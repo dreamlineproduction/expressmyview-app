@@ -1,0 +1,230 @@
+ion-item, ion-toolbar{
+    --border-color: transparent;
+}
+.menu-logo-img{
+    width: 8px;
+    margin-right: 10px;
+}
+
+.menu_title{
+    font-size: 16px;
+    font-weight: bold;
+    align-self: center;
+    margin-left: 5px;
+}
+
+.menu_btn{
+    float: right;
+}
+
+.search{
+    width: 17px;
+    float: right;
+    height: 100%;
+    margin-right: 5px;
+}
+
+.profile{
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.submit_button {
+    font-weight: 600;
+    font-size: 13px;
+    font-style: normal;
+    height: 53px;
+    --background: linear-gradient(to right, #FC5375, #926AEF);
+    --background-activated: transparent;
+    border-radius: 10px;
+    overflow: hidden;
+    text-transform: none;
+}
+
+.cloud{
+    height: 326px;
+    border: dashed 2px rgba(87,87,87,0.1);
+    border-radius: 10px;
+    background-color: #F6F6F6;
+    position: relative;
+}
+
+.cloudgray{
+    min-height: 130px;
+    border: dashed 2px rgba(87,87,87,0.1);
+    border-radius: 10px;
+    background-color: #F6F6F6;
+    position: relative;
+}
+
+.cloud_img{
+    width: 95px;
+    height: 95px;
+}
+
+.cloudgray_img{
+    width: 39px;
+    height: 39px;
+}
+
+.cloud_text{
+    color: #A8A8A8;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.cloudgray_text{
+    color: #A8A8A8;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.cloud_content{
+    position: absolute;
+    text-align: -webkit-center;
+    text-align: -moz-center;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 220px;
+}
+
+.selected_image{
+    font-size: 16px;
+    color: #A8A8A8;
+    font-weight: normal;
+}
+
+.selected_image_col{
+    height: 58px;
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.ion_label{
+    color: #000000;
+    font-size: 13px;
+    font-weight: normal;
+    margin-bottom: 10px;
+}
+
+.star{
+    color: red;
+}
+
+.cell-class {
+    border-color: #A8A8A8; 
+    border-width: .01em; 
+    border-style:solid; 
+    background-color: #fff;
+    border-radius: 12px;
+    padding-left: 16px;
+    font-weight: normal;
+    min-height: 52px;
+    margin: 5px 0 15px 0;
+    height: auto;
+}   
+
+.ion_chip_group{
+    display: inline-flex;
+    flex-wrap: wrap;
+}
+
+.ion_select{
+    margin-top: 10px;
+}
+
+.description_col{
+    border-color: #A8A8A8; 
+    border-width: .01em; 
+    border-style:solid; 
+    background-color: #fff;
+    border-radius: 12px;
+    padding-left: 16px;
+    font-weight: normal;
+    min-height: 135px;
+    margin: 5px 0 15px 0;
+}   
+
+.checkbox_text{
+    color: #A8A8A8;
+    font-size: 13px;
+    padding-left: 10px;
+}
+
+.checkbox_icon{
+    height: 15px;
+    width: 15px;
+    --border-radius: 5px;
+    z-index: 1;
+}
+
+.footer{
+    margin-bottom: 150px;
+    margin-top: 20px;
+}
+
+.footer_note{
+    font-size: 8px;
+    color: #A8A8A8;
+    text-align: center;
+}
+
+.image_box{
+    min-height: 130px;
+    background-color: #F6F6F6;
+    --ion-item-background: #F6F6F6;
+    border: 0.5px dashed rgba($color:  #575757, $alpha: 0.3);
+    border-radius: 5px;
+}
+
+.tags-input__input-field{
+    border-color: #A8A8A8 !important;
+    border-width: 0.01em !important;
+    border-style: solid !important;
+    background-color: #fff !important;
+    border-radius: 12px !important;
+}
+
+.language_ul{
+    position: absolute;
+    list-style: none;
+    background-color: lightgrey;
+    width: 100%;
+    z-index: 1000 !important;
+    padding-left: 20px !important;
+}
+
+.language_li{
+    padding: 5px 0 5px 0;
+}
+
+.uploadProgress{
+    width: 38px !important;
+    height: 38px !important;
+    position: absolute;
+}
+
+.round_progress_container{
+    position: relative;
+    width: 38px !important;
+    height: 38px !important;
+    margin-left: auto;
+}
+
+.uploadProgressText{
+    font-family: Montserrat;
+    font-size: 10px;
+    font-weight: normal;
+    color: #575757;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}

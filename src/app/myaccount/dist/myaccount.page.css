@@ -1,0 +1,135 @@
+ion-item, ion-toolbar {
+  --border-color: transparent;
+}
+
+.menu-logo-img {
+  width: 8px;
+  margin-right: 10px;
+}
+
+.menu_title {
+  font-size: 16px;
+  font-weight: bold;
+  align-self: center;
+  margin-left: 5px;
+}
+
+.menu_btn {
+  float: right;
+}
+
+.search {
+  width: 17px;
+  float: right;
+  height: 100%;
+  margin-right: 5px;
+}
+
+.profile {
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.img_icon {
+  width: 100%;
+  border-radius: 10px !important;
+  overflow: hidden;
+}
+
+.img_container {
+  position: relative;
+  --padding-start: 0;
+  --inner-padding-end: 0;
+}
+
+.img_text {
+  position: absolute;
+  background-color: #FF253A;
+  height: 14px;
+  width: 38px;
+  font-size: 10px;
+  text-align: center;
+  color: white;
+  border-radius: 3px;
+  right: 3px;
+  bottom: 3px;
+  line-height: 13px;
+  font-weight: bold;
+}
+
+.title {
+  font-size: 13px;
+  font-weight: bold;
+  margin: 2px 0;
+}
+
+.subtitle {
+  font-size: 10px;
+  font-weight: normal;
+  color: #FF253A;
+  margin: 2px 0 8px 0;
+}
+
+.small_icon {
+  width: 10px;
+  height: 10px;
+  margin-left: 4px;
+}
+
+.footer_title {
+  font-size: 9px;
+  color: #A8A8A8;
+  margin-right: 10px;
+}
+
+.footer_icon {
+  width: 12px;
+  height: 12px;
+  color: #A8A8A8;
+  margin-right: 4px;
+}
+
+.card_container {
+  margin: 5px 0px 15px 0px;
+}
+
+.viewall {
+  font-size: 13px;
+  color: #FF253A;
+  font-weight: bold;
+  text-align: right;
+}
+
+.video_title {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.threedots {
+  width: 23px;
+  margin-top: 7px;
+}
+
+.channel_row {
+  padding-left: 5px;
+}
+
+.small_card {
+  width: 86px;
+  height: 93px;
+  padding-top: 10px;
+}
+
+.small_card_img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50% !important;
+  overflow: hidden;
+}
+
+.small_card_text {
+  font-size: 10px;
+  margin-top: -5px;
+}

@@ -1,0 +1,59 @@
+<ion-app>
+  <ion-menu side="end" menuId="first" contentId="main">
+    <ion-header>
+      <ion-toolbar>
+          <ion-row class="ion-padding">
+            <ion-img offset=3 class="menu-logo-img ion-text-center" [src]="logo"></ion-img>
+            <ion-label class="menu_title">Myview</ion-label>
+            <ion-col>
+              <ion-menu-toggle>
+                <ion-icon class="close" menuClose name="close-outline"></ion-icon>
+              </ion-menu-toggle>
+            </ion-col>
+          </ion-row>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <!-- <button (click)="startCall()">Start Call</button>
+        <div id="agora_local">
+        </div>
+        <div id="remote-container">
+        </div> -->
+        <ion-menu-toggle>
+          <ion-row class="ion-padding list_row" menuClose (click) = "openMyAccount()">
+            <ion-img class="list_icon" [src]="myAccount"></ion-img>
+            <ion-text class="list_text">My Account</ion-text>
+          </ion-row>
+        </ion-menu-toggle>
+        <ion-menu-toggle>
+          <ion-row class="ion-padding list_row" menuClose (click) = "openMyChannels()">
+            <ion-img class="list_icon" [src]="myChannels"></ion-img>
+            <ion-text class="list_text">My Channels</ion-text>
+          </ion-row>
+        </ion-menu-toggle>
+        <ion-menu-toggle>
+          <ion-row class="ion-padding list_row" menuClose (click) = "openMySubscriptions()">
+            <ion-img class="list_icon" [src]="mySubscriptions"></ion-img>
+            <ion-text class="list_text">My Subscriptions</ion-text>
+          </ion-row>
+        </ion-menu-toggle>
+        <!-- <ion-menu-toggle>
+          <ion-row class="ion-padding list_row" menuClose (click) = "openCreateChannel()">
+            <ion-img class="list_icon" [src]="createChannel"></ion-img>
+            <ion-text class="list_text">Create Channel</ion-text>
+          </ion-row>
+        </ion-menu-toggle> -->
+        <ion-menu-toggle>
+          <ion-row class="ion-padding list_row" menuClose (click) = "openAccountSettings()">
+            <ion-img class="list_icon" [src]="accountSettings"></ion-img>
+            <ion-text class="list_text">Account Settings</ion-text>
+          </ion-row>
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-router-outlet id="main"></ion-router-outlet>
+</ion-app>
+

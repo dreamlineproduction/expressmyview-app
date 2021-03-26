@@ -1,0 +1,90 @@
+ion-item, ion-toolbar{
+    --border-color: transparent;
+}
+//Header
+.menu-logo-img{
+    width: 30px;
+}
+
+.menu_title{
+    font-size: 16px;
+    font-weight: bold;
+    align-self: center;
+    margin-left: 5px;
+}
+
+.menu_btn{
+    float: right;
+}
+
+.search{
+    width: 17px;
+    float: right;
+    height: 100%;
+    margin-right: 5px;
+}
+
+//img
+.img_icon{
+    width: 100%;
+    border-radius: 10px !important;
+    overflow: hidden;
+}
+
+.img_container{
+    position: relative;
+    --padding-start: 0;
+    --inner-padding-end: 0;
+}
+
+.img_text{
+    position: absolute;
+    background-color: #FF253A;
+    height: 14px;
+    width: 38px;
+    font-size: 10px;
+    text-align: center;
+    color: white;
+    border-radius: 3px;
+    right: 3px;
+    bottom: 3px;
+    line-height: 13px;
+    font-weight: bold;
+}
+
+//text
+.title{
+    font-size: 13px;
+    font-weight: bold;
+    margin: 3px 0;
+}
+
+.subtitle{
+    font-size: 10px;
+    font-weight: normal;
+    color: #FF253A;
+    margin: 3px 0 8px 0;
+}
+
+.small_icon{
+    width: 10px;
+    height: 10px;
+    margin-left: 4px;
+}
+
+.footer_title{
+    font-size: 9px;
+    color: #A8A8A8;
+    margin-right: 10px;
+}
+
+.footer_icon{
+    width: 12px;
+    height: 12px;
+    color: #A8A8A8;
+    margin-right: 4px;
+}
+
+.card_container{
+    margin: 15px 0px;
+}

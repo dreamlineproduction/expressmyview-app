@@ -1,0 +1,14 @@
+.menu-logo-img {
+  width: 10px;
+  margin-left: 5px;
+}
+
+ion-toolbar .sc-ion-searchbar-ios-h {
+  padding: 0px !important;
+}
+
+.filter {
+  width: 17px;
+  float: right;
+  margin-right: 5px;
+}

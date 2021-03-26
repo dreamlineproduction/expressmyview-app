@@ -1,0 +1,19 @@
+<ion-content class="ion-padding">
+  <ion-grid  *ngIf="popupkey1">
+    <ion-row (click)="editChannel(popupkey2)">
+      <ion-col>Edit Channel</ion-col>
+    </ion-row>
+    <ion-row (click)="deleteChannel(popupkey2)">
+      <ion-col>Delete channel</ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid  *ngIf="popupkey3">
+    <ion-row (click)="editPodcast(popupkey4)">
+      <ion-col>Edit Podcast</ion-col>
+    </ion-row>
+    <ion-row (click)="deletePodcast(popupkey4)">
+      <ion-col>Delete Podcast</ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

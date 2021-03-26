@@ -1,0 +1,117 @@
+<ion-header collapse="" *ngIf="loaded">
+  <ion-toolbar>
+    <ion-row class="ion-padding">
+      <ion-img offset=3 class="menu-logo-img ion-text-center" [src]="back" (click) = goBack()></ion-img>
+      <ion-label class="menu_title">{{podcastDetails.stream.title}}</ion-label>
+      <ion-col>
+        <ion-buttons class="menu_btn">
+          <ion-menu-button menu="first"><ion-img offset=3 class="profile" [src]="user_image"></ion-img></ion-menu-button>
+        </ion-buttons>
+        <ion-img offset=3 class="search" [src]="search"></ion-img>
+     </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+<ion-content *ngIf="loaded">
+  <video #video style="width: 100%;height: 200px;" poster="{{podcastDetails.stream.thumbnail}}" src = "https://expressmyview.crtvecode.in/uploads/KVljDAjLgn_null_1615291532.mp4" class="podcastVideo" controls >
+  </video>
+  
+  <ion-row class="ion-align-items-center ion-padding-start">
+    <ion-col>
+      <ion-row>
+        <ion-col size="8">
+          <div class="big_card_title">{{podcastDetails.stream.title}}</div>
+          <div>
+            <ion-icon class="footer_small_icon"  name="eye"></ion-icon>
+              <ion-text class="big_card_footer">{{podcastDetails.stream.views}} views</ion-text>
+              <ion-icon class="footer_small_icon" name="calendar"></ion-icon>
+              <ion-text class="big_card_footer">{{podcastDetails.stream.dateDiff}}</ion-text>
+          </div>
+        </ion-col>
+        <!-- <ion-col size="4" *ngIf="!isSame">
+          <ion-row>
+            <ion-button [color]="!isLiked ? 'danger' : 'medium'" role="button" (click)="like()">
+              <fa-icon icon="thumbs-up"></fa-icon>
+            </ion-button>
+          </ion-row>
+        </ion-col> -->
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row class="ion-padding-start ion-padding-top ion-padding-end">
+    <ion-col class="other_details_col">
+      <ion-row class="ion-align-items-center">
+        <ion-col size="7">
+          <ion-row class="ion-align-items-center">
+            <ion-text class="big_card_subtitle">{{channelName}}</ion-text>
+            <ion-img class="small_icon" [src]="checkmark"></ion-img>  
+          </ion-row>
+        </ion-col>
+        <!-- <ion-col size="5" class="ion-text-right" *ngIf="!isSame">
+          <ion-button color="danger" *ngIf="!isSubscribed" (click)="subscribe()">Subscribe</ion-button>
+          <ion-button color="medium" *ngIf="isSubscribed" (click)="subscribe()">Unsubscribe</ion-button>
+        </ion-col> -->
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  
+  <ion-row class="ion-align-items-center ion-padding-start ion-padding-top ion-padding-end">
+    <ion-col size="12" class="other_details_col">
+      <ion-row *ngIf="casts">
+        <ion-text class="other_details_label">Cast : </ion-text>
+        <ion-text class="other_details_text"><span *ngFor="let cast of casts">{{cast.name}}, </span></ion-text>
+      </ion-row>
+      <ion-row *ngIf="categories">
+        <ion-text class="other_details_label">Category : </ion-text>
+        <ion-text class="other_details_text"><span *ngFor="let category of categories">{{category.name}}, </span></ion-text>
+      </ion-row>
+      <ion-row *ngIf="tags">
+        <ion-text class="other_details_label">Tags : </ion-text>
+        <ion-text class="other_details_text"><span *ngFor="let tag of tags">{{tag.name}}, </span></ion-text>
+      </ion-row>
+      <ion-row>
+        <ion-text class="other_details_label">About : </ion-text>
+        <ion-text class="other_details_text">{{podcastDetails.stream.description}}</ion-text>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+
+  <!-- <div>
+    <ion-item>
+      <h5 class="latest">Related Podcasts</h5>
+    </ion-item>
+    <ion-row class="ion-align-items-center ion-justify-content-center card_container" *ngFor="let relatedPodcast of relatedPodcasts">
+      <ion-col size="4" (click)="goToPlay(relatedPodcast.id)">
+        <ion-item class="img_container">
+          <ion-img class="img_icon" *ngIf="relatedPodcast" [src]="relatedPodcast.path"></ion-img>
+          <ion-text class="img_text">{{relatedPodcast.runtime_formatted}}</ion-text>
+        </ion-item>
+      </ion-col>
+      <ion-col size="7">
+        <ion-row class="ion-align-items-center" (click)="goToPlay(relatedPodcast.id)">
+          <ion-text class="title">{{relatedPodcast.title}}</ion-text>
+        </ion-row>
+       <ion-row class="ion-align-items-center">
+          <ion-text class="subtitle" (click)="goToChannelDetails(relatedPodcast.channel_id)">{{relatedPodcast.channelName}}</ion-text>
+          <ion-img class="small_icon" [src]="checkmark"></ion-img>
+       </ion-row>
+        <ion-row class="ion-align-items-center" (click)="goToPlay(relatedPodcast.id)">
+          <ion-icon class="footer_icon"  name="eye"></ion-icon>
+          <ion-text class="footer_title">{{relatedPodcast.views}} views</ion-text>
+          <ion-icon class="footer_icon" name="calendar"></ion-icon>
+          <ion-text class="footer_title">{{relatedPodcast.dateDiff}}</ion-text>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </div> -->
+  <button (click)="startCall()">Start Call</button>
+  <div id="agora_local">
+  </div>
+  <div id="remote-container">
+  </div>
+  <ion-row class="ion-align-items-center ion-padding-start ion-padding-top ion-padding-end">
+    <ion-col size="12" class="other_details_col">
+      <ion-text class="comment_title">{{podcastDetails.stream.comments_count}} comments</ion-text>
+    </ion-col>
+  </ion-row>
+</ion-content>

@@ -1,0 +1,64 @@
+<ion-header *ngIf="loaded">
+  <ion-img class="banner_img" *ngIf="channelDetails.bannerPath" [src]="channelDetails.bannerPath"></ion-img>
+</ion-header>
+
+<ion-content *ngIf="loaded">
+  <ion-row class="ion-padding">
+    <ion-col size="2" class="ion-justify-content-center">
+      <ion-img class="small_img" *ngIf="channelDetails.logoPath" [src]="channelDetails.logoPath"></ion-img>
+    </ion-col>
+    <ion-col size="6" class="ion-align-items-center ion-justify-content-center ion-align-self-center ion-padding-start">
+      <ion-row>
+        <ion-col><ion-text class="channel_title">{{channelDetails.name}}</ion-text></ion-col>
+        <ion-col class="ion-align-self-center"><ion-img class="small_icon" [src]="checkmark"></ion-img></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-text class="subscribers">{{channelDetails.subscribers}} subscribers</ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col size="4" class="ion-text-right" *ngIf="!isSame">
+      <ion-button color="danger" class="subscribe_btn" *ngIf="!isSubscribed" (click)="subscribe()">Subscribe</ion-button>
+      <ion-button color="medium" class="subscribe_btn" *ngIf="isSubscribed" (click)="subscribe()">Unsubscribe</ion-button>
+    </ion-col>
+    <ion-col *ngIf="myData" size="4" class="ion-align-items-center ion-justify-content-end">
+      <ion-img class="threedots" (click)="presentPopover($event,'channel', channelDetails.id)" [src] = "threedots"></ion-img>
+    </ion-col>
+  </ion-row>
+
+  <div *ngIf="allPodcastCount > 0">
+    <ion-row class="ion-padding-start ion-padding-end ion-padding-top">
+      <ion-col class="video_title" *ngIf="allPodcastCount > 1">
+        All {{allPodcastCount}} podcasts
+      </ion-col>
+      <ion-col class="video_title"  *ngIf="allPodcastCount == 1">
+        {{allPodcastCount}} podcast
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-align-items-center ion-justify-content-center card_container" *ngFor="let allPodcast of allPodcasts;">
+      <ion-col size="4" (click)="goToPlay(allPodcast.id)">
+        <ion-item class="img_container">
+          <ion-img class="img_icon" *ngIf="allPodcast.path" [src]="allPodcast.path"></ion-img>
+          <ion-text class="img_text">{{allPodcast.runtime_formatted}}</ion-text>
+        </ion-item>
+      </ion-col>
+      <ion-col size="7" class="ion-align-self-baseline">
+        <ion-row class="ion-align-items-start ion-no-padding" (click)="goToPlay(allPodcast.id)">
+          <ion-col size="10">
+            <ion-text class="title">{{allPodcast.title}}</ion-text>
+          </ion-col>
+         <ion-col *ngIf="myData" size="2">
+            <ion-img class="threedots" (click)="presentPopover($event,'podcast', allPodcast.id)" [src]="threedots"></ion-img>
+         </ion-col>
+        </ion-row>
+        <ion-row class="ion-align-items-start channel_row" (click)="goToPlay(allPodcast.id)">
+          <ion-icon class="footer_icon"  name="eye"></ion-icon>
+          <ion-text class="footer_title">{{allPodcast.views}} views</ion-text>
+          <ion-icon class="footer_icon" name="calendar"></ion-icon>
+          <ion-text class="footer_title">{{allPodcast.dateDiff}}</ion-text>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-content>

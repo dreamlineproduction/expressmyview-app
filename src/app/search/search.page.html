@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-row class="ion-align-content-center">
+      <ion-col size="2" class="ion-align-self-center">
+        <ion-img offset=3 class="menu-logo-img ion-text-center" [src]="back" (click) = goBack()></ion-img>
+      </ion-col>
+      <ion-col size="8">
+        <ion-searchbar placeholder="Search Podcasts" [(ngModel)]="searchKeys" (input)="searchKey($event)"></ion-searchbar>
+      </ion-col>
+      <ion-col size="2" class="ion-align-self-center">
+        <ion-img offset=3 class="filter ion-text-center" [src]="filter" (click) = filterSearch()></ion-img>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+</ion-content>

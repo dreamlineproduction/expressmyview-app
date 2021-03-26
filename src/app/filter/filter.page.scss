@@ -1,0 +1,40 @@
+.menu-logo-img{
+    width: 10px;
+    margin-left: 5px;
+}
+
+ion-toolbar .sc-ion-searchbar-ios-h{
+    padding : 0px !important;
+}
+
+.close{
+    width: 17px;
+    float: right;
+    margin-right: 5px;
+}
+
+.ion_radio{
+    margin-right: 10px;
+}
+
+.filter_title{
+    font-size: 13px;
+    font-family: Montserrat;
+    font-weight: normal;
+    color: #A8A8A8;
+}
+
+.filter_label{
+    font-size: 13px;
+    font-family: Montserrat;
+    font-weight: normal;
+}
+
+ion-item{
+    --border-color: transparent;
+    height: 34px;
+}
+
+ion-radio{
+    --color-checked : #FF253A;
+}

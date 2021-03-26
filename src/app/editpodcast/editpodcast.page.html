@@ -1,0 +1,151 @@
+<ion-header collapse="">
+  <ion-toolbar>
+    <ion-row class="ion-padding">
+      <ion-img offset=3 class="menu-logo-img ion-text-center" [src]="back" (click) = goBack()></ion-img>
+      <ion-label class="menu_title">Edit Podcasts</ion-label>
+      <ion-col>
+        <ion-buttons class="menu_btn">
+          <ion-menu-button menu="first"><ion-img offset=3 class="profile" [src]="user_image"></ion-img></ion-menu-button>
+        </ion-buttons>
+        <ion-img offset=3 class="search" [src]="search"></ion-img>
+     </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <form #form="ngForm" (ngSubmit)="save()" >
+    <ion-grid>
+      <ion-row class="ion-margin">
+        <ion-col class="ion-no-padding">
+          <ion-label class="ion_label">Select Channel</ion-label>
+          <ion-item class="ion-no-padding ion-font-family cell-class ion_select">
+            <ion-select [(ngModel)]="channel" name = "channel">
+              <ion-select-option *ngFor="let channel of channels" [value]="channel.id">{{channel.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-margin">
+        <ion-label class="ion_label">Podcast Title</ion-label>
+        <ion-col class="cell-class ion-font-family" size="12">
+          <ion-input fill="outline" [(ngModel)]="title" name="title" ngModel class="ion-font-family ion_input"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-margin">
+        <ion-label class="ion_label">About Podcast</ion-label>
+        <ion-col class="ion-font-family description_col" size="12">
+          <ion-textarea auto-grow fill="outline" [(ngModel)]="description" name="description" placeholder="Short description about podcast" class="ion-font-family ion_input"></ion-textarea>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-margin">
+        <ion-col class="ion-no-padding">
+          <ion-label class="ion_label">Privacy Settings</ion-label>
+          <ion-item class="ion-no-padding ion-font-family cell-class ion_select">
+            <ion-select placeholder="Public" [(ngModel)]="privacy_settings" name="privacy_settings">
+              <ion-select-option value="public">Public</ion-select-option>
+              <ion-select-option value="private">Private</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-margin">
+        <ion-col class="ion-no-padding">
+          <ion-label class="ion_label">License</ion-label>
+          <ion-item class="ion-no-padding ion-font-family cell-class ion_select">
+            <ion-select placeholder="Standard Myview License" [(ngModel)]="license" name="license">
+              <ion-select-option *ngFor="let license of licenses" [value]="license.id">{{license.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+     
+      <ion-row class="ion-margin">
+        <ion-label class="ion_label">Language in Video (Optional)</ion-label>
+        <ion-col class="cell-class ion-font-family" size="12">
+          <div *ngIf="languages != ''" class="ion_chip_group">
+            <div *ngFor="let lang of languages">
+              <ion-chip>
+                <ion-label>{{lang}}</ion-label>
+                  <ion-icon name="close" src="{{lang}}" (click)="removeLanguage($event.target.src)"></ion-icon>
+              </ion-chip>
+            </div>
+          </div>
+          <ion-input fill="outline" [(ngModel)]="searchText" (input)="onSearchChange($event.target.value)" name="searchText"  placeholder="" class="ion-font-family ion_input" >
+          </ion-input>
+          <ul #language_ul *ngIf="searchText" class="language_ul">
+            <li class="list-group-item language_li" *ngFor="let c of allLanguages | appFilter: searchText" (click)="addLanguage($event)" >{{c}}</li>
+          </ul>
+        </ion-col>
+      </ion-row>
+      
+      <ion-row class="ion-margin">
+        <ion-label class="ion_label">Cast (Optional)</ion-label>
+        <ion-col class="cell-class ion-font-family" size="12">
+          <div *ngIf="casts != ''" class="ion_chip_group">
+            <div *ngFor="let cast of casts">
+              <ion-chip>
+                <ion-label>{{cast}}</ion-label>
+                  <ion-icon name="close" src="{{cast}}" (click)="removeCast($event.target.src)"></ion-icon>
+              </ion-chip>
+            </div>
+          </div>
+          <ion-input fill="outline" [(ngModel)]="searchTextCasts" (input)="onSearchChange($event.target.value)" name="searchTextCasts"  placeholder="" class="ion-font-family ion_input" >
+          </ion-input>
+          <ul *ngIf="searchTextCasts" class="language_ul">
+            <li class="list-group-item language_li" *ngFor="let c of allCasts | appFilter: searchTextCasts" (click)="addCast($event)" >{{c}}</li>
+          </ul>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-margin">
+        <ion-label class="ion_label">Tags (Optional)</ion-label>
+        <ion-col class="cell-class ion-font-family" size="12">
+          <div *ngIf="tags != ''" class="ion_chip_group">
+            <div *ngFor="let tag of tags">
+              <ion-chip>
+                <ion-label>{{tag}}</ion-label>
+                  <ion-icon name="close" src="{{tag}}" (click)="removeTag($event.target.src)"></ion-icon>
+              </ion-chip>
+            </div>
+          </div>
+          <ion-input fill="outline" [(ngModel)]="searchTextTags" (input)="onSearchChange($event.target.value)" name="searchTextTags"  placeholder="" class="ion-font-family ion_input" >
+          </ion-input>
+          <ul *ngIf="searchTextTags" class="language_ul">
+            <li class="list-group-item language_li" *ngFor="let c of allTags | appFilter: searchTextTags" (click)="addTag($event)" >{{c}}</li>
+          </ul>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-label class="ion_label ion-margin-start ion-margin-end">Category ( Upto 6 categories )</ion-label>
+        <ion-col size="6" *ngFor="let category of categories">
+          <ion-row class="ion-margin-start ion-margin-end">
+            <ion-checkbox class="checkbox_icon" [(ngModel)]="category.checked" [disabled]="isCheckboxDisabled && !category.checked" name="{{category.name}}" (ionChange)="selectMember($event, category.name)"></ion-checkbox>
+            <ion-label class="checkbox_text">{{category.name}}</ion-label>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-margin-start ion-margin-end ion-margin-top">
+        <ion-label class="ion_label">Podcats Cover</ion-label>
+      </ion-row>
+      <ion-row class="ion-margin-start ion-margin-end">
+        <ion-col (click)="selectImage()" class="cloudgray">
+          <div *ngIf="!myPhoto" class="cloud_content">
+           <ion-img offset=3 class="cloudgray_img" [src]="cloudgray"></ion-img>
+           <ion-text class="cloudgray_text">Tap to Select Image for Podcast Cover</ion-text>
+          </div>
+          <ion-img *ngIf="myPhoto" src="{{myPhoto}}" ></ion-img>
+        </ion-col>
+      </ion-row>
+      <ion-button class="ion-margin ion-font-family submit_button" type="submit" expand="block" size="10">Update Podcast</ion-button>
+      <ion-row class="ion-margin-start ion-margin-end footer">
+        <p class="footer_note">
+          By submitting your videos to Express My View, you acknowledge that you agree to Our Terms of Service and Community Guidelines. Please be sure not to violate others' copyright or privacy rights.
+        </p>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
+

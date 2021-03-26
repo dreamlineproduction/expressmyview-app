@@ -1,0 +1,43 @@
+ion-item, ion-toolbar{
+    --border-color: transparent;
+}
+
+.close{
+    color: #575757;
+    font-size: 22px;
+    align-self: center;
+    float: right;
+}
+
+.menu-logo-img{
+    width: 30px;
+}
+
+.menu_title{
+    font-size: 16px;
+    font-weight: bold;
+    align-self: center;
+    margin-left: 10px;
+}
+
+.list_icon{
+    width: 15px;
+    height: 15px;
+    margin-right: 13px;
+    align-self: center;
+}
+
+#agora_local{
+    height: 500px;
+    width: 500px;
+    display: inline-block;
+}
+
+.list_text{
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.list_row{
+    padding-left: 22px;
+}

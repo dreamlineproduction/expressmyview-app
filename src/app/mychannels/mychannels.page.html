@@ -1,0 +1,39 @@
+
+  <ion-header collapse="">
+    <ion-toolbar>
+      <ion-row class="ion-padding">
+        <ion-img offset=3 class="menu-logo-img ion-text-center" [src]="back" (click) = goBack()></ion-img>
+        <ion-label class="menu_title">My Channels</ion-label>
+        <ion-col>
+          <ion-buttons class="menu_btn">
+            <ion-menu-button menu="first"><ion-img offset=3 class="profile" [src]="user_image"></ion-img></ion-menu-button>
+          </ion-buttons>
+          <ion-img offset=3 class="search" [src]="search"></ion-img>
+       </ion-col>
+      </ion-row>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <div *ngIf="myChannels">
+      <ion-card class="big_card" (click) = "channel(myChannel.id)" *ngFor="let myChannel of myChannels;">
+        <ion-card-header class="ion-no-padding">
+          <ion-img class="big_card_img" *ngIf="myChannel.bannerPath" [src]="myChannel.bannerPath"></ion-img>
+        </ion-card-header>
+      
+        <ion-card-content class="big_card_content">
+          <ion-row class="ion-justify-content-center">
+            <ion-img class="small_img" *ngIf="myChannel.logoPath" [src]="myChannel.logoPath"></ion-img>
+          </ion-row>
+          <ion-row class="ion-align-items-center ion-justify-content-center">
+            <ion-card-title class="big_card_subtitle">{{myChannel.name}}</ion-card-title>
+            <ion-img class="small_icon" [src]="checkmark"></ion-img>
+          </ion-row>
+          <ion-row class="ion-align-items-center ion-justify-content-center">
+            <ion-text class="big_card_footer">{{myChannel.allPodcastsCount}} podcasts</ion-text>
+          </ion-row>
+        </ion-card-content>
+      </ion-card> 
+    </div> 
+  </ion-content>
+

@@ -1,0 +1,100 @@
+<ion-header collapse="" *ngIf="loaded">
+  <ion-toolbar>
+    <ion-row class="ion-padding">
+      <ion-img offset=3 class="menu-logo-img ion-text-center" [src]="back" (click) = goBack()></ion-img>
+      <ion-label class="menu_title">Edit Channel</ion-label>
+      <ion-col>
+        <ion-buttons class="menu_btn">
+          <ion-menu-button menu="first"><ion-img offset=3 class="profile" [src]="user_image"></ion-img></ion-menu-button>
+        </ion-buttons>
+        <ion-img offset=3 class="search" [src]="search"></ion-img>
+     </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="loaded">
+  <form #form="ngForm" (ngSubmit)="save(form.value)">
+    <ion-grid>
+      <ion-row class="ion-margin">
+        <ion-label class="ion_label">Name <span class="star">*</span></ion-label>
+        <ion-col class="cell-class ion-font-family" size="12">
+          <ion-input fill="outline" name="name" [(ngModel)]="name" placeholder="Enter a name for your channel" class="ion-font-family ion_input"></ion-input>
+        </ion-col>
+      </ion-row>
+      
+      <ion-row class="ion-margin">
+        <ion-label class="ion_label">Description</ion-label>
+        <ion-col class="ion-font-family description_col" size="12">
+          <ion-textarea auto-grow fill="outline" name="description" [(ngModel)]="description" placeholder="Short description about your channel" class="ion-font-family ion_input"></ion-textarea>
+        </ion-col>
+      </ion-row>
+      
+      <ion-row class="ion-margin">
+        <ion-label class="ion_label">Logo <span class="ion_sublabel">(Recommended Size 150X150 PX)</span></ion-label>
+        <ion-col class="font-font-family ion-no-padding" size="12">
+          <ion-item class="image_box ion-no-padding">
+            <ion-img *ngIf="logo" src="{{logo}}" [(ngModel)]="logo" name="logo" ngDefaultControl></ion-img>
+          </ion-item>
+        </ion-col>
+        <ion-button class="ion-font-family img_button" *ngIf="!logo" (click)="selectImage('logo')" expand="block">Select Image</ion-button>
+        <ion-button class="ion-font-family img_button" *ngIf="logo" (click)="selectImage('logo')" expand="block">Change Logo</ion-button>
+      </ion-row>
+      
+      <ion-row class="ion-margin">
+        <ion-label class="ion_label">Banner <span class="ion_sublabel">(Recommended Size 1920X400 PX)</span></ion-label>
+        <ion-col class="font-font-family ion-no-padding" size="12">
+          <ion-item class="image_box ion-no-padding">
+            <ion-img *ngIf="banner" src="{{banner}}" [(ngModel)]="banner" name="banner" ngDefaultControl></ion-img>
+          </ion-item>
+        </ion-col>
+        <ion-button class="ion-font-family img_button" *ngIf="!banner" (click)="selectImage('banner')" expand="block">Select Image</ion-button>
+        <ion-button class="ion-font-family img_button" *ngIf="banner" (click)="selectImage('banner')" expand="block">Change Banner</ion-button>
+      </ion-row>
+      
+      <ion-row class="ion-margin">
+        <ion-label class="ion_label">Facebook</ion-label>
+        <ion-col class="cell-class ion-font-family" size="12">
+          <ion-input fill="outline" name="facebook" [(ngModel)]="facebook" placeholder="Enter your Facebook link" class="ion-font-family ion_input"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-margin">
+        <ion-label class="ion_label">Twitter</ion-label>
+        <ion-col class="cell-class ion-font-family" size="12">
+          <ion-input fill="outline" name="twitter" [(ngModel)]="twitter" placeholder="Enter your Twitter link" class="ion-font-family ion_input"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-margin">
+        <ion-label class="ion_label">Youtube</ion-label>
+        <ion-col class="cell-class ion-font-family" size="12">
+          <ion-input fill="outline" name="youtube" [(ngModel)]="youtube" placeholder="Enter your Youtube link" class="ion-font-family ion_input"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-margin">
+        <ion-label class="ion_label">Instagram</ion-label>
+        <ion-col class="cell-class ion-font-family" size="12">
+          <ion-input fill="outline" name="instagram" [(ngModel)]="instagram" placeholder="Enter your Instagram link" class="ion-font-family ion_input"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-margin">
+        <ion-label class="ion_label">Pinterest</ion-label>
+        <ion-col class="cell-class ion-font-family" size="12">
+          <ion-input fill="outline" name="pinterest" [(ngModel)]="pinterest" placeholder="Enter your Pinterest link" class="ion-font-family ion_input"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-margin">
+        <ion-label class="ion_label">Linkedin</ion-label>
+        <ion-col class="cell-class ion-font-family" size="12">
+          <ion-input fill="outline" name="linkedin" [(ngModel)]="linkedin" placeholder="Enter your Linkedin link" class="ion-font-family ion_input"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-margin">
+        <ion-label class="ion_label">Tiktok</ion-label>
+        <ion-col class="cell-class ion-font-family" size="12">
+          <ion-input fill="outline" name="tiktok" [(ngModel)]="tiktok" placeholder="Enter your Tiktok link" class="ion-font-family ion_input"></ion-input>
+        </ion-col>
+      </ion-row>
+      <ion-button class="ion-margin ion-font-family submit_button" type="submit" expand="block" size="10">Update Channel</ion-button>
+    </ion-grid>
+  </form>
+</ion-content>

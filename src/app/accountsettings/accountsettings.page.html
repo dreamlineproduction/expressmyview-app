@@ -1,0 +1,101 @@
+  <ion-header collapse="" *ngIf="loaded">
+    <ion-toolbar>
+      <ion-row class="ion-padding">
+        <ion-img offset=3 class="menu-logo-img ion-text-center" [src]="back" (click) = goBack()></ion-img>
+        <ion-label class="menu_title">Account Settings</ion-label>
+        <ion-col>
+          <ion-buttons (click)="logout()" class="logout_btn">
+            <ion-img offset=3 class="logout" [src]="logout_icon"></ion-img>
+          </ion-buttons>
+          <ion-buttons class="menu_btn">
+            <ion-menu-button menu="first"><ion-img offset=3 class="profile" [src]="user_image"></ion-img></ion-menu-button>
+          </ion-buttons>
+          <ion-img offset=3 class="search" [src]="search"></ion-img>
+       </ion-col>
+      </ion-row>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content *ngIf="loaded">
+    <form #form="ngForm" (ngSubmit)="save(form.value)">
+      <ion-grid>
+        <ion-row class="ion-margin">
+          <ion-label class="ion_label">Name <span class="star">*</span></ion-label>
+          <ion-col class="cell-class ion-font-family" size="12">
+            <ion-input fill="outline" name="name" [(ngModel)]="name" class="ion-font-family ion_input"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-margin">
+          <ion-label class="ion_label">Phone <span class="star">*</span></ion-label>
+          <ion-col class="cell-class ion-font-family" size="12">
+            <ion-input fill="outline" name="phone" [(ngModel)]="phone" placeholder="Phone" class="ion-font-family ion_input"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-margin-start ion-margin-top ion-margin-end">
+          <ion-label class="ion_label">Email Address <span class="star">*</span></ion-label>
+          <ion-col class="cell-class ion-font-family" size="12">
+            <ion-input fill="outline" name="email" [(ngModel)]="email" placeholder="Email Address" class="ion-font-family ion_input"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-margin-start">
+            <ion-checkbox class="remembericon" [(ngModel)]="hideEmailCheck" checked="checked" name="hideEmailCheck" (ionChange)="selectMember($event)"></ion-checkbox>
+            <ion-label class="rememberme">Hide My Email</ion-label>
+        </ion-row>
+        <ion-row class="ion-margin">
+            <ion-col class="ion-no-padding">
+              <ion-label class="ion_label">Country <span class="star">*</span></ion-label>
+              <ion-item class="ion-no-padding ion-font-family cell-class ion_select">
+                <ion-select placeholder="Select Country" [(ngModel)]="country" name="country">
+                  <ion-select-option *ngFor="let country of countries" [value]="country.code">{{country.name}}</ion-select-option>
+                </ion-select> 
+              </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row class="ion-margin">
+          <ion-label class="ion_label">City <span class="star">*</span></ion-label>
+          <ion-col class="cell-class ion-font-family" size="12">
+            <ion-input fill="outline" name="city" ngModel placeholder="City" class="ion-font-family ion_input" [(ngModel)]="city"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-margin">
+          <ion-label class="ion_label">Zip Code <span class="star">*</span></ion-label>
+          <ion-col class="cell-class ion-font-family" size="12">
+            <ion-input fill="outline" name="zipcode" placeholder="Zip Code" class="ion-font-family ion_input" [(ngModel)]="zip"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-margin">
+          <ion-col class="ion-no-padding">
+            <ion-label class="ion_label">State <span class="star">*</span></ion-label>
+            <ion-item class="ion-no-padding ion-font-family cell-class ion_select">
+              <ion-select placeholder="Select State" [(ngModel)]="state" name="state">
+                <ion-select-option value="in">India</ion-select-option>
+                <ion-select-option value="usa">United States of America</ion-select-option>
+                <ion-select-option value="updated state">updated state</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-margin">
+          <ion-label class="ion_label">Address <span class="star">*</span></ion-label>
+          <ion-col class="cell-class ion-font-family" size="12">
+            <ion-input fill="outline" name="address" ngModel placeholder="Address" class="ion-font-family ion_input" [(ngModel)]="address"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-row class="ion-margin">
+          <ion-label class="ion_label">Avatar <span class="star">*</span></ion-label>
+          <ion-col class="font-font-family ion-no-padding" size="12">
+            <ion-item class="image_box ion-no-padding">
+              <ion-img *ngIf="myPhoto" src="{{myPhoto}}" [(ngModel)]="myPhoto" name="myPhoto" ngDefaultControl></ion-img>
+            </ion-item>
+          </ion-col>
+          <ion-button *ngIf="!myPhoto" class="ion-font-family img_button" (click)="selectImage()" expand="block">Select Image</ion-button>
+          <ion-button *ngIf="myPhoto" class="ion-font-family img_button" (click)="selectImage()" expand="block">Change Image</ion-button>
+        </ion-row>
+        <ion-row class="ion-margin">
+          <ion-text (click)="goToChangePassword()" class="changePassword">Change Password ></ion-text>
+        </ion-row>
+        <ion-button class="ion-margin ion-font-family submit_button" type="submit" expand="block" size="10">Save Changes</ion-button>
+      </ion-grid>
+    </form>
+  </ion-content>
+

@@ -1,0 +1,118 @@
+.class-name {
+  --ion-background-color:#ffffff;
+  color: #575757;
+}
+
+.ion-text-center {
+  --colors: #fff;
+}
+
+.cell-class {
+  border-color: #D1D1D1;
+  border-width: 0.01em;
+  border-style: solid;
+  background-color: #F5F5F5;
+  border-radius: 12px;
+  padding-left: 16px;
+  font-weight: normal;
+  height: 52px;
+}
+
+.cell-class:first-child {
+  margin-bottom: 20px;
+}
+
+.logo-img {
+  display: block;
+  width: 40px;
+  object-fit: inherit;
+  object-position: inherit;
+  float: right;
+}
+
+.img {
+  text-align: -webkit-center;
+}
+
+.ion-margin-top {
+  --margin-top: var(--ion-margin, 50px);
+  margin-top: var(--ion-margin, 50px);
+}
+
+.submit_button {
+  font-weight: 600;
+  font-size: 13px;
+  font-style: normal;
+  height: 53px;
+  --background: linear-gradient(to right, #FC5375, #926AEF);
+  --background-activated: transparent;
+}
+
+.sc-ion-input-ios-h {
+  color: #575757;
+  margin-top: 3px;
+}
+
+ion-item {
+  --border-color: transparent;
+  --background-activated: transparent;
+}
+
+.rememberme {
+  color: #A8A8A8;
+  font-size: 13px;
+}
+
+.remembericon {
+  height: 15px;
+  width: 15px;
+  --border-radius: 5px;
+}
+
+.forgot {
+  color: #A8A8A8;
+  font-size: 13px;
+  font-style: normal;
+  text-transform: none;
+}
+
+.forgot_p {
+  margin-top: -5px;
+  margin-bottom: 25px;
+}
+
+.clickhere {
+  color: #FF253A;
+  font-weight: 600;
+  font-size: 13px;
+  font-style: normal;
+  text-transform: none;
+}
+
+ion-col {
+  align-self: center;
+}
+
+.main_title {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.logo_grid {
+  margin-top: 45px;
+}
+
+.title_grid {
+  margin-top: 15%;
+  margin-bottom: 7%;
+}
+
+.title_p {
+  color: #A8A8A8;
+  font-size: 12px;
+}

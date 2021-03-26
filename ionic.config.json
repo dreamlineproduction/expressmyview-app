@@ -1,0 +1,7 @@
+{
+  "name": "expressmyview",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
