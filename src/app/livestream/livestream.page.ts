@@ -17,7 +17,7 @@ export class LivestreamPage{
   logo:string='assets/icon/logo.svg';
   logout_icon:string='assets/icon/menu.svg';
   search:string='assets/icon/search.svg';
-  user_image:any;
+  user_image:any = 'assets/icon/default_user.png';
   tiger:string='assets/icon/tiger.svg';
   play:string='assets/icon/play.svg';
   checkmark:string='assets/icon/checkmark.svg';
@@ -50,7 +50,11 @@ export class LivestreamPage{
     });
   
     this.uid = localStorage.getItem("user_id");
-    this.user_image = localStorage.getItem("user_image");
+    if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+    }else{
+      this.user_image = localStorage.getItem("user_image");
+    }
     this.watchAPI();
     this.client = this.ngxAgoraService.createClient({ mode: 'live', codec: 'h264' });
     this.client.setClientRole("audience");

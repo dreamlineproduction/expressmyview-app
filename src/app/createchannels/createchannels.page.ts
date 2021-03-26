@@ -14,7 +14,7 @@ export class CreatechannelsPage implements OnInit {
   back:string='assets/icon/back.svg';
   logo_img:string='assets/icon/logo.svg';
   search:string='assets/icon/search.svg';
-  user_image:any;
+  user_image:any = 'assets/icon/default_user.png';
   logo:any;
   banner:any;
   name:any;
@@ -30,7 +30,11 @@ export class CreatechannelsPage implements OnInit {
   uid:any;
   constructor(private location: Location,  public navCtrl: NavController, private camera: Camera, private actionSheetController : ActionSheetController, private file: File, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController) { 
     this.uid = localStorage.getItem("user_id");
-    this.user_image = localStorage.getItem("user_image");
+    if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+    }else{
+      this.user_image = localStorage.getItem("user_image");
+    }
   }
 
   pickImage(sourceType, source){

@@ -21,7 +21,7 @@ import {ServiceService} from '../service.service';
 export class EditpodcastPage {
   title = '';
   searchText = '';
-  user_image:any;
+  user_image:any = 'assets/icon/default_user.png';
   allLanguages = [ ]
   logo:string='assets/icon/logo.svg';
   menu:string='assets/icon/menu.svg';
@@ -108,7 +108,11 @@ export class EditpodcastPage {
         this.cid = data.cid
       });
       this.uid = localStorage.getItem('user_id');
-      this.user_image = localStorage.getItem("user_image");
+      if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+      }else{
+        this.user_image = localStorage.getItem("user_image");
+      }
       this.getDatas();
       this.getPodcastDetails();
     }

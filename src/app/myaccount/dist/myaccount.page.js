@@ -59,6 +59,7 @@ var MyaccountPage = /** @class */ (function () {
         this.search = 'assets/icon/search.svg';
         this.tiger = 'assets/icon/tiger.svg';
         this.checkmark = 'assets/icon/checkmark.svg';
+        this.user_image = 'assets/icon/default_user.png';
         this.eye = 'assets/icon/eye.svg';
         this.calendar = 'assets/icon/calendar.svg';
         this.threedots = 'assets/icon/threedots.svg';
@@ -66,7 +67,11 @@ var MyaccountPage = /** @class */ (function () {
         this.loaded = false;
         this.title = this.truncateChar(this.title);
         this.uid = localStorage.getItem("user_id");
-        this.user_image = localStorage.getItem("user_image");
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
         this.getMyAccountDatas();
     }
     MyaccountPage.prototype.truncateChar = function (text) {

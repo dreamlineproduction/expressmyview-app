@@ -49,14 +49,14 @@ var operators_1 = require("rxjs/operators");
 var search_page_1 = require("../app/search/search.page");
 var filter_page_1 = require("../app/filter/filter.page");
 var ServiceService = /** @class */ (function () {
+    // url = "https://expressmyview.crtvecode.in/public/api/";
     // url = "https://testmyserver.in/expressmyviewserver/api/";
     function ServiceService(http, httpBackend, navCtrl, modalController) {
         this.http = http;
         this.httpBackend = httpBackend;
         this.navCtrl = navCtrl;
         this.modalController = modalController;
-        // url = "http://localhost:8888/Projects/expressmyview-git/expressmyview/public/api/";
-        this.url = "https://expressmyview.crtvecode.in/public/api/";
+        this.url = "https://expressmyview.crtvecode.in/expressmyview-git/expressmyview/public/api/";
         this.http = new http_1.HttpClient(this.httpBackend);
         var headers = new http_1.HttpHeaders({
             'Content-Type': 'application/json'

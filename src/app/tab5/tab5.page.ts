@@ -15,15 +15,15 @@ export class Tab5Page{
   tiger:string='assets/icon/tiger.svg';
   checkmark:string='assets/icon/checkmark.svg';
   eye:string='assets/icon/eye.svg';
-  user_image:any;
+  user_image:any = 'assets/icon/default_user.png';
   uid:any;
   calendar:string='assets/icon/calendar.svg';
   title:string = "Lorem Ipsum is simply dummy text of the printing and typesetting industry";
   allVideoPodcasts:any;
+  loaded:boolean = false;
   constructor(public navCtrl: NavController, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private router: Router) {
     this.title = this.truncateChar(this.title);
     this.uid = localStorage.getItem("user_id");
-    this.user_image = localStorage.getItem("user_image");
     this.getAllPodcasts();
   }
 
@@ -50,6 +50,7 @@ export class Tab5Page{
       if ( response.error == undefined) {
         console.log("datas", response.streams);
         this.allVideoPodcasts = response.streams;
+        this.loaded = true;
         loading.dismiss();
       }else{
         this.presentToast(response.error);
@@ -79,6 +80,11 @@ export class Tab5Page{
   }
 
   ngOnInit() {
+    if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+    }else{
+      this.user_image = localStorage.getItem("user_image");
+    }
   }
 
   goToPlay(lid){

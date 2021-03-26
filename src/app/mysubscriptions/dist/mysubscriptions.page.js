@@ -57,8 +57,13 @@ var MysubscriptionsPage = /** @class */ (function () {
         this.search = 'assets/icon/search.svg';
         this.checkmark = 'assets/icon/checkmark.svg';
         this.tiger = 'assets/icon/tiger.svg';
+        this.user_image = 'assets/icon/default_user.png';
         this.uid = localStorage.getItem("user_id");
-        this.user_image = localStorage.getItem("user_image");
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
         this.getMySubscriptions();
     }
     MysubscriptionsPage.prototype.ngOnInit = function () {

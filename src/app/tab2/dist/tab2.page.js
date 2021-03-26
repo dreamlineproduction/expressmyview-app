@@ -57,11 +57,17 @@ var Tab2Page = /** @class */ (function () {
         this.search = 'assets/icon/search.svg';
         this.checkmark = 'assets/icon/checkmark.svg';
         this.tiger = 'assets/icon/tiger.svg';
+        this.user_image = 'assets/icon/default_user.png';
+        this.loaded = false;
         this.uid = localStorage.getItem("user_id");
-        this.user_image = localStorage.getItem("user_image");
         this.getAllChannels();
     }
     Tab2Page.prototype.ngOnInit = function () {
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
     };
     Tab2Page.prototype.channel = function (id) {
         var navData = {
@@ -92,6 +98,7 @@ var Tab2Page = /** @class */ (function () {
                             console.log("datas", response);
                             if (response.error == undefined) {
                                 _this.allChannels = response.message;
+                                _this.loaded = true;
                                 loading.dismiss();
                             }
                             else {

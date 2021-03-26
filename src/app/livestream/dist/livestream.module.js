@@ -12,10 +12,11 @@ var common_1 = require("@angular/common");
 var forms_1 = require("@angular/forms");
 var ngx_agora_1 = require("ngx-agora");
 var angular_1 = require("@ionic/angular");
+var environment_1 = require("../../environments/environment");
 var livestream_routing_module_1 = require("./livestream-routing.module");
 var livestream_page_1 = require("./livestream.page");
 var agoraConfig = {
-    AppID: localStorage.getItem("appID")
+    AppID: environment_1.environment.appID
 };
 var LivestreamPageModule = /** @class */ (function () {
     function LivestreamPageModule() {

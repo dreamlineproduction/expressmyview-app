@@ -1,28 +1,28 @@
 <ion-tabs>
 
   <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="tab1" (click)="changeHomeIcon()">
-      <ion-img [src]="isHomeSelected ? clickedHomeIcon : home"></ion-img>
+    <ion-tab-button tab="tab1">
+      <ion-icon [src]="home"></ion-icon>
       <ion-label>Home</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="tab2" (click)="changeListingIcon()">
-      <ion-img [src]="isListingSelected ? clickedListIcon : listing "></ion-img>
+    <ion-tab-button tab="tab2">
+      <ion-icon [src]="listing "></ion-icon>
       <ion-label>Channels</ion-label>
     </ion-tab-button>
 
-    <!-- <ion-tab-button tab="tab3" (click)="changeUploadIcon()">
-      <ion-img [src]="isUploadSelected ? clickedUploadIcon : upload "></ion-img>
+    <!-- <ion-tab-button tab="tab3">
+      <ion-icon [src]="upload "></ion-icon>
       <ion-label>Upload</ion-label>
     </ion-tab-button> -->
 
-    <ion-tab-button tab="tab4" (click)="changePodcastIcon()">
-      <ion-img [src]="isPodcastSelected ?  clickedPodcastIcon : podcast "></ion-img>
+    <ion-tab-button tab="tab4">
+      <ion-icon [src]="podcast "></ion-icon>
       <ion-label>Podcast</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="tab5" (click)="changeLiveIcon()">
-      <ion-img [src]="isLiveSelected ? clickedLiveIcon : live"></ion-img>
+    <ion-tab-button tab="tab5">
+      <ion-icon [src]="live"></ion-icon>
       <ion-label>Live</ion-label>
     </ion-tab-button>
   </ion-tab-bar>

@@ -35,7 +35,7 @@ export class Tab3Page {
   languages = [];
   uploadProgress = 0;
   videoUpload = false;
-  user_image:any;
+  user_image:any = 'assets/icon/default_user.png';
   fileType = "";
   filesName = "";
   fileURI:any;
@@ -66,6 +66,7 @@ export class Tab3Page {
   selectedCategoriesCount = 0;
   isCheckboxDisabled:boolean=false;
   newSearch = "";
+  loaded:boolean = false;
   constructor(
     private location: Location, 
     public navCtrl: NavController, 
@@ -86,10 +87,16 @@ export class Tab3Page {
       this.downloadText = ""; 
       this.languages = [];
       this.uid = localStorage.getItem('user_id');
-      this.user_image = localStorage.getItem("user_image");
       this.getDatas();
     }
 
+    ngOnInit(){
+      if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+      }else{
+        this.user_image = localStorage.getItem("user_image");
+      }
+    }
     async uploadFile(){
       const userid = localStorage.getItem('user_id');
       console.log("userid", userid);
@@ -450,6 +457,7 @@ export class Tab3Page {
         response.languages.forEach(language => {
           this.allLanguages.push(language.name);
         });
+        this.loaded = true;
         loading.dismiss(); 
       }
     });

@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgxAgoraModule, AgoraConfig } from 'ngx-agora';
 import { IonicModule } from '@ionic/angular';
-
+import { environment } from '../../environments/environment';
 import { LivestreamPageRoutingModule } from './livestream-routing.module';
 
 import { LivestreamPage } from './livestream.page';
 
 const agoraConfig: AgoraConfig = {
-  AppID: localStorage.getItem("appID"),
+  AppID: environment.appID,
 };
 
 @NgModule({

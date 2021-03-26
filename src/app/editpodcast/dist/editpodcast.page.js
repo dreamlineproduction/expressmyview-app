@@ -65,6 +65,7 @@ var EditpodcastPage = /** @class */ (function () {
         this.router = router;
         this.title = '';
         this.searchText = '';
+        this.user_image = 'assets/icon/default_user.png';
         this.allLanguages = [];
         this.logo = 'assets/icon/logo.svg';
         this.menu = 'assets/icon/menu.svg';
@@ -115,7 +116,11 @@ var EditpodcastPage = /** @class */ (function () {
             _this.cid = data.cid;
         });
         this.uid = localStorage.getItem('user_id');
-        this.user_image = localStorage.getItem("user_image");
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
         this.getDatas();
         this.getPodcastDetails();
     }

@@ -57,8 +57,15 @@ var MychannelsPage = /** @class */ (function () {
         this.search = 'assets/icon/search.svg';
         this.checkmark = 'assets/icon/checkmark.svg';
         this.tiger = 'assets/icon/tiger.svg';
+        this.user_image = 'assets/icon/default_user.png';
+        this.banner = 'assets/icon/default_banner.jpeg';
+        this.channelLogo = 'assets/icon/default_user.png';
         this.uid = localStorage.getItem("user_id");
-        this.user_image = localStorage.getItem("user_image");
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
         this.getMyChannels();
     }
     MychannelsPage.prototype.ngOnInit = function () {
@@ -96,6 +103,12 @@ var MychannelsPage = /** @class */ (function () {
                             if (response.error == undefined) {
                                 console.log("datas", response[0]);
                                 _this.myChannels = response[0].myChannels;
+                                if (response[0].myChannels.bannerPath) {
+                                    _this.banner = response[0].myChannels.bannerPath;
+                                }
+                                if (response[0].myChannels.logoPath) {
+                                    _this.channelLogo = response[0].myChannels.logoPath;
+                                }
                                 loading.dismiss();
                             }
                             else {

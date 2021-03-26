@@ -16,12 +16,17 @@ export class MychannelsPage implements OnInit {
   checkmark:string='assets/icon/checkmark.svg';
   tiger:string='assets/icon/tiger.svg';
   myChannels:any;
-  user_image:any;
+  user_image:any = 'assets/icon/default_user.png';
   uid:any;
-
+  banner:any = 'assets/icon/default_banner.jpeg';
+  channelLogo:any = 'assets/icon/default_user.png';
   constructor(private location: Location,  public navCtrl: NavController, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private router: Router) { 
     this.uid = localStorage.getItem("user_id");
-    this.user_image = localStorage.getItem("user_image");
+    if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+    }else{
+      this.user_image = localStorage.getItem("user_image");
+    }
     this.getMyChannels();
   }
 
@@ -57,6 +62,12 @@ export class MychannelsPage implements OnInit {
       if ( response.error == undefined) {
         console.log("datas", response[0]);
         this.myChannels = response[0].myChannels;
+        if(response[0].myChannels.bannerPath){
+          this.banner = response[0].myChannels.bannerPath;
+        }
+        if(response[0].myChannels.logoPath){
+          this.channelLogo = response[0].myChannels.logoPath;
+        }
         loading.dismiss();
       }else{
         this.presentToast(response.error);

@@ -57,10 +57,11 @@ var Tab4Page = /** @class */ (function () {
         this.tiger = 'assets/icon/tiger.svg';
         this.checkmark = 'assets/icon/checkmark.svg';
         this.eye = 'assets/icon/eye.svg';
+        this.user_image = 'assets/icon/default_user.png';
         this.calendar = 'assets/icon/calendar.svg';
         this.title = "Lorem Ipsum is simply dummy text of the printing and typesetting industry";
+        this.loaded = false;
         this.title = this.truncateChar(this.title);
-        this.user_image = localStorage.getItem("user_image");
         this.getAllPodcasts();
     }
     Tab4Page.prototype.truncateChar = function (text) {
@@ -90,6 +91,7 @@ var Tab4Page = /** @class */ (function () {
                             if (response.error == undefined) {
                                 console.log("datas", response[0]);
                                 _this.allVideoPodcasts = response[0].allVideoPodcasts;
+                                _this.loaded = true;
                                 loading.dismiss();
                             }
                             else {
@@ -130,7 +132,20 @@ var Tab4Page = /** @class */ (function () {
         };
         this.router.navigate(['tabs/channel'], navData);
     };
+    Tab4Page.prototype.goToPlay = function (id) {
+        var navData = {
+            queryParams: {
+                id: id
+            }
+        };
+        this.router.navigate(['tabs/podcast'], navData);
+    };
     Tab4Page.prototype.ngOnInit = function () {
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
     };
     Tab4Page = __decorate([
         core_1.Component({

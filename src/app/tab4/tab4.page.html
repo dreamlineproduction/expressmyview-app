@@ -1,5 +1,5 @@
 
-  <ion-header collapse="">
+  <ion-header collapse="" *ngIf="loaded">
     <ion-toolbar>
       <ion-row class="ion-padding">
         <ion-img offset=3 class="menu-logo-img ion-text-center" [src]="logo"></ion-img>
@@ -13,7 +13,7 @@
       </ion-row>
     </ion-toolbar>
   </ion-header>
-  <ion-content *ngIf="allVideoPodcasts">
+  <ion-content *ngIf="allVideoPodcasts && loaded">
     <ion-row class="ion-align-items-center ion-justify-content-center card_container" *ngFor="let allVideoPodcast of allVideoPodcasts;">
       <ion-col size="4">
         <ion-item class="img_container">
@@ -22,14 +22,14 @@
         </ion-item>
       </ion-col>
       <ion-col size="7">
-        <ion-row class="ion-align-items-center">
+        <ion-row class="ion-align-items-center" (click)="goToPlay(allVideoPodcast.id)">
           <ion-text class="title">{{allVideoPodcast.title}}</ion-text>
         </ion-row>
        <ion-row class="ion-align-items-center">
           <ion-text class="subtitle" (click)="goToChannelDetails(allVideoPodcast.channel_id)">{{allVideoPodcast.channelName}}</ion-text>
           <ion-img class="small_icon" [src]="checkmark"></ion-img>
        </ion-row>
-        <ion-row class="ion-align-items-center">
+        <ion-row class="ion-align-items-center" (click)="goToPlay(allVideoPodcast.id)">
           <ion-icon class="footer_icon"  name="eye"></ion-icon>
           <ion-text class="footer_title">{{allVideoPodcast.views}} views</ion-text>
           <ion-icon class="footer_icon" name="calendar"></ion-icon>

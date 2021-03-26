@@ -12,7 +12,7 @@ export class ChangepasswordPage implements OnInit {
   back:string='assets/icon/back.svg';
   logo:string='assets/icon/logo.svg';
   search:string='assets/icon/search.svg';
-  user_image:any;
+  user_image:any = 'assets/icon/default_user.png';
   currentPassword:any;
   newPassword:any;
   confirmPassword:any;
@@ -20,7 +20,11 @@ export class ChangepasswordPage implements OnInit {
 
   constructor(private location: Location,  public navCtrl: NavController, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController) { 
     this.uid = localStorage.getItem("user_id");
-    this.user_image = localStorage.getItem("user_image");
+    if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+    }else{
+      this.user_image = localStorage.getItem("user_image");
+    }
   }
 
   ngOnInit() {

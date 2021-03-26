@@ -15,13 +15,13 @@ export class Tab4Page{
   tiger:string='assets/icon/tiger.svg';
   checkmark:string='assets/icon/checkmark.svg';
   eye:string='assets/icon/eye.svg';
-  user_image:any;
+  user_image:any = 'assets/icon/default_user.png';
   calendar:string='assets/icon/calendar.svg';
   title:string = "Lorem Ipsum is simply dummy text of the printing and typesetting industry";
   allVideoPodcasts:any;
+  loaded:boolean = false;
   constructor(public navCtrl: NavController, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private router: Router) {
     this.title = this.truncateChar(this.title);
-    this.user_image = localStorage.getItem("user_image");
     this.getAllPodcasts();
   }
 
@@ -48,6 +48,7 @@ export class Tab4Page{
       if ( response.error == undefined) {
         console.log("datas", response[0]);
         this.allVideoPodcasts = response[0].allVideoPodcasts;
+        this.loaded = true;
         loading.dismiss();
       }else{
         this.presentToast(response.error);
@@ -76,7 +77,21 @@ export class Tab4Page{
     this.router.navigate(['tabs/channel'], navData);
   }
 
+  goToPlay(id){
+    const navData: NavigationExtras = {
+      queryParams: {
+        id: id
+      }
+    }
+    this.router.navigate(['tabs/podcast'], navData);
+  }
+
   ngOnInit() {
+    if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+    }else{
+      this.user_image = localStorage.getItem("user_image");
+    }
   }
 
 }

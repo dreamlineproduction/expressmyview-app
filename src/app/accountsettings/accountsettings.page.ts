@@ -16,7 +16,7 @@ export class AccountsettingsPage implements OnInit {
     search:string='assets/icon/search.svg';
     tiger:string='assets/icon/tiger.svg';
     logout_icon:string='assets/icon/menu.svg';
-    user_image:any;
+    user_image:any = 'assets/icon/default_user.png';
     myPhoto:any;
     croppedImagePath = "";
     uid:any;
@@ -1006,7 +1006,11 @@ export class AccountsettingsPage implements OnInit {
     }];
     constructor(private location: Location,  public navCtrl: NavController, private file: File, private camera: Camera, private actionSheetController : ActionSheetController, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController) {
         this.uid = localStorage.getItem("user_id");
-        this.user_image = localStorage.getItem("user_image");
+        if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+        }else{
+          this.user_image = localStorage.getItem("user_image");
+        }
         this.getuser();
     }
 

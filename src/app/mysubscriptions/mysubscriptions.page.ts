@@ -16,11 +16,15 @@ export class MysubscriptionsPage implements OnInit {
   checkmark:string='assets/icon/checkmark.svg';
   tiger:string='assets/icon/tiger.svg';
   mySubscriptions:any;
-  user_image:any;
+  user_image:any = 'assets/icon/default_user.png';
   uid:any;
   constructor(private location: Location,  public navCtrl: NavController, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private router: Router) { 
     this.uid = localStorage.getItem("user_id");
-    this.user_image = localStorage.getItem("user_image");
+    if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+    }else{
+      this.user_image = localStorage.getItem("user_image");
+    }
     this.getMySubscriptions();
   }
 

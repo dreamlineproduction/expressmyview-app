@@ -1,4 +1,4 @@
-<ion-header collapse="">
+<ion-header collapse="" *ngIf="loaded">
   <ion-toolbar>
     <ion-row class="ion-padding">
       <ion-img offset=3 class="menu-logo-img ion-text-center" [src]="back" (click) = goBack()></ion-img>
@@ -13,7 +13,7 @@
   </ion-toolbar>
 </ion-header>
 
-  <ion-content *ngIf="allChannels">
+  <ion-content *ngIf="allChannels && loaded">
    <ion-card *ngFor="let allChannel of allChannels;">
       <ion-row class="ion-align-items-center ion-justify-content-center card_container">
         <ion-col size="2">

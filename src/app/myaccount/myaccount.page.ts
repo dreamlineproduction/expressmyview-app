@@ -18,7 +18,7 @@ export class MyaccountPage implements OnInit {
   search:string='assets/icon/search.svg';
   tiger:string='assets/icon/tiger.svg';
   checkmark:string='assets/icon/checkmark.svg';
-  user_image:any;
+  user_image:any = 'assets/icon/default_user.png';
   eye:string='assets/icon/eye.svg';
   calendar:string='assets/icon/calendar.svg';
   threedots:string='assets/icon/threedots.svg';
@@ -34,7 +34,11 @@ export class MyaccountPage implements OnInit {
   constructor(public popoverCtrl: PopoverController, private location: Location, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private router: Router) {
     this.title = this.truncateChar(this.title);
     this.uid = localStorage.getItem("user_id");
-    this.user_image = localStorage.getItem("user_image");
+    if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+    }else{
+      this.user_image = localStorage.getItem("user_image");
+    }
     this.getMyAccountDatas();
   }
 

@@ -16,8 +16,7 @@
   <!-- <video #video id="video_player" style="width: 100%;height: 200px;" poster="{{podcastDetails.thumbnail}}" src = "https://expressmyview.crtvecode.in/public/uploads/KVljDAjLgn_null_1615291532.mp4" class="podcastVideo" controls >
   </video> -->
   <video #video id="video_player" style="width: 100%;height: 200px;" class="podcastVideo" controls >
-    <source src="https://expressmyview.crtvecode.in/public/uploads/KVljDAjLgn_null_1615291532.mp4" type="video/mp4"/>
-    <source data-fluid-hd src='vid_1080p.mp4' title='1080p' type='video/mp4' />
+    <source data-fluid-hd src='{{fullHD}}' title='1080p' type='video/mp4' />
     <source data-fluid-hd src='vid_720p.mp4' title='720p' type='video/mp4' />
     <source src='vid_480p.mp4' title='480p' type='video/mp4' /> 
   </video>
@@ -57,7 +56,7 @@
     <ion-col class="other_details_col">
       <ion-row class="ion-align-items-center">
         <ion-col size="7">
-          <ion-row class="ion-align-items-center">
+          <ion-row class="ion-align-items-center" (click)="goToChannelDetails(podcastDetails.channel_id)">
             <ion-text class="big_card_subtitle">{{channelName}}</ion-text>
             <ion-img class="small_icon" [src]="checkmark"></ion-img>  
           </ion-row>

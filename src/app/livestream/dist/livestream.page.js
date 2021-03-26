@@ -60,6 +60,7 @@ var LivestreamPage = /** @class */ (function () {
         this.logo = 'assets/icon/logo.svg';
         this.logout_icon = 'assets/icon/menu.svg';
         this.search = 'assets/icon/search.svg';
+        this.user_image = 'assets/icon/default_user.png';
         this.tiger = 'assets/icon/tiger.svg';
         this.play = 'assets/icon/play.svg';
         this.checkmark = 'assets/icon/checkmark.svg';
@@ -75,7 +76,11 @@ var LivestreamPage = /** @class */ (function () {
             _this.lid = data.lid;
         });
         this.uid = localStorage.getItem("user_id");
-        this.user_image = localStorage.getItem("user_image");
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
         this.watchAPI();
         this.client = this.ngxAgoraService.createClient({ mode: 'live', codec: 'h264' });
         this.client.setClientRole("audience");

@@ -76,6 +76,7 @@ var Tab3Page = /** @class */ (function () {
         this.languages = [];
         this.uploadProgress = 0;
         this.videoUpload = false;
+        this.user_image = 'assets/icon/default_user.png';
         this.fileType = "";
         this.filesName = "";
         this.fileExtension = "";
@@ -102,6 +103,7 @@ var Tab3Page = /** @class */ (function () {
         this.selectedCategoriesCount = 0;
         this.isCheckboxDisabled = false;
         this.newSearch = "";
+        this.loaded = false;
         this.items = [
             { display: 'Pizza', value: 1 },
             { display: 'Pasta', value: 2 },
@@ -111,9 +113,15 @@ var Tab3Page = /** @class */ (function () {
         this.downloadText = "";
         this.languages = [];
         this.uid = localStorage.getItem('user_id');
-        this.user_image = localStorage.getItem("user_image");
         this.getDatas();
     }
+    Tab3Page.prototype.ngOnInit = function () {
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
+    };
     Tab3Page.prototype.uploadFile = function () {
         return __awaiter(this, void 0, void 0, function () {
             var userid;
@@ -486,6 +494,7 @@ var Tab3Page = /** @class */ (function () {
                                 response.languages.forEach(function (language) {
                                     _this.allLanguages.push(language.name);
                                 });
+                                _this.loaded = true;
                                 loading.dismiss();
                             }
                         });

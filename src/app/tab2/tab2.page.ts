@@ -16,15 +16,20 @@ export class Tab2Page {
   checkmark:string='assets/icon/checkmark.svg';
   tiger:string='assets/icon/tiger.svg';
   allChannels:any;
-  user_image:any;
+  user_image:any = 'assets/icon/default_user.png';
   uid:any;
+  loaded:boolean = false;
   constructor(private location: Location,  public navCtrl: NavController, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private router: Router) { 
     this.uid = localStorage.getItem("user_id");
-    this.user_image = localStorage.getItem("user_image");
     this.getAllChannels();
   }
 
   ngOnInit() {
+    if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+    }else{
+      this.user_image = localStorage.getItem("user_image");
+    }
   }
 
   channel(id){
@@ -51,6 +56,7 @@ export class Tab2Page {
       console.log("datas", response);
       if ( response.error == undefined) {
         this.allChannels = response.message;
+        this.loaded = true;
         loading.dismiss();
       }else{
         this.presentToast(response.error);

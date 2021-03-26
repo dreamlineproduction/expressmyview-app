@@ -59,6 +59,7 @@ var AccountsettingsPage = /** @class */ (function () {
         this.search = 'assets/icon/search.svg';
         this.tiger = 'assets/icon/tiger.svg';
         this.logout_icon = 'assets/icon/menu.svg';
+        this.user_image = 'assets/icon/default_user.png';
         this.croppedImagePath = "";
         this.loaded = false;
         this.imagePickerOptions = {
@@ -1031,7 +1032,11 @@ var AccountsettingsPage = /** @class */ (function () {
                 code: "VI"
             }];
         this.uid = localStorage.getItem("user_id");
-        this.user_image = localStorage.getItem("user_image");
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
         this.getuser();
     }
     AccountsettingsPage.prototype.ngOnInit = function () {

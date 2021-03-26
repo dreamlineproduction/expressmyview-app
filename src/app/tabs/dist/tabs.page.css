@@ -1,4 +1,10 @@
-@charset "UTF-8";
-ion-tab-button {
-  --color-selected: var(–ion-color-calm);
+ion-tab-button[aria-selected=true] ion-icon {
+  color: #FF253A;
+}
+ion-tab-button[aria-selected=true] ion-label {
+  color: black;
+}
+
+ion-tab-button ion-icon {
+  width: 25px;
 }

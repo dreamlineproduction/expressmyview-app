@@ -9,51 +9,15 @@ exports.__esModule = true;
 exports.TabsPage = void 0;
 var core_1 = require("@angular/core");
 var TabsPage = /** @class */ (function () {
-    function TabsPage() {
+    function TabsPage(navCtrl, router) {
+        this.navCtrl = navCtrl;
+        this.router = router;
         this.home = 'assets/icon/home.svg';
         this.listing = 'assets/icon/listing.svg';
         this.upload = 'assets/icon/upload.svg';
         this.podcast = 'assets/icon/podcast.svg';
         this.live = 'assets/icon/live.svg';
-        this.clickedHomeIcon = 'assets/icon/clickedHomeIcon.svg';
-        this.clickedListIcon = 'assets/icon/clickedListIcon.svg';
-        this.clickedUploadIcon = 'assets/icon/clickedUploadIcon.svg';
-        this.clickedPodcastIcon = 'assets/icon/clickedPodcastIcon.svg';
-        this.clickedLiveIcon = 'assets/icon/clickedLiveIcon.svg';
-        this.isHomeSelected = false;
-        this.isListingSelected = false;
-        this.isUploadSelected = false;
-        this.isPodcastSelected = false;
-        this.isLiveSelected = false;
-        this.isHomeSelected = true;
     }
-    TabsPage.prototype.changeHomeIcon = function () {
-        this.resetAll();
-        this.isHomeSelected = true;
-    };
-    TabsPage.prototype.changeListingIcon = function () {
-        this.resetAll();
-        this.isListingSelected = true;
-    };
-    TabsPage.prototype.changeUploadIcon = function () {
-        this.resetAll();
-        this.isUploadSelected = true;
-    };
-    TabsPage.prototype.changePodcastIcon = function () {
-        this.resetAll();
-        this.isPodcastSelected = true;
-    };
-    TabsPage.prototype.changeLiveIcon = function () {
-        this.resetAll();
-        this.isLiveSelected = true;
-    };
-    TabsPage.prototype.resetAll = function () {
-        this.isHomeSelected = false;
-        this.isListingSelected = false;
-        this.isUploadSelected = false;
-        this.isPodcastSelected = false;
-        this.isLiveSelected = false;
-    };
     TabsPage = __decorate([
         core_1.Component({
             selector: 'app-tabs',

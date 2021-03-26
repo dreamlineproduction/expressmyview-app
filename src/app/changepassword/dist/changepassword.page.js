@@ -54,8 +54,13 @@ var ChangepasswordPage = /** @class */ (function () {
         this.back = 'assets/icon/back.svg';
         this.logo = 'assets/icon/logo.svg';
         this.search = 'assets/icon/search.svg';
+        this.user_image = 'assets/icon/default_user.png';
         this.uid = localStorage.getItem("user_id");
-        this.user_image = localStorage.getItem("user_image");
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
     }
     ChangepasswordPage.prototype.ngOnInit = function () {
     };

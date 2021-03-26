@@ -58,6 +58,7 @@ var Tab1Page = /** @class */ (function () {
         this.checkmark = 'assets/icon/checkmark.svg';
         this.eye = 'assets/icon/eye.svg';
         this.calendar = 'assets/icon/calendar.svg';
+        this.user_image = 'assets/icon/default_user.png';
         this.loaded = false;
         this.slideOpts = {
             initialSlide: 1,
@@ -78,9 +79,15 @@ var Tab1Page = /** @class */ (function () {
             }
         };
         this.uid = localStorage.getItem("user_id");
-        this.user_image = localStorage.getItem("user_image");
         this.getHomeDatas();
     }
+    Tab1Page.prototype.ngOnInit = function () {
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
+    };
     Tab1Page.prototype.getHomeDatas = function () {
         return __awaiter(this, void 0, void 0, function () {
             var loading, params;
@@ -158,6 +165,9 @@ var Tab1Page = /** @class */ (function () {
             }
         };
         this.router.navigate(['tabs/podcast'], navData);
+    };
+    Tab1Page.prototype.goToPodcast = function () {
+        this.router.navigate(['tabs/tab4']);
     };
     Tab1Page.prototype.searchPage = function () {
         this.server.presentModal();

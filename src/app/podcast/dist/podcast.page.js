@@ -44,7 +44,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.PodcastPage = void 0;
 var core_1 = require("@angular/core");
-var fluid_player_1 = require("fluid-player");
 var PodcastPage = /** @class */ (function () {
     function PodcastPage(location, navCtrl, server, toastController, loadingController, streamingMedia, route, router, rendererFactory) {
         var _this = this;
@@ -60,6 +59,7 @@ var PodcastPage = /** @class */ (function () {
         this.logo = 'assets/icon/logo.svg';
         this.logout_icon = 'assets/icon/menu.svg';
         this.search = 'assets/icon/search.svg';
+        this.user_image = 'assets/icon/default_user.png';
         this.tiger = 'assets/icon/tiger.svg';
         this.play = 'assets/icon/play.svg';
         this.checkmark = 'assets/icon/checkmark.svg';
@@ -75,107 +75,14 @@ var PodcastPage = /** @class */ (function () {
             _this.pid = data.id;
         });
         this.uid = localStorage.getItem("user_id");
-        this.user_image = localStorage.getItem("user_image");
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
         this.getPodcastDetails();
     }
     PodcastPage.prototype.ngOnInit = function () {
-    };
-    // ngAfterViewInit(): void {
-    //   const video = this.videoElement.nativeElement;
-    //   this.fluidPlayers = fluidPlayer(video, {
-    //     layoutControls: {
-    //       playButtonShowing: false,
-    //       autoPlay: true,
-    //       keyboardControl: false,
-    //       controlBar: false,
-    //       fillToContainer: false,
-    //     }
-    //   });
-    // }
-    PodcastPage.prototype.ngAfterViewInit = function () {
-        var _this = this;
-        var video = this.videoElement.nativeElement;
-        this.fluidPlayer = fluid_player_1["default"](video, {
-            layoutControls: {
-                primaryColor: '#A9061C'
-            },
-            modules: {
-                onAfterInitHls: function (hls) {
-                    var playerInstant = _this.fluidPlayer;
-                    hls.on('hlsManifestLoaded', function () {
-                        playerInstant.videoSources = hls.levels.map(function (source, index) {
-                            return {
-                                title: source.height + "p",
-                                url: index,
-                                isHD: source.height >= 720 ? true : false
-                            };
-                        });
-                        playerInstant.videoSources.reverse();
-                        var sourceChangeButton = video.parentElement.querySelector("#video_fluid_control_video_source");
-                        sourceChangeButton.style.display = 'inline-block';
-                        var appendSourceChange = false;
-                        var sourceChangeList = _this.renderer.createElement('div');
-                        sourceChangeList.id = 'video_fluid_control_video_source_list';
-                        sourceChangeList.classList.add('fluid_video_sources_list');
-                        sourceChangeList.style.display = 'none';
-                        var firstSource = true;
-                        playerInstant.videoSources.forEach(function (source) {
-                            var sourceSelected = source.url === hls.firstLevel ? 'source_selected' : '';
-                            var hdElement = source.isHD
-                                ? '<sup style="color:#A9061C" class="fp_hd_source"></sup>'
-                                : '';
-                            firstSource = false;
-                            var sourceChangeDiv = _this.renderer.createElement('div');
-                            sourceChangeDiv.id = 'source_video_' + source.title;
-                            sourceChangeDiv.classList.add('fluid_video_source_list_item');
-                            sourceChangeDiv.innerHTML =
-                                '<span class="source_button_icon ' +
-                                    sourceSelected +
-                                    '"></span>' +
-                                    source.title +
-                                    hdElement;
-                            sourceChangeDiv.addEventListener('click', function (event) {
-                                event.stopPropagation();
-                                hls.loadLevel = source.url;
-                                hls.currentLevel = source.url;
-                                playerInstant.openCloseVideoSourceSwitch();
-                            });
-                            sourceChangeList.appendChild(sourceChangeDiv);
-                            appendSourceChange = true;
-                            if (appendSourceChange) {
-                                sourceChangeButton.appendChild(sourceChangeList);
-                                sourceChangeButton.addEventListener('click', function () {
-                                    playerInstant.openCloseVideoSourceSwitch();
-                                });
-                            }
-                            else {
-                                video.parentElement.querySelector('#video_fluid_control_video_source').style.display = 'none';
-                            }
-                        });
-                    });
-                    hls.on('hlsLevelSwitched', function () {
-                        video.parentElement
-                            .querySelector('.source_button_icon.source_selected')
-                            .classList.remove('source_selected');
-                        var currentLevelTitle = playerInstant.videoSources.filter(function (source) { return source.url === hls.currentLevel; })[0].title;
-                        video.parentElement
-                            .querySelector("#source_video_" + currentLevelTitle + " .source_button_icon")
-                            .classList.add('source_selected');
-                    });
-                }
-            }
-        });
-        this.fluidPlayer.openCloseVideoSourceSwitch = function () {
-            var list = video.parentElement.querySelector('#video_fluid_control_video_source_list');
-            if (list) {
-                if (list.style.display === 'none') {
-                    list.style.display = 'block';
-                }
-                else {
-                    list.style.display = 'none';
-                }
-            }
-        };
     };
     PodcastPage.prototype.toFullScreen = function () {
         var elem = this.videoElement.nativeElement;
@@ -233,6 +140,7 @@ var PodcastPage = /** @class */ (function () {
                                 _this.categories = response[0].categories;
                                 _this.isSubscribed = response[0].isSubscribed;
                                 _this.isLiked = response[0].isLiked;
+                                _this.fullHD = response[0].podcast.videoPath;
                                 if (response[0].podcast.user_id == _this.uid) {
                                     _this.isSame = true;
                                 }

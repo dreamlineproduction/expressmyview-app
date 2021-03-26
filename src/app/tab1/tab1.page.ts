@@ -17,7 +17,7 @@ export class Tab1Page {
   checkmark:string='assets/icon/checkmark.svg';
   eye:string='assets/icon/eye.svg';
   calendar:string='assets/icon/calendar.svg';
-  user_image:any;
+  user_image:any = 'assets/icon/default_user.png';
   popularChannels:any;
   latestVideoPodcasts:any;
   streamingNows:any;
@@ -44,10 +44,17 @@ export class Tab1Page {
   
   constructor(public navCtrl: NavController, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private router: Router) {
     this.uid = localStorage.getItem("user_id");
-    this.user_image = localStorage.getItem("user_image");
     this.getHomeDatas();
   }
 
+  ngOnInit(){
+    if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+    }else{
+      this.user_image = localStorage.getItem("user_image");
+    }
+  }
+  
   async getHomeDatas(){
     const loading = await this.loadingController.create({
       message: 'Please wait...',
@@ -107,6 +114,10 @@ export class Tab1Page {
       }
     }
     this.router.navigate(['tabs/podcast'], navData);
+  }
+
+  goToPodcast(){
+    this.router.navigate(['tabs/tab4']);
   }
 
   searchPage(){

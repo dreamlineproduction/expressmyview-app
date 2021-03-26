@@ -12,8 +12,8 @@ import { FilterPage } from '../app/filter/filter.page';
 export class ServiceService {
   options:any;
   
-  // url = "http://localhost:8888/Projects/expressmyview-git/expressmyview/public/api/";
-  url = "https://expressmyview.crtvecode.in/public/api/";
+  url = "https://expressmyview.crtvecode.in/expressmyview-git/expressmyview/public/api/";
+  // url = "https://expressmyview.crtvecode.in/public/api/";
   // url = "https://testmyserver.in/expressmyviewserver/api/";
   constructor(private http: HttpClient,private httpBackend: HttpBackend, public navCtrl: NavController, public modalController: ModalController) {
     this.http = new HttpClient(this.httpBackend);

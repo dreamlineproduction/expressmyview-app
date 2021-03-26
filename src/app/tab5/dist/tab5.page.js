@@ -57,11 +57,12 @@ var Tab5Page = /** @class */ (function () {
         this.tiger = 'assets/icon/tiger.svg';
         this.checkmark = 'assets/icon/checkmark.svg';
         this.eye = 'assets/icon/eye.svg';
+        this.user_image = 'assets/icon/default_user.png';
         this.calendar = 'assets/icon/calendar.svg';
         this.title = "Lorem Ipsum is simply dummy text of the printing and typesetting industry";
+        this.loaded = false;
         this.title = this.truncateChar(this.title);
         this.uid = localStorage.getItem("user_id");
-        this.user_image = localStorage.getItem("user_image");
         this.getAllPodcasts();
     }
     Tab5Page.prototype.truncateChar = function (text) {
@@ -91,6 +92,7 @@ var Tab5Page = /** @class */ (function () {
                             if (response.error == undefined) {
                                 console.log("datas", response.streams);
                                 _this.allVideoPodcasts = response.streams;
+                                _this.loaded = true;
                                 loading.dismiss();
                             }
                             else {
@@ -132,6 +134,11 @@ var Tab5Page = /** @class */ (function () {
         this.router.navigate(['tabs/channel'], navData);
     };
     Tab5Page.prototype.ngOnInit = function () {
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
     };
     Tab5Page.prototype.goToPlay = function (lid) {
         var navData = {

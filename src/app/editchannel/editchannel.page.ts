@@ -16,7 +16,7 @@ export class EditchannelPage implements OnInit {
   logo_img:string='assets/icon/logo.svg';
   search:string='assets/icon/search.svg';
   logo:any;
-  user_image:any;
+  user_image:any = 'assets/icon/default_user.png';
   banner:any;
   name:any;
   description:any;
@@ -34,7 +34,11 @@ export class EditchannelPage implements OnInit {
   loaded:boolean = false;
   constructor(private location: Location,  public navCtrl: NavController, private camera: Camera, private actionSheetController : ActionSheetController, private file: File, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private route: ActivatedRoute, private router: Router) {
     this.uid = localStorage.getItem("user_id");
-    this.user_image = localStorage.getItem("user_image");
+    if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+    }else{
+      this.user_image = localStorage.getItem("user_image");
+    }
     this.route.queryParams.subscribe((data) => {
       this.cid = data.id;
     });

@@ -60,9 +60,14 @@ var EditchannelPage = /** @class */ (function () {
         this.back = 'assets/icon/back.svg';
         this.logo_img = 'assets/icon/logo.svg';
         this.search = 'assets/icon/search.svg';
+        this.user_image = 'assets/icon/default_user.png';
         this.loaded = false;
         this.uid = localStorage.getItem("user_id");
-        this.user_image = localStorage.getItem("user_image");
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
         this.route.queryParams.subscribe(function (data) {
             _this.cid = data.id;
         });
