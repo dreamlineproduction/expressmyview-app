@@ -22,8 +22,8 @@
         <ion-slides [options]="slideOpts" class="popular_slide">
           <ion-slide *ngFor="let popularChannel of popularChannels;" (click)="goToChannelDetails(popularChannel.id)">
             <ion-card class="small_card">
-              <ion-item *ngIf="popularChannel.path">
-                <ion-img class="small_card_img" [src]="popularChannel.path"></ion-img>
+              <ion-item>
+                <ion-img class="small_card_img" [src]="popularChannel.path ? popularChannel.path : user_image"></ion-img>
               </ion-item>
               <ion-item>
                 <ion-label class="small_card_text">{{popularChannel.name}}</ion-label>
@@ -58,7 +58,7 @@
           </ion-row>
           <ion-row class="ion-align-items-center">
             <ion-card-title class="big_card_subtitle" (click)="goToChannelDetails(latestVideoPodcast.channel_id)">{{latestVideoPodcast.channelName}}</ion-card-title>
-            <ion-img class="small_icon" [src]="checkmark"></ion-img>
+            <!-- <ion-img class="small_icon" [src]="checkmark"></ion-img> -->
           </ion-row>
           <ion-row class="ion-align-items-center" (click)="goToPlay(latestVideoPodcast.id)">
             <ion-icon class="footer_small_icon"  name="eye"></ion-icon>
@@ -94,7 +94,7 @@
           </ion-row>
           <ion-row class="ion-align-items-center">
             <ion-card-title class="big_card_subtitle" (click)="goToChannelDetails(streamingNow.channel_id)">{{streamingNow.channelName}}</ion-card-title>
-            <ion-img class="small_icon" [src]="checkmark"></ion-img>
+            <!-- <ion-img class="small_icon" [src]="checkmark"></ion-img> -->
           </ion-row>
           <ion-row class="ion-align-items-center">
             <ion-icon class="footer_small_icon"  name="eye"></ion-icon>

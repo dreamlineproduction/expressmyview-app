@@ -18,7 +18,10 @@ export class Tab2Page {
   allChannels:any;
   user_image:any = 'assets/icon/default_user.png';
   uid:any;
+  logoPath = 'assets/icon/default_user.png';
   loaded:boolean = false;
+  nextPageURL:any;
+  moreData:boolean = false;
   constructor(private location: Location,  public navCtrl: NavController, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private router: Router) { 
     this.uid = localStorage.getItem("user_id");
     this.getAllChannels();
@@ -55,12 +58,32 @@ export class Tab2Page {
     this.server.getAllChannels(params).subscribe((response: any) => {
       console.log("datas", response);
       if ( response.error == undefined) {
-        this.allChannels = response.message;
+        this.allChannels = response.message.data;
+        this.nextPageURL = response.message.next_page_url;
+        if(this.nextPageURL != null){
+          this.moreData =  true;
+        }
         this.loaded = true;
         loading.dismiss();
       }else{
         this.presentToast(response.error);
         loading.dismiss();
+      }
+    });
+  }
+
+  doInfinite(event:any){
+    console.log("nextPage", this.nextPageURL);
+    this.server.loadMorePost(this.nextPageURL).subscribe((response: any) => {
+      console.log("reponse more", response);
+      response.message.data.forEach(element => {
+        this.allChannels.push(element);
+      });
+      this.nextPageURL = response.message.next_page_url;
+      event.target.complete()
+      console.log("nextPagei", this.nextPageURL);
+      if(this.nextPageURL == null){
+        this.moreData = false;
       }
     });
   }

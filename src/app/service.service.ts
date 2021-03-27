@@ -204,6 +204,22 @@ export class ServiceService {
     .pipe(map(results => results));
   }
 
+  getMyAllPodcasts(data){
+    return this.http.post(this.url+'getMyAllPodcasts',data, this.options)
+    .pipe(map(results => results));
+  }
+
+  loadMore(url){
+    return this.http.get(url, this.options)
+    .pipe(map(results => results));
+  }
+
+  loadMorePost(url){
+    return this.http.post(url, this.options)
+    .pipe(map(results => results));
+  }
+
+
   async presentModal() {
     const modal = await this.modalController.create({
       component: SearchPage,

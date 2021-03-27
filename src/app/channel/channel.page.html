@@ -1,16 +1,16 @@
 <ion-header *ngIf="loaded">
-  <ion-img class="banner_img" *ngIf="channelDetails.bannerPath" [src]="channelDetails.bannerPath"></ion-img>
+  <ion-img class="banner_img" [src]="bannerPath"></ion-img>
 </ion-header>
 
 <ion-content *ngIf="loaded">
   <ion-row class="ion-padding">
     <ion-col size="2" class="ion-justify-content-center">
-      <ion-img class="small_img" *ngIf="channelDetails.logoPath" [src]="channelDetails.logoPath"></ion-img>
+      <ion-img class="small_img" [src]="logoPath"></ion-img>
     </ion-col>
     <ion-col size="6" class="ion-align-items-center ion-justify-content-center ion-align-self-center ion-padding-start">
       <ion-row>
         <ion-col><ion-text class="channel_title">{{channelDetails.name}}</ion-text></ion-col>
-        <ion-col class="ion-align-self-center"><ion-img class="small_icon" [src]="checkmark"></ion-img></ion-col>
+        <!-- <ion-col class="ion-align-self-center"><ion-img class="small_icon" [src]="checkmark"></ion-img></ion-col> -->
       </ion-row>
       <ion-row>
         <ion-col>
@@ -61,4 +61,9 @@
       </ion-col>
     </ion-row>
   </div>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="moreData">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

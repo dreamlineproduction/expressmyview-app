@@ -45,7 +45,7 @@ exports.__esModule = true;
 exports.PodcastPage = void 0;
 var core_1 = require("@angular/core");
 var PodcastPage = /** @class */ (function () {
-    function PodcastPage(location, navCtrl, server, toastController, loadingController, streamingMedia, route, router, rendererFactory) {
+    function PodcastPage(location, navCtrl, server, toastController, loadingController, streamingMedia, route, router) {
         var _this = this;
         this.location = location;
         this.navCtrl = navCtrl;
@@ -55,7 +55,6 @@ var PodcastPage = /** @class */ (function () {
         this.streamingMedia = streamingMedia;
         this.route = route;
         this.router = router;
-        this.rendererFactory = rendererFactory;
         this.logo = 'assets/icon/logo.svg';
         this.logout_icon = 'assets/icon/menu.svg';
         this.search = 'assets/icon/search.svg';

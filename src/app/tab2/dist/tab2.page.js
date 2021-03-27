@@ -58,7 +58,9 @@ var Tab2Page = /** @class */ (function () {
         this.checkmark = 'assets/icon/checkmark.svg';
         this.tiger = 'assets/icon/tiger.svg';
         this.user_image = 'assets/icon/default_user.png';
+        this.logoPath = 'assets/icon/default_user.png';
         this.loaded = false;
+        this.moreData = false;
         this.uid = localStorage.getItem("user_id");
         this.getAllChannels();
     }
@@ -97,7 +99,11 @@ var Tab2Page = /** @class */ (function () {
                         this.server.getAllChannels(params).subscribe(function (response) {
                             console.log("datas", response);
                             if (response.error == undefined) {
-                                _this.allChannels = response.message;
+                                _this.allChannels = response.message.data;
+                                _this.nextPageURL = response.message.next_page_url;
+                                if (_this.nextPageURL != null) {
+                                    _this.moreData = true;
+                                }
                                 _this.loaded = true;
                                 loading.dismiss();
                             }
@@ -109,6 +115,22 @@ var Tab2Page = /** @class */ (function () {
                         return [2 /*return*/];
                 }
             });
+        });
+    };
+    Tab2Page.prototype.doInfinite = function (event) {
+        var _this = this;
+        console.log("nextPage", this.nextPageURL);
+        this.server.loadMorePost(this.nextPageURL).subscribe(function (response) {
+            console.log("reponse more", response);
+            response.message.data.forEach(function (element) {
+                _this.allChannels.push(element);
+            });
+            _this.nextPageURL = response.message.next_page_url;
+            event.target.complete();
+            console.log("nextPagei", _this.nextPageURL);
+            if (_this.nextPageURL == null) {
+                _this.moreData = false;
+            }
         });
     };
     Tab2Page.prototype.presentToast = function (txt) {

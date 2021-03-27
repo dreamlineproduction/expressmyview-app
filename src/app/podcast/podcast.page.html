@@ -58,7 +58,7 @@
         <ion-col size="7">
           <ion-row class="ion-align-items-center" (click)="goToChannelDetails(podcastDetails.channel_id)">
             <ion-text class="big_card_subtitle">{{channelName}}</ion-text>
-            <ion-img class="small_icon" [src]="checkmark"></ion-img>  
+            <!-- <ion-img class="small_icon" [src]="checkmark"></ion-img>   -->
           </ion-row>
         </ion-col>
         <ion-col size="5" class="ion-text-right" *ngIf="!isSame">
@@ -69,7 +69,7 @@
     </ion-col>
   </ion-row>
   
-  <ion-row class="ion-align-items-center ion-padding-start ion-padding-top ion-padding-end">
+  <ion-row class="ion-align-items-center ion-padding">
     <ion-col size="12" class="other_details_col">
       <ion-row *ngIf="casts">
         <ion-text class="other_details_label">Cast : </ion-text>
@@ -107,7 +107,7 @@
         </ion-row>
        <ion-row class="ion-align-items-center">
           <ion-text class="subtitle" (click)="goToChannelDetails(relatedPodcast.channel_id)">{{relatedPodcast.channelName}}</ion-text>
-          <ion-img class="small_icon" [src]="checkmark"></ion-img>
+          <!-- <ion-img class="small_icon" [src]="checkmark"></ion-img> -->
        </ion-row>
         <ion-row class="ion-align-items-center" (click)="goToPlay(relatedPodcast.id)">
           <ion-icon class="footer_icon"  name="eye"></ion-icon>

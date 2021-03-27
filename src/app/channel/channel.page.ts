@@ -18,6 +18,8 @@ export class ChannelPage implements OnInit {
   tiger:string='assets/icon/tiger.svg';
   user_image:any;
   cid:any;
+  bannerPath = 'assets/icon/default_banner.jpeg';
+  logoPath = 'assets/icon/default_user.png';
   channelDetails:any;
   allPodcastCount:any;
   allPodcasts:any;
@@ -26,6 +28,8 @@ export class ChannelPage implements OnInit {
   uid:any;
   isSubscribed:boolean;
   isSame:boolean = false;
+  nextPageURL:any;
+  moreData:boolean = false;
   constructor(public popoverCtrl: PopoverController, private route: ActivatedRoute, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private router: Router) { 
     this.title = this.truncateChar(this.title);
     this.user_image = localStorage.getItem("user_image");
@@ -81,8 +85,18 @@ export class ChannelPage implements OnInit {
         console.log("datas", response[0]);
         this.channelDetails = response[0].channelDetails;
         this.allPodcastCount = response[0].allPodcastsCount;
-        this. allPodcasts = response[0].allPodcasts;
+        this.allPodcasts = response[0].allPodcasts.data;
+        this.nextPageURL = response[0].allPodcasts.next_page_url;
+        if(this.nextPageURL != null){
+          this.moreData =  true;
+        }
         this.isSubscribed = response[0].isSubscribed;
+        if(response[0].channelDetails.bannerPath){
+          this.bannerPath = response[0].channelDetails.bannerPath;
+        }
+        if(response[0].channelDetails.logoPath){
+          this.bannerPath = response[0].channelDetails.logoPath;
+        }
         if(response[0].channelDetails.user_id == this.uid){
           this.isSame = true;
         }
@@ -91,6 +105,22 @@ export class ChannelPage implements OnInit {
       }else{
         this.presentToast(response.error);
         loading.dismiss();
+      }
+    });
+  }
+
+  doInfinite(event:any){
+    console.log("nextPage", this.nextPageURL);
+    this.server.loadMorePost(this.nextPageURL).subscribe((response: any) => {
+      console.log("reponse more", response);
+      response.allPodcasts[0].data.forEach(element => {
+        this.allPodcasts.push(element);
+      });
+      this.nextPageURL = response[0].allPodcasts.next_page_url;
+      event.target.complete()
+      console.log("nextPagei", this.nextPageURL);
+      if(this.nextPageURL == null){
+        this.moreData = false;
       }
     });
   }

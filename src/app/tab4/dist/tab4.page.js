@@ -61,6 +61,7 @@ var Tab4Page = /** @class */ (function () {
         this.calendar = 'assets/icon/calendar.svg';
         this.title = "Lorem Ipsum is simply dummy text of the printing and typesetting industry";
         this.loaded = false;
+        this.moreData = false;
         this.title = this.truncateChar(this.title);
         this.getAllPodcasts();
     }
@@ -90,7 +91,11 @@ var Tab4Page = /** @class */ (function () {
                         this.server.getAllVideoPodcasts().subscribe(function (response) {
                             if (response.error == undefined) {
                                 console.log("datas", response[0]);
-                                _this.allVideoPodcasts = response[0].allVideoPodcasts;
+                                _this.allVideoPodcasts = response[0].allVideoPodcasts.data;
+                                _this.nextPageURL = response[0].allVideoPodcasts.next_page_url;
+                                if (_this.nextPageURL != null) {
+                                    _this.moreData = true;
+                                }
                                 _this.loaded = true;
                                 loading.dismiss();
                             }
@@ -146,6 +151,22 @@ var Tab4Page = /** @class */ (function () {
         else {
             this.user_image = localStorage.getItem("user_image");
         }
+    };
+    Tab4Page.prototype.doInfinite = function (event) {
+        var _this = this;
+        console.log("nextPage", this.nextPageURL);
+        this.server.loadMore(this.nextPageURL).subscribe(function (response) {
+            console.log("reponse more", response);
+            response[0].allVideoPodcasts.data.forEach(function (element) {
+                _this.allVideoPodcasts.push(element);
+            });
+            _this.nextPageURL = response[0].allVideoPodcasts.next_page_url;
+            event.target.complete();
+            console.log("nextPagei", _this.nextPageURL);
+            if (_this.nextPageURL == null) {
+                _this.moreData = false;
+            }
+        });
     };
     Tab4Page = __decorate([
         core_1.Component({

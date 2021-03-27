@@ -60,9 +60,12 @@ var ChannelPage = /** @class */ (function () {
         this.checkmark = 'assets/icon/checkmark.svg';
         this.threedots = 'assets/icon/threedots.svg';
         this.tiger = 'assets/icon/tiger.svg';
+        this.bannerPath = 'assets/icon/default_banner.jpeg';
+        this.logoPath = 'assets/icon/default_user.png';
         this.loaded = false;
         this.myData = false;
         this.isSame = false;
+        this.moreData = false;
         this.title = this.truncateChar(this.title);
         this.user_image = localStorage.getItem("user_image");
         this.uid = localStorage.getItem("user_id");
@@ -117,8 +120,18 @@ var ChannelPage = /** @class */ (function () {
                                 console.log("datas", response[0]);
                                 _this.channelDetails = response[0].channelDetails;
                                 _this.allPodcastCount = response[0].allPodcastsCount;
-                                _this.allPodcasts = response[0].allPodcasts;
+                                _this.allPodcasts = response[0].allPodcasts.data;
+                                _this.nextPageURL = response[0].allPodcasts.next_page_url;
+                                if (_this.nextPageURL != null) {
+                                    _this.moreData = true;
+                                }
                                 _this.isSubscribed = response[0].isSubscribed;
+                                if (response[0].channelDetails.bannerPath) {
+                                    _this.bannerPath = response[0].channelDetails.bannerPath;
+                                }
+                                if (response[0].channelDetails.logoPath) {
+                                    _this.bannerPath = response[0].channelDetails.logoPath;
+                                }
                                 if (response[0].channelDetails.user_id == _this.uid) {
                                     _this.isSame = true;
                                 }
@@ -133,6 +146,22 @@ var ChannelPage = /** @class */ (function () {
                         return [2 /*return*/];
                 }
             });
+        });
+    };
+    ChannelPage.prototype.doInfinite = function (event) {
+        var _this = this;
+        console.log("nextPage", this.nextPageURL);
+        this.server.loadMorePost(this.nextPageURL).subscribe(function (response) {
+            console.log("reponse more", response);
+            response.allPodcasts[0].data.forEach(function (element) {
+                _this.allPodcasts.push(element);
+            });
+            _this.nextPageURL = response[0].allPodcasts.next_page_url;
+            event.target.complete();
+            console.log("nextPagei", _this.nextPageURL);
+            if (_this.nextPageURL == null) {
+                _this.moreData = false;
+            }
         });
     };
     ChannelPage.prototype.presentToast = function (txt) {

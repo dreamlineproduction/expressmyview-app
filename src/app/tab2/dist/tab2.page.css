@@ -27,7 +27,7 @@ ion-item, ion-toolbar {
 
 .img_icon {
   width: 40px;
-  border-radius: 10px !important;
+  border-radius: 50% !important;
   overflow: hidden;
 }
 
@@ -61,7 +61,7 @@ ion-item, ion-toolbar {
 .subtitle {
   font-size: 15px;
   font-weight: normal;
-  color: #FF253A;
+  color: black;
   margin: 3px 0 8px 0;
 }
 

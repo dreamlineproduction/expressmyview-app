@@ -46,13 +46,14 @@ exports.MyaccountPage = void 0;
 var core_1 = require("@angular/core");
 var popovercomponent_page_1 = require("../popovercomponent/popovercomponent.page");
 var MyaccountPage = /** @class */ (function () {
-    function MyaccountPage(popoverCtrl, location, server, toastController, loadingController, router) {
+    function MyaccountPage(popoverCtrl, location, server, toastController, loadingController, router, navCtrl) {
         this.popoverCtrl = popoverCtrl;
         this.location = location;
         this.server = server;
         this.toastController = toastController;
         this.loadingController = loadingController;
         this.router = router;
+        this.navCtrl = navCtrl;
         this.back = 'assets/icon/back.svg';
         this.logo = 'assets/icon/logo.svg';
         this.menu = 'assets/icon/menu.svg';
@@ -220,6 +221,17 @@ var MyaccountPage = /** @class */ (function () {
             }
         };
         this.router.navigate(['tabs/channel'], navData);
+    };
+    MyaccountPage.prototype.viewAllChannels = function () {
+        this.navCtrl.navigateForward('tabs/mychannels');
+    };
+    MyaccountPage.prototype.viewAllPodcasts = function (media) {
+        var navData = {
+            queryParams: {
+                media: media
+            }
+        };
+        this.router.navigate(['tabs/my-medias'], navData);
     };
     MyaccountPage = __decorate([
         core_1.Component({

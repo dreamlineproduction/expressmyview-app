@@ -86,6 +86,10 @@ const routes: Routes = [
     path: 'livestream',
     loadChildren: () => import('./livestream/livestream.module').then( m => m.LivestreamPageModule)
   },
+  {
+    path: 'my-medias',
+    loadChildren: () => import('./my-medias/my-medias.module').then( m => m.MyMediasPageModule)
+  },
 ];
 @NgModule({
   imports: [

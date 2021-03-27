@@ -52,6 +52,7 @@ var Tab5Page = /** @class */ (function () {
         this.loadingController = loadingController;
         this.router = router;
         this.logo = 'assets/icon/logo.svg';
+        this.default_podcast = 'assets/icon/default_podcast.jpeg';
         this.menu = 'assets/icon/menu.svg';
         this.search = 'assets/icon/search.svg';
         this.tiger = 'assets/icon/tiger.svg';
@@ -61,6 +62,7 @@ var Tab5Page = /** @class */ (function () {
         this.calendar = 'assets/icon/calendar.svg';
         this.title = "Lorem Ipsum is simply dummy text of the printing and typesetting industry";
         this.loaded = false;
+        this.moreData = false;
         this.title = this.truncateChar(this.title);
         this.uid = localStorage.getItem("user_id");
         this.getAllPodcasts();
@@ -91,7 +93,11 @@ var Tab5Page = /** @class */ (function () {
                         this.server.getLiveStreams("").subscribe(function (response) {
                             if (response.error == undefined) {
                                 console.log("datas", response.streams);
-                                _this.allVideoPodcasts = response.streams;
+                                _this.allVideoPodcasts = response.streams.data;
+                                _this.nextPageURL = response.streams.next_page_url;
+                                if (_this.nextPageURL != null) {
+                                    _this.moreData = true;
+                                }
                                 _this.loaded = true;
                                 loading.dismiss();
                             }
@@ -103,6 +109,22 @@ var Tab5Page = /** @class */ (function () {
                         return [2 /*return*/];
                 }
             });
+        });
+    };
+    Tab5Page.prototype.doInfinite = function (event) {
+        var _this = this;
+        console.log("nextPage", this.nextPageURL);
+        this.server.loadMorePost(this.nextPageURL).subscribe(function (response) {
+            console.log("reponse more", response);
+            response.streams.data.forEach(function (element) {
+                _this.allVideoPodcasts.push(element);
+            });
+            _this.nextPageURL = response.streams.next_page_url;
+            event.target.complete();
+            console.log("nextPagei", _this.nextPageURL);
+            if (_this.nextPageURL == null) {
+                _this.moreData = false;
+            }
         });
     };
     Tab5Page.prototype.presentToast = function (txt) {

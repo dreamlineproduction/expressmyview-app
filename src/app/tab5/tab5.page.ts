@@ -10,6 +10,7 @@ import { Router, NavigationExtras } from '@angular/router';
 })
 export class Tab5Page{
   logo:string='assets/icon/logo.svg';
+  default_podcast:string='assets/icon/default_podcast.jpeg';
   menu:string='assets/icon/menu.svg';
   search:string='assets/icon/search.svg';
   tiger:string='assets/icon/tiger.svg';
@@ -21,6 +22,8 @@ export class Tab5Page{
   title:string = "Lorem Ipsum is simply dummy text of the printing and typesetting industry";
   allVideoPodcasts:any;
   loaded:boolean = false;
+  nextPageURL:any;
+  moreData:boolean = false;
   constructor(public navCtrl: NavController, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private router: Router) {
     this.title = this.truncateChar(this.title);
     this.uid = localStorage.getItem("user_id");
@@ -49,12 +52,32 @@ export class Tab5Page{
     this.server.getLiveStreams("").subscribe((response: any) => {
       if ( response.error == undefined) {
         console.log("datas", response.streams);
-        this.allVideoPodcasts = response.streams;
+        this.allVideoPodcasts = response.streams.data;
+        this.nextPageURL = response.streams.next_page_url;
+        if(this.nextPageURL != null){
+          this.moreData =  true;
+        }
         this.loaded = true;
         loading.dismiss();
       }else{
         this.presentToast(response.error);
         loading.dismiss();
+      }
+    });
+  }
+
+  doInfinite(event:any){
+    console.log("nextPage", this.nextPageURL);
+    this.server.loadMorePost(this.nextPageURL).subscribe((response: any) => {
+      console.log("reponse more", response);
+      response.streams.data.forEach(element => {
+        this.allVideoPodcasts.push(element);
+      });
+      this.nextPageURL = response.streams.next_page_url;
+      event.target.complete()
+      console.log("nextPagei", this.nextPageURL);
+      if(this.nextPageURL == null){
+        this.moreData = false;
       }
     });
   }

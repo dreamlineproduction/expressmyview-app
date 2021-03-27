@@ -19,7 +19,7 @@
         <ion-col class="video_title">
           My Videos
         </ion-col>
-        <ion-col class="viewall">
+        <ion-col class="viewall" (click)="viewAllPodcasts('video')">
           View All
         </ion-col>
       </ion-row>
@@ -41,7 +41,7 @@
           </ion-row>
          <ion-row class="ion-align-items-center channel_row">
             <ion-text class="subtitle">{{myVideo.channelName}}</ion-text>
-            <ion-img class="small_icon" [src]="checkmark"></ion-img>
+            <!-- <ion-img class="small_icon" [src]="checkmark"></ion-img> -->
          </ion-row>
           <ion-row class="ion-align-items-center channel_row">
             <ion-icon class="footer_icon"  name="eye"></ion-icon>
@@ -58,7 +58,7 @@
         <ion-col class="video_title">
           My Audios
         </ion-col>
-        <ion-col class="viewall">
+        <ion-col class="viewall" (click)="viewAllPodcasts('audio')">
           View All
         </ion-col>
       </ion-row>
@@ -80,7 +80,7 @@
           </ion-row>
          <ion-row class="ion-align-items-center channel_row">
             <ion-text class="subtitle">{{myAudio.channelName}}</ion-text>
-            <ion-img class="small_icon" [src]="checkmark"></ion-img>
+            <!-- <ion-img class="small_icon" [src]="checkmark"></ion-img> -->
          </ion-row>
           <ion-row class="ion-align-items-center channel_row">
             <ion-icon class="footer_icon"  name="eye"></ion-icon>
@@ -97,13 +97,13 @@
         <ion-col class="video_title">
           My Channels
         </ion-col>
-        <ion-col class="viewall">
+        <ion-col class="viewall" (click)="viewAllChannels()">
           View All
         </ion-col>
       </ion-row>
       <ion-slides [options]="slideOpts">
-        <ion-slide *ngFor="let myChannel of myChannels;" (click)="goToChannelDetails(myChannel.id)">
-          <ion-card class="small_card">
+        <ion-slide *ngFor="let myChannel of myChannels;">
+          <ion-card class="small_card" (click)="goToChannelDetails(myChannel.id)">
             <ion-item>
               <ion-img class="small_card_img" *ngIf="myChannel.path" [src]="myChannel.path"></ion-img>
             </ion-item>

@@ -34,7 +34,12 @@ var routes = [
             {
                 path: 'tab5',
                 loadChildren: function () { return Promise.resolve().then(function () { return require('../tab5/tab5.module'); }).then(function (m) { return m.Tab5PageModule; }); }
-            }, {
+            },
+            {
+                path: 'my-medias',
+                loadChildren: function () { return Promise.resolve().then(function () { return require('../my-medias/my-medias.module'); }).then(function (m) { return m.MyMediasPageModule; }); }
+            },
+            {
                 path: 'myaccount',
                 loadChildren: function () { return Promise.resolve().then(function () { return require('../myaccount/myaccount.module'); }).then(function (m) { return m.MyaccountPageModule; }); }
             },

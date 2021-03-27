@@ -20,6 +20,8 @@ export class Tab4Page{
   title:string = "Lorem Ipsum is simply dummy text of the printing and typesetting industry";
   allVideoPodcasts:any;
   loaded:boolean = false;
+  nextPageURL:any;
+  moreData:boolean = false;
   constructor(public navCtrl: NavController, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private router: Router) {
     this.title = this.truncateChar(this.title);
     this.getAllPodcasts();
@@ -47,7 +49,11 @@ export class Tab4Page{
     this.server.getAllVideoPodcasts().subscribe((response: any) => {
       if ( response.error == undefined) {
         console.log("datas", response[0]);
-        this.allVideoPodcasts = response[0].allVideoPodcasts;
+        this.allVideoPodcasts = response[0].allVideoPodcasts.data;
+        this.nextPageURL = response[0].allVideoPodcasts.next_page_url;
+        if(this.nextPageURL != null){
+          this.moreData =  true;
+        }
         this.loaded = true;
         loading.dismiss();
       }else{
@@ -94,4 +100,19 @@ export class Tab4Page{
     }
   }
 
+  doInfinite(event:any){
+    console.log("nextPage", this.nextPageURL);
+    this.server.loadMore(this.nextPageURL).subscribe((response: any) => {
+      console.log("reponse more", response);
+      response[0].allVideoPodcasts.data.forEach(element => {
+        this.allVideoPodcasts.push(element);
+      });
+      this.nextPageURL = response[0].allVideoPodcasts.next_page_url;
+      event.target.complete()
+      console.log("nextPagei", this.nextPageURL);
+      if(this.nextPageURL == null){
+        this.moreData = false;
+      }
+    });
+  }
 }

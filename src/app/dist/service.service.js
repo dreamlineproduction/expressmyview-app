@@ -211,6 +211,18 @@ var ServiceService = /** @class */ (function () {
         return this.http.post(this.url + 'searchAPI', data, options)
             .pipe(operators_1.map(function (results) { return results; }));
     };
+    ServiceService.prototype.getMyAllPodcasts = function (data) {
+        return this.http.post(this.url + 'getMyAllPodcasts', data, this.options)
+            .pipe(operators_1.map(function (results) { return results; }));
+    };
+    ServiceService.prototype.loadMore = function (url) {
+        return this.http.get(url, this.options)
+            .pipe(operators_1.map(function (results) { return results; }));
+    };
+    ServiceService.prototype.loadMorePost = function (url) {
+        return this.http.post(url, this.options)
+            .pipe(operators_1.map(function (results) { return results; }));
+    };
     ServiceService.prototype.presentModal = function () {
         return __awaiter(this, void 0, void 0, function () {
             var modal;

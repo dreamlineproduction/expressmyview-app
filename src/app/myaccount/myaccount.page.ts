@@ -31,7 +31,7 @@ export class MyaccountPage implements OnInit {
   myAudiosLength:any;
   myChannelsLength:any;
   loaded:boolean = false;
-  constructor(public popoverCtrl: PopoverController, private location: Location, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private router: Router) {
+  constructor(public popoverCtrl: PopoverController, private location: Location, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private router: Router,public navCtrl: NavController) {
     this.title = this.truncateChar(this.title);
     this.uid = localStorage.getItem("user_id");
     if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
@@ -165,5 +165,18 @@ export class MyaccountPage implements OnInit {
       }
     }
     this.router.navigate(['tabs/channel'], navData);
+  }
+
+  viewAllChannels(){
+    this.navCtrl.navigateForward('tabs/mychannels');
+  }
+
+  viewAllPodcasts(media){
+    const navData: NavigationExtras = {
+      queryParams: {
+        media: media
+      }
+    }
+    this.router.navigate(['tabs/my-medias'], navData);
   }
 }

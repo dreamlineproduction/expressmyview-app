@@ -112,6 +112,7 @@ ion-item, ion-toolbar {
 
 .banner_img {
   height: 214px;
+  object-fit: fill;
 }
 
 .subscribe_btn {

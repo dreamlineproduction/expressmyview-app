@@ -11,7 +11,6 @@ import { StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-m
   styleUrls: ['./podcast.page.scss'],
 })
 export class PodcastPage {
-  private renderer: Renderer2;
   @ViewChild('video') videoElement: ElementRef;
   fluidPlayer: any;
   logo:string='assets/icon/logo.svg';
@@ -39,7 +38,7 @@ export class PodcastPage {
   newrelatedPodcasts = [];
   isSame:boolean = false;
   fullHD:any;
-  constructor(private location: Location,  public navCtrl: NavController, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private streamingMedia: StreamingMedia, private route: ActivatedRoute,private router: Router, private rendererFactory: RendererFactory2) { 
+  constructor(private location: Location,  public navCtrl: NavController, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private streamingMedia: StreamingMedia, private route: ActivatedRoute,private router: Router) { 
     this.route.queryParams.subscribe((data) => {
       this.pid = data.id;
     });

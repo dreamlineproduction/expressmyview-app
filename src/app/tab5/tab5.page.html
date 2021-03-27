@@ -17,7 +17,7 @@
     <ion-row class="ion-align-items-center ion-justify-content-center card_container" *ngFor="let allVideoPodcast of allVideoPodcasts;">
       <ion-col size="4" (click)="goToPlay(allVideoPodcast.id)">
         <ion-item class="img_container">
-          <ion-img class="img_icon" *ngIf="allVideoPodcast" [src]="allVideoPodcast.path"></ion-img>
+          <ion-img class="img_icon" *ngIf="allVideoPodcast" [src]="allVideoPodcast.path ? allVideoPodcast.path : default_podcast"></ion-img>
         </ion-item>
       </ion-col>
       <ion-col size="7" (click)="goToPlay(allVideoPodcast.id)">
@@ -26,7 +26,7 @@
         </ion-row>
        <ion-row class="ion-align-items-center">
           <ion-text class="subtitle" (click)="goToChannelDetails(allVideoPodcast.channel_id)">{{allVideoPodcast.channelName}}</ion-text>
-          <ion-img class="small_icon" [src]="checkmark"></ion-img>
+          <!-- <ion-img class="small_icon" [src]="checkmark"></ion-img> -->
        </ion-row>
         <ion-row class="ion-align-items-center" (click)="goToPlay(allVideoPodcast.id)">
           <ion-icon class="footer_icon"  name="eye"></ion-icon>
@@ -36,5 +36,10 @@
         </ion-row>
       </ion-col>
     </ion-row>
+
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="moreData">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </ion-content>
 
