@@ -104,6 +104,11 @@ export class ServiceService {
              .pipe(map(results => results));
   }
 
+  getChannelPodcasts(data){  
+    return this.http.post(this.url+'getChannelPodcasts', data, this.options)
+             .pipe(map(results => results));
+  }
+
   getuser(data){  
     return this.http.post(this.url+'getuser', data, this.options)
              .pipe(map(results => results));

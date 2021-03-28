@@ -45,7 +45,7 @@ exports.__esModule = true;
 exports.PodcastPage = void 0;
 var core_1 = require("@angular/core");
 var PodcastPage = /** @class */ (function () {
-    function PodcastPage(location, navCtrl, server, toastController, loadingController, streamingMedia, route, router) {
+    function PodcastPage(location, navCtrl, server, toastController, loadingController, streamingMedia, route, router, nativeAudio) {
         var _this = this;
         this.location = location;
         this.navCtrl = navCtrl;
@@ -55,6 +55,7 @@ var PodcastPage = /** @class */ (function () {
         this.streamingMedia = streamingMedia;
         this.route = route;
         this.router = router;
+        this.nativeAudio = nativeAudio;
         this.logo = 'assets/icon/logo.svg';
         this.logout_icon = 'assets/icon/menu.svg';
         this.search = 'assets/icon/search.svg';
@@ -110,6 +111,13 @@ var PodcastPage = /** @class */ (function () {
     //   };
     //   this.streamingMedia.playVideo('http://expressmyview.crtvecode.in/uploads/0xxKzADjM0_undefined_1615285748.mp4', options);
     // }
+    // audioPlay(){
+    //   this.nativeAudio.preloadSimple('uniqueId1', 'path/to/file.mp3').then(() => {
+    //     console.log('video finished');
+    //   }).catch(error => {
+    //     console.log(error);
+    //   });
+    // }
     PodcastPage.prototype.getPodcastDetails = function () {
         return __awaiter(this, void 0, void 0, function () {
             var loading, params;
@@ -139,7 +147,13 @@ var PodcastPage = /** @class */ (function () {
                                 _this.categories = response[0].categories;
                                 _this.isSubscribed = response[0].isSubscribed;
                                 _this.isLiked = response[0].isLiked;
-                                _this.fullHD = response[0].podcast.videoPath;
+                                _this.filetype = response[0].podcast.file_type;
+                                if (_this.filetype == "video") {
+                                    _this.fullHD = response[0].podcast.videoPath;
+                                }
+                                else {
+                                    _this.audio = response[0].podcast.audioPath;
+                                }
                                 if (response[0].podcast.user_id == _this.uid) {
                                     _this.isSame = true;
                                 }

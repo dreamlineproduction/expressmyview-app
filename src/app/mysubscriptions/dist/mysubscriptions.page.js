@@ -58,6 +58,8 @@ var MysubscriptionsPage = /** @class */ (function () {
         this.checkmark = 'assets/icon/checkmark.svg';
         this.tiger = 'assets/icon/tiger.svg';
         this.user_image = 'assets/icon/default_user.png';
+        this.default_channel = 'assets/icon/default_user.png';
+        this.moreData = false;
         this.uid = localStorage.getItem("user_id");
         if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
         }
@@ -96,7 +98,11 @@ var MysubscriptionsPage = /** @class */ (function () {
                         this.server.getMySubscriptions(params).subscribe(function (response) {
                             // console.log("datas", response.message);
                             if (response.error == undefined) {
-                                _this.mySubscriptions = response.message;
+                                _this.mySubscriptions = response.message.data;
+                                _this.nextPageURL = response.message.next_page_url;
+                                if (_this.nextPageURL != null) {
+                                    _this.moreData = true;
+                                }
                                 loading.dismiss();
                             }
                             else {
@@ -107,6 +113,22 @@ var MysubscriptionsPage = /** @class */ (function () {
                         return [2 /*return*/];
                 }
             });
+        });
+    };
+    MysubscriptionsPage.prototype.doInfinite = function (event) {
+        var _this = this;
+        console.log("nextPage", this.nextPageURL);
+        this.server.loadMorePost(this.nextPageURL + "&uid=" + this.uid).subscribe(function (response) {
+            console.log("reponse more", response);
+            response.message.data.forEach(function (element) {
+                _this.mySubscriptions.push(element);
+            });
+            _this.nextPageURL = response.message.next_page_url;
+            event.target.complete();
+            console.log("nextPagei", _this.nextPageURL);
+            if (_this.nextPageURL == null) {
+                _this.moreData = false;
+            }
         });
     };
     MysubscriptionsPage.prototype.presentToast = function (txt) {

@@ -1,5 +1,18 @@
+ion-header {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.08) !important;
+}
+
 ion-item, ion-toolbar {
   --border-color: transparent;
+}
+
+ion-slide {
+  width: auto !important;
+  max-width: 115px !important;
+}
+
+.swiper-container-fade .swiper-slide {
+  pointer-events: all;
 }
 
 .menu-logo-img {

@@ -1,6 +1,6 @@
 <ion-header collapse="">
   <ion-toolbar>
-    <ion-row class="ion-padding">
+    <ion-row class="ion-padding-start ion-padding-end">
       <ion-img offset=3 class="menu-logo-img ion-text-center" [src]="back" (click) = goBack()></ion-img>
       <ion-label class="menu_title">My Subscriptions</ion-label>
       <ion-col>
@@ -13,19 +13,33 @@
   </ion-toolbar>
 </ion-header>
 
-  <ion-content *ngIf="mySubscriptions">
-    <ion-row class="ion-align-items-center ion-justify-content-center card_container" *ngFor="let mySubscription of mySubscriptions;">
+<ion-content *ngIf="mySubscriptions">
+  <ion-card *ngFor="let mySubscription of mySubscriptions;">
+    <ion-row class="ion-align-items-center ion-justify-content-center card_container">
       <ion-col size="2">
         <ion-item class="img_container">
-          <ion-img class="img_icon" *ngIf="mySubscription.logoPath" [src]="mySubscription.logoPath"></ion-img>
+          <ion-img class="img_icon" [src]="mySubscription.logoPath ? mySubscription.logoPath : default_channel"></ion-img>
         </ion-item>
       </ion-col>
       <ion-col size="9">
-       <ion-row class="ion-align-items-center">
+        <ion-row class="ion-align-items-center">
           <ion-text class="subtitle" (click)="goToChannelDetails(mySubscription.id)">{{mySubscription.name}}</ion-text>
           <!-- <ion-img class="small_icon" [src]="checkmark"></ion-img> -->
-       </ion-row>
+        </ion-row>
       </ion-col>
     </ion-row>
-  </ion-content>
+  </ion-card>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="moreData">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+
+<ion-content *ngIf="!mySubscriptions">
+  <ion-row class="ion-padding-start ion-padding-end ion-padding-top empty">
+    <ion-col>
+      You have not Subscribed to any channel.
+    </ion-col>
+  </ion-row>
+</ion-content>
 

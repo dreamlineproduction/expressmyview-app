@@ -1,7 +1,7 @@
 
   <ion-header collapse="" *ngIf="loaded">
     <ion-toolbar>
-      <ion-row class="ion-padding">
+      <ion-row class="ion-padding-start ion-padding-end">
         <ion-img offset=3 class="menu-logo-img ion-text-center" [src]="logo"></ion-img>
         <ion-label class="menu_title">Myview</ion-label>
         <ion-col>
@@ -22,10 +22,10 @@
         <ion-slides [options]="slideOpts" class="popular_slide">
           <ion-slide *ngFor="let popularChannel of popularChannels;" (click)="goToChannelDetails(popularChannel.id)">
             <ion-card class="small_card">
-              <ion-item>
+              <ion-item class="small_card_item">
                 <ion-img class="small_card_img" [src]="popularChannel.path ? popularChannel.path : user_image"></ion-img>
               </ion-item>
-              <ion-item>
+              <ion-item class="small_card_item">
                 <ion-label class="small_card_text">{{popularChannel.name}}</ion-label>
               </ion-item>
             </ion-card>
@@ -105,5 +105,11 @@
         </ion-card-content>
       </ion-card>
     </div>
+
+    <ion-row class="ion-padding-start ion-padding-end ion-padding-top empty" *ngIf="!popularChannels && !latestVideoPodcasts && !streamingNows">
+      <ion-col>
+        No Podcast or channels available.
+      </ion-col>
+    </ion-row>
   </ion-content>
 

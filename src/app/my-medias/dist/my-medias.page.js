@@ -66,6 +66,7 @@ var MyMediasPage = /** @class */ (function () {
         this.calendar = 'assets/icon/calendar.svg';
         this.title = "Lorem Ipsum is simply dummy text of the printing and typesetting industry";
         this.loaded = false;
+        this.moreData = false;
         this.title = this.truncateChar(this.title);
         this.route.queryParams.subscribe(function (data) {
             _this.uid = localStorage.getItem("user_id");
@@ -109,7 +110,11 @@ var MyMediasPage = /** @class */ (function () {
                         this.server.getMyAllPodcasts(params).subscribe(function (response) {
                             if (response.error == undefined) {
                                 console.log("datas", response[0]);
-                                _this.allVideoPodcasts = response[0].allVideoPodcasts;
+                                _this.allVideoPodcasts = response[0].allVideoPodcasts.data;
+                                _this.nextPageURL = response[0].allVideoPodcasts.next_page_url;
+                                if (_this.nextPageURL != null) {
+                                    _this.moreData = true;
+                                }
                                 _this.loaded = true;
                                 loading.dismiss();
                             }
@@ -122,6 +127,22 @@ var MyMediasPage = /** @class */ (function () {
                         return [2 /*return*/];
                 }
             });
+        });
+    };
+    MyMediasPage.prototype.doInfinite = function (event) {
+        var _this = this;
+        console.log("nextPage", this.nextPageURL);
+        this.server.loadMorePost(this.nextPageURL + "&id=" + this.uid + "&media=" + this.media).subscribe(function (response) {
+            console.log("reponse more", response);
+            response[0].allVideoPodcasts.data.forEach(function (element) {
+                _this.allVideoPodcasts.push(element);
+            });
+            _this.nextPageURL = response[0].allVideoPodcasts.next_page_url;
+            event.target.complete();
+            console.log("nextPagei", _this.nextPageURL);
+            if (_this.nextPageURL == null) {
+                _this.moreData = false;
+            }
         });
     };
     MyMediasPage.prototype.presentToast = function (txt) {

@@ -24,6 +24,7 @@ export class ChannelPage implements OnInit {
   allPodcastCount:any;
   allPodcasts:any;
   loaded:boolean = false;
+  podcastLoaded:boolean = false;
   myData:boolean = false;
   uid:any;
   isSubscribed:boolean;
@@ -40,6 +41,7 @@ export class ChannelPage implements OnInit {
       }
       this.cid = data.id;
       this.getChannelDetails();
+      this.getChannelPodcasts();
     });
   }
 
@@ -85,11 +87,6 @@ export class ChannelPage implements OnInit {
         console.log("datas", response[0]);
         this.channelDetails = response[0].channelDetails;
         this.allPodcastCount = response[0].allPodcastsCount;
-        this.allPodcasts = response[0].allPodcasts.data;
-        this.nextPageURL = response[0].allPodcasts.next_page_url;
-        if(this.nextPageURL != null){
-          this.moreData =  true;
-        }
         this.isSubscribed = response[0].isSubscribed;
         if(response[0].channelDetails.bannerPath){
           this.bannerPath = response[0].channelDetails.bannerPath;
@@ -109,14 +106,42 @@ export class ChannelPage implements OnInit {
     });
   }
 
+  async getChannelPodcasts(){
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+    });
+
+    await loading.present();
+
+    const params = {
+      'channel_id' : this.cid,
+    };
+
+    this.server.getChannelPodcasts(params).subscribe((response: any) => {
+      if ( response.error == undefined) {
+        console.log("datas", response[0]);
+        this.allPodcasts = response[0].data;
+        this.nextPageURL = response[0].next_page_url;
+        if(this.nextPageURL != null){
+          this.moreData =  true;
+        }
+        this.podcastLoaded = true;
+        loading.dismiss();
+      }else{
+        this.presentToast(response.error);
+        loading.dismiss();
+      }
+    });
+  }
+
   doInfinite(event:any){
     console.log("nextPage", this.nextPageURL);
-    this.server.loadMorePost(this.nextPageURL).subscribe((response: any) => {
+    this.server.loadMorePost(this.nextPageURL+"&channel_id="+this.cid).subscribe((response: any) => {
       console.log("reponse more", response);
-      response.allPodcasts[0].data.forEach(element => {
+      response[0].data.forEach(element => {
         this.allPodcasts.push(element);
       });
-      this.nextPageURL = response[0].allPodcasts.next_page_url;
+      this.nextPageURL = response[0].next_page_url;
       event.target.complete()
       console.log("nextPagei", this.nextPageURL);
       if(this.nextPageURL == null){

@@ -1,6 +1,19 @@
+ion-header{
+    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+}
 ion-item, ion-toolbar{
     --border-color: transparent;
 }
+
+audio{
+    outline:none;
+}
+
+.audio_thumbnail{
+    height: 200px;
+    object-fit: cover;
+}
+
 .menu-logo-img{
     width: 8px;
     margin-right: 10px;

@@ -60,6 +60,8 @@ var MychannelsPage = /** @class */ (function () {
         this.user_image = 'assets/icon/default_user.png';
         this.banner = 'assets/icon/default_banner.jpeg';
         this.channelLogo = 'assets/icon/default_user.png';
+        this.loaded = false;
+        this.moreData = false;
         this.uid = localStorage.getItem("user_id");
         if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
         }
@@ -102,23 +104,45 @@ var MychannelsPage = /** @class */ (function () {
                         this.server.getMyChannels(params).subscribe(function (response) {
                             if (response.error == undefined) {
                                 console.log("datas", response[0]);
-                                _this.myChannels = response[0].myChannels;
+                                _this.myChannels = response[0].myChannels.data;
+                                _this.nextPageURL = response[0].myChannels.next_page_url;
+                                if (_this.nextPageURL != null) {
+                                    _this.moreData = true;
+                                }
                                 if (response[0].myChannels.bannerPath) {
                                     _this.banner = response[0].myChannels.bannerPath;
                                 }
                                 if (response[0].myChannels.logoPath) {
                                     _this.channelLogo = response[0].myChannels.logoPath;
                                 }
+                                _this.loaded = true;
                                 loading.dismiss();
                             }
                             else {
                                 _this.presentToast(response.error);
+                                _this.loaded = true;
                                 loading.dismiss();
                             }
                         });
                         return [2 /*return*/];
                 }
             });
+        });
+    };
+    MychannelsPage.prototype.doInfinite = function (event) {
+        var _this = this;
+        console.log("nextPage", this.nextPageURL);
+        this.server.loadMorePost(this.nextPageURL + "&userid=" + this.uid).subscribe(function (response) {
+            console.log("reponse more", response);
+            response[0].myChannels.data.forEach(function (element) {
+                _this.myChannels.push(element);
+            });
+            _this.nextPageURL = response[0].myChannels.next_page_url;
+            event.target.complete();
+            console.log("nextPagei", _this.nextPageURL);
+            if (_this.nextPageURL == null) {
+                _this.moreData = false;
+            }
         });
     };
     MychannelsPage.prototype.presentToast = function (txt) {

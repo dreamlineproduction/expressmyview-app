@@ -131,6 +131,10 @@ var ServiceService = /** @class */ (function () {
         return this.http.post(this.url + 'channelDetails', data, this.options)
             .pipe(operators_1.map(function (results) { return results; }));
     };
+    ServiceService.prototype.getChannelPodcasts = function (data) {
+        return this.http.post(this.url + 'getChannelPodcasts', data, this.options)
+            .pipe(operators_1.map(function (results) { return results; }));
+    };
     ServiceService.prototype.getuser = function (data) {
         return this.http.post(this.url + 'getuser', data, this.options)
             .pipe(operators_1.map(function (results) { return results; }));

@@ -1,6 +1,6 @@
 <ion-header collapse="" *ngIf="loaded">
   <ion-toolbar>
-    <ion-row class="ion-padding">
+    <ion-row class="ion-padding-start ion-padding-end">
       <ion-img offset=3 class="menu-logo-img ion-text-center" [src]="back" (click) = goBack()></ion-img>
       <ion-label class="menu_title">{{pageTitle}}</ion-label>
       <ion-col>
@@ -36,6 +36,11 @@
         </ion-row>
       </ion-col>
     </ion-row>
+
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="moreData">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </ion-content>
 
   <ion-content *ngIf="!allVideoPodcasts && loaded">
