@@ -1,45 +1,48 @@
 <ion-header collapse="">
-  <ion-toolbar>
-    <ion-row class="ion-padding-start ion-padding-end">
-      <ion-img offset=3 class="menu-logo-img ion-text-center" [src]="back" (click) = goBack()></ion-img>
-      <ion-label class="menu_title">My Subscriptions</ion-label>
-      <ion-col>
-        <ion-buttons class="menu_btn">
-          <ion-menu-button menu="first"><ion-img offset=3 class="profile" [src]="user_image"></ion-img></ion-menu-button>
-        </ion-buttons>
-        <ion-img offset=3 class="search" [src]="search"></ion-img>
-     </ion-col>
-    </ion-row>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-row class="ion-padding-start ion-padding-end">
+            <ion-img offset=3 class="menu-logo-img ion-text-center" [src]="back" (click)=goBack()></ion-img>
+            <ion-label class="menu_title">My Subscriptions</ion-label>
+            <ion-col>
+                <ion-buttons class="menu_btn">
+                    <ion-menu-button menu="first">
+                        <ion-img offset=3 class="profile" [src]="user_image"></ion-img>
+                    </ion-menu-button>
+                </ion-buttons>
+                <ion-img offset=3 class="search" [src]="search"></ion-img>
+            </ion-col>
+        </ion-row>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content *ngIf="mySubscriptions">
-  <ion-card *ngFor="let mySubscription of mySubscriptions;">
-    <ion-row class="ion-align-items-center ion-justify-content-center card_container">
-      <ion-col size="2">
-        <ion-item class="img_container">
-          <ion-img class="img_icon" [src]="mySubscription.logoPath ? mySubscription.logoPath : default_channel"></ion-img>
-        </ion-item>
-      </ion-col>
-      <ion-col size="9">
-        <ion-row class="ion-align-items-center">
-          <ion-text class="subtitle" (click)="goToChannelDetails(mySubscription.id)">{{mySubscription.name}}</ion-text>
-          <!-- <ion-img class="small_icon" [src]="checkmark"></ion-img> -->
+    <ion-card *ngFor="let mySubscription of mySubscriptions;">
+        <ion-row class="ion-align-items-center ion-justify-content-center card_container">
+            <ion-col size="2">
+                <ion-item class="img_container">
+                    <ion-img class="img_icon" [src]="mySubscription.logoPath ? mySubscription.logoPath : default_channel"></ion-img>
+                </ion-item>
+            </ion-col>
+            <ion-col size="9">
+                <ion-row class="ion-align-items-center">
+                    <ion-text class="subtitle" (click)="goToChannelDetails(mySubscription.id)">{{mySubscription.name}}</ion-text>
+                    <!-- <ion-img class="small_icon" [src]="checkmark"></ion-img> -->
+                </ion-row>
+            </ion-col>
         </ion-row>
-      </ion-col>
-    </ion-row>
-  </ion-card>
-  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="moreData">
-    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+    </ion-card>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="moreData">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 </ion-content>
 
 <ion-content *ngIf="!mySubscriptions">
-  <ion-row class="ion-padding-start ion-padding-end ion-padding-top empty">
-    <ion-col>
-      You have not Subscribed to any channel.
-    </ion-col>
-  </ion-row>
+    <ion-row class="ion-padding-start ion-padding-end ion-padding-top empty">
+        <ion-col>
+            <img src="assets/animation_200_kmtfrdlj.gif" width="200">
+            <h5>No Channel available. Please create one.</h5>
+            <a class="ion-home color-primary item" href="https://expressmyview.com/" target="_blank"> Visit Website</a>
+        </ion-col>
+    </ion-row>
 </ion-content>
-

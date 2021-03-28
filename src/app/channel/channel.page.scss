@@ -1,52 +1,58 @@
-ion-item, ion-toolbar{
+ion-item,
+ion-toolbar {
     --border-color: transparent;
 }
-.channel_img{
+
+.channel_img {
     height: 214px;
     width: 100%;
     object-fit: cover;
 }
 
-.small_img{
+.channel-bg {
+    background: #f7f7f7;
+}
+
+.small_img {
     width: 56px;
     height: 56px;
     border-radius: 50%;
     overflow: hidden;
 }
 
-.channel_title{
+.channel_title {
     font-size: 15px;
 }
 
-.small_icon{
+.small_icon {
     width: 10px;
     height: 10px;
     margin-left: 4px;
 }
 
-.subscribers{
+.subscribers {
     font-size: 10px;
     color: #A8A8A8;
 }
 
-.video_title{
+.video_title {
     font-size: 15px;
     font-weight: bold;
 }
 
-.img_icon{
+.img_icon {
     width: 115px;
     border-radius: 10px !important;
     overflow: hidden;
 }
 
-.img_container{
+.img_container {
     position: relative;
     --padding-start: 0;
     --inner-padding-end: 0;
 }
 
-.img_text{
+.img_text {
     position: absolute;
     background-color: #FF253A;
     height: 14px;
@@ -61,60 +67,60 @@ ion-item, ion-toolbar{
     font-weight: bold;
 }
 
-.title{
+.title {
     font-size: 13px;
     font-weight: bold;
     margin: 0px 0px 2px 0;
 }
 
-.subtitle{
+.subtitle {
     font-size: 10px;
     font-weight: normal;
     color: #FF253A;
     margin: 2px 0 8px 0;
 }
 
-.small_icon{
+.small_icon {
     width: 10px;
     height: 10px;
     margin-left: 4px;
     align-self: center;
 }
 
-.footer_title{
+.footer_title {
     font-size: 9px;
     color: #A8A8A8;
     margin-right: 10px;
 }
 
-.footer_icon{
+.footer_icon {
     width: 12px;
     height: 12px;
     color: #A8A8A8;
     margin-right: 4px;
 }
 
-.card_container{
+.card_container {
     margin: 5px 0px 15px 0px;
 }
 
-.threedots{
-    width: 23px; 
+.threedots {
+    width: 23px;
     margin-top: 7px;
     float: right;
     margin-right: 11%;
 }
 
-.channel_row{
+.channel_row {
     padding-left: 5px;
 }
 
-.banner_img{
+.banner_img {
     height: 214px;
     object-fit: fill;
 }
 
-.subscribe_btn{
+.subscribe_btn {
     font-size: 12px;
     --border-radius: 6px;
 }

@@ -12,7 +12,7 @@ import { FilterPage } from '../app/filter/filter.page';
 export class ServiceService {
   options:any;
   
-  url = "https://expressmyview.crtvecode.in/expressmyview-git/expressmyview/public/api/";
+  url = "http://127.0.0.1:8000/api/";
   // url = "https://expressmyview.crtvecode.in/public/api/";
   // url = "https://testmyserver.in/expressmyviewserver/api/";
   constructor(private http: HttpClient,private httpBackend: HttpBackend, public navCtrl: NavController, public modalController: ModalController) {

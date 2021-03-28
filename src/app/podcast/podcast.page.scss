@@ -1,54 +1,57 @@
-ion-header{
+ion-header {
     box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
 }
-ion-item, ion-toolbar{
+
+ion-item,
+ion-toolbar {
     --border-color: transparent;
 }
 
-audio{
-    outline:none;
+audio {
+    outline: none;
 }
 
-.audio_thumbnail{
+.audio_thumbnail {
     height: 200px;
     object-fit: cover;
 }
 
-.menu-logo-img{
+.menu-logo-img {
     width: 8px;
     margin-right: 10px;
 }
 
-.menu_title{
+.menu_title {
     font-size: 16px;
     font-weight: bold;
     align-self: center;
     margin-left: 5px;
 }
 
-.menu_btn{
+.menu_btn {
     float: right;
 }
 
-.search{
+.search {
     width: 17px;
     float: right;
     height: 100%;
     margin-right: 5px;
 }
 
-.profile{
+.profile {
     width: 27px;
     height: 27px;
     border-radius: 50%;
     overflow: hidden;
 }
-.podcast_thumbnail{
+
+.podcast_thumbnail {
     height: 214px;
     width: 100%;
 }
 
-.play_icon{
+.play_icon {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -56,65 +59,64 @@ audio{
     font-size: 50px;
 }
 
-.podcast_thumbnail_item{
+.podcast_thumbnail_item {
     width: 100%;
     padding-top: 20px;
 }
 
-
-.big_card{
+.big_card {
     height: 307px;
     margin-top: 5px;
 }
 
-.big_card_content{
+.big_card_content {
     margin-top: 10px;
 }
 
-.big_card_img{
+.big_card_img {
     height: 210px;
     width: 100%;
     object-fit: cover;
 }
 
-.big_card_title{
+.big_card_title {
     font-size: 15px;
     font-weight: bold;
 }
 
-.big_card_subtitle{
+.big_card_subtitle {
     font-size: 17px;
     font-weight: normal;
     color: #FF253A;
     margin: 5px 0 8px 0;
 }
 
-.small_icon{
+.small_icon {
     width: 10px;
     height: 10px;
     margin-left: 4px;
 }
 
-.big_card_footer{
+.big_card_footer {
     font-size: 12px;
     color: #A8A8A8;
     margin-right: 10px;
 }
 
-.footer_small_icon{
+.footer_small_icon {
     width: 12px;
     height: 12px;
     color: #A8A8A8;
     margin-right: 4px;
 }
 
-.big_card_img_container{
+.big_card_img_container {
     position: relative;
     --padding-start: 0;
     --inner-padding-end: 0;
 }
 
-.big_card_img_text{
+.big_card_img_text {
     position: absolute;
     background-color: #FF253A;
     height: 22px;
@@ -128,43 +130,56 @@ audio{
     line-height: 20px;
 }
 
-.other_details_label{
+.other_details_label {
     font-size: 15px;
     font-weight: bold;
-    padding : 2px 10px 2px 5px;
+    padding: 2px 10px 2px 5px;
 }
 
-.other_details_text{
+.other_details_text {
     font-size: 15px;
     font-weight: normal;
-    color: #ff516b;
-    padding : 2px 5px;
+    color: #616161;
+    padding: 2px 5px;
     width: -webkit-fill-available;
 }
 
-.comment_title{
+.comment_title {
     font-size: 15px;
     font-weight: bold;
     color: #888;
 }
 
-.other_details_col{
-    box-shadow: rgb(0 0 0 / 20%) 0px 3px 1px -2px, rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px;
+.other_details_col {
+    border-bottom: 1px solid #f1f1f1;
+    box-shadow: 1px 2px 4px 0 rgb(0 0 0 / 10%);
+    background-color: #fff;
 }
 
-.img_icon{
+.un-subscribe {
+    padding: 2px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.un-subscribe .button-native {
+    background: #3880ff00;
+}
+
+.img_icon {
     width: 100%;
     border-radius: 10px !important;
     overflow: hidden;
 }
 
-.img_container{
+.img_container {
     position: relative;
     --padding-start: 0;
     --inner-padding-end: 0;
 }
 
-.img_text{
+.img_text {
     position: absolute;
     background-color: #FF253A;
     height: 14px;
@@ -180,47 +195,47 @@ audio{
 }
 
 //text
-.title{
+.title {
     font-size: 13px;
     font-weight: bold;
     margin: 3px 0;
 }
 
-.subtitle{
+.subtitle {
     font-size: 10px;
     font-weight: normal;
     color: #FF253A;
     margin: 3px 0 8px 0;
 }
 
-.small_icon{
+.small_icon {
     width: 10px;
     height: 10px;
     margin-left: 4px;
 }
 
-.footer_title{
+.footer_title {
     font-size: 9px;
     color: #A8A8A8;
     margin-right: 10px;
 }
 
-.footer_icon{
+.footer_icon {
     width: 12px;
     height: 12px;
     color: #A8A8A8;
     margin-right: 4px;
 }
 
-.card_container{
+.card_container {
     margin: 15px 0px;
 }
 
-.latest{
+.latest {
     font-size: 15px;
     font-weight: bold;
 }
 
-.podcastVideo{
+.podcastVideo {
     object-fit: cover;
 }

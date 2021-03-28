@@ -148,7 +148,7 @@ export class PodcastPage {
     const toast = await this.toastController.create({
       message: txt,
       duration: 3000,
-      position: 'top',
+      position: 'bottom',
       mode: 'ios',
       color: 'dark'
     });

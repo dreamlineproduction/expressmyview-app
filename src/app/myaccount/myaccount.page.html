@@ -1,124 +1,126 @@
-
-  <ion-header collapse="" *ngIf="loaded">
+<ion-header collapse="" *ngIf="loaded">
     <ion-toolbar>
-      <ion-row class="ion-padding-start ion-padding-end">
-        <ion-img offset=3 class="menu-logo-img ion-text-center" [src]="back" (click) = goBack()></ion-img>
-        <ion-label class="menu_title">My Account</ion-label>
-        <ion-col>
-          <ion-buttons class="menu_btn">
-            <ion-menu-button menu="first"><ion-img offset=3 class="profile" [src]="user_image"></ion-img></ion-menu-button>
-          </ion-buttons>
-          <ion-img offset=3 class="search" [src]="search"></ion-img>
-       </ion-col>
-      </ion-row>
+        <ion-row class="ion-padding-start ion-padding-end">
+            <ion-img offset=3 class="menu-logo-img ion-text-center" [src]="back" (click)=goBack()></ion-img>
+            <ion-label class="menu_title">My Account</ion-label>
+            <ion-col>
+                <ion-buttons class="menu_btn">
+                    <ion-menu-button menu="first">
+                        <ion-img offset=3 class="profile" [src]="user_image"></ion-img>
+                    </ion-menu-button>
+                </ion-buttons>
+                <ion-img offset=3 class="search" [src]="search"></ion-img>
+            </ion-col>
+        </ion-row>
     </ion-toolbar>
-  </ion-header>
-  <ion-content *ngIf="loaded">
-    <div  *ngIf="myVideosLength > 0">
-      <ion-row class="ion-padding-start ion-padding-end ion-padding-top">
-        <ion-col class="video_title">
-          My Videos
-        </ion-col>
-        <ion-col class="viewall" (click)="viewAllPodcasts('video')">
-          View All
-        </ion-col>
-      </ion-row>
-      <ion-row class="ion-align-items-center ion-justify-content-center card_container" *ngFor="let myVideo of myVideos;">
-        <ion-col size="4">
-          <ion-item class="img_container">
-            <ion-img class="img_icon" *ngIf="myVideo.path" [src]="myVideo.path"></ion-img>
-            <ion-text class="img_text">{{myVideo.runtime}}</ion-text>
-          </ion-item>
-        </ion-col>
-        <ion-col size="7">
-          <ion-row class="ion-align-items-top">
-            <ion-col size="10">
-              <ion-text class="title">{{myVideo.title}}</ion-text>
+</ion-header>
+<ion-content *ngIf="loaded">
+    <div *ngIf="myVideosLength > 0">
+        <ion-row class="ion-padding-start ion-padding-end ion-padding-top">
+            <ion-col class="video_title">
+                My Videos
             </ion-col>
-            <ion-col size="2">
-              <ion-img class="threedots" (click)="presentPopover($event, myVideo.channel_id,'podcast', myVideo.id)" [src]="threedots"></ion-img>
+            <ion-col class="viewall" (click)="viewAllPodcasts('video')">
+                View All
             </ion-col>
-          </ion-row>
-         <ion-row class="ion-align-items-center channel_row">
-            <ion-text class="subtitle">{{myVideo.channelName}}</ion-text>
-            <!-- <ion-img class="small_icon" [src]="checkmark"></ion-img> -->
-         </ion-row>
-          <ion-row class="ion-align-items-center channel_row">
-            <ion-icon class="footer_icon"  name="eye"></ion-icon>
-            <ion-text class="footer_title">{{myVideo.views}} views</ion-text>
-            <ion-icon class="footer_icon" name="calendar"></ion-icon>
-            <ion-text class="footer_title">{{myVideo.dateDiff}}</ion-text>
-          </ion-row>
-        </ion-col>
-      </ion-row>
+        </ion-row>
+        <ion-row class="ion-align-items-center ion-justify-content-center card_container" *ngFor="let myVideo of myVideos;">
+            <ion-col size="4">
+                <ion-item class="img_container">
+                    <ion-img class="img_icon" *ngIf="myVideo.path" [src]="myVideo.path"></ion-img>
+                    <ion-text class="img_text">{{myVideo.runtime}}</ion-text>
+                </ion-item>
+            </ion-col>
+            <ion-col size="7">
+                <ion-row class="ion-align-items-top">
+                    <ion-col size="10">
+                        <ion-text class="title">{{myVideo.title}}</ion-text>
+                    </ion-col>
+                    <ion-col size="2">
+                        <ion-img class="threedots" (click)="presentPopover($event, myVideo.channel_id,'podcast', myVideo.id)" [src]="threedots"></ion-img>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-items-center channel_row">
+                    <ion-text class="subtitle">{{myVideo.channelName}}</ion-text>
+                    <!-- <ion-img class="small_icon" [src]="checkmark"></ion-img> -->
+                </ion-row>
+                <ion-row class="ion-align-items-center channel_row">
+                    <ion-icon class="footer_icon" name="eye"></ion-icon>
+                    <ion-text class="footer_title">{{myVideo.views}} views</ion-text>
+                    <ion-icon class="footer_icon" name="calendar"></ion-icon>
+                    <ion-text class="footer_title">{{myVideo.dateDiff}}</ion-text>
+                </ion-row>
+            </ion-col>
+        </ion-row>
     </div>
 
     <div *ngIf="myAudiosLength > 0">
-      <ion-row class="ion-padding-start ion-padding-end ion-padding-top">
-        <ion-col class="video_title">
-          My Audios
-        </ion-col>
-        <ion-col class="viewall" (click)="viewAllPodcasts('audio')">
-          View All
-        </ion-col>
-      </ion-row>
-      <ion-row class="ion-align-items-center ion-justify-content-center card_container" *ngFor="let myAudio of myAudios;">
-        <ion-col size="4">
-          <ion-item class="img_container">
-            <ion-img class="img_icon" *ngIf="myAudio.path" [src]="myAudio.path"></ion-img>
-            <ion-text class="img_text">{{myAudio.runtime}}</ion-text>
-          </ion-item>
-        </ion-col>
-        <ion-col size="7">
-          <ion-row class="ion-align-items-top">
-            <ion-col size="10">
-              <ion-text class="title">{{myAudio.title}}</ion-text>
+        <ion-row class="ion-padding-start ion-padding-end ion-padding-top">
+            <ion-col class="video_title">
+                My Audios
             </ion-col>
-            <ion-col size="2">
-              <ion-img class="threedots" (click)="presentPopover($event, myAudio.channel_id,'podcast', myAudio.id)" [src]="threedots"></ion-img>
+            <ion-col class="viewall" (click)="viewAllPodcasts('audio')">
+                View All
             </ion-col>
-          </ion-row>
-         <ion-row class="ion-align-items-center channel_row">
-            <ion-text class="subtitle">{{myAudio.channelName}}</ion-text>
-            <!-- <ion-img class="small_icon" [src]="checkmark"></ion-img> -->
-         </ion-row>
-          <ion-row class="ion-align-items-center channel_row">
-            <ion-icon class="footer_icon"  name="eye"></ion-icon>
-            <ion-text class="footer_title">{{myAudio.views}} views</ion-text>
-            <ion-icon class="footer_icon" name="calendar"></ion-icon>
-            <ion-text class="footer_title">{{myAudio.dateDiff}}</ion-text>
-          </ion-row>
-        </ion-col>
-      </ion-row>
+        </ion-row>
+        <ion-row class="ion-align-items-center ion-justify-content-center card_container" *ngFor="let myAudio of myAudios;">
+            <ion-col size="4">
+                <ion-item class="img_container">
+                    <ion-img class="img_icon" *ngIf="myAudio.path" [src]="myAudio.path"></ion-img>
+                    <ion-text class="img_text">{{myAudio.runtime}}</ion-text>
+                </ion-item>
+            </ion-col>
+            <ion-col size="7">
+                <ion-row class="ion-align-items-top">
+                    <ion-col size="10">
+                        <ion-text class="title">{{myAudio.title}}</ion-text>
+                    </ion-col>
+                    <ion-col size="2">
+                        <ion-img class="threedots" (click)="presentPopover($event, myAudio.channel_id,'podcast', myAudio.id)" [src]="threedots"></ion-img>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="ion-align-items-center channel_row">
+                    <ion-text class="subtitle">{{myAudio.channelName}}</ion-text>
+                    <!-- <ion-img class="small_icon" [src]="checkmark"></ion-img> -->
+                </ion-row>
+                <ion-row class="ion-align-items-center channel_row">
+                    <ion-icon class="footer_icon" name="eye"></ion-icon>
+                    <ion-text class="footer_title">{{myAudio.views}} views</ion-text>
+                    <ion-icon class="footer_icon" name="calendar"></ion-icon>
+                    <ion-text class="footer_title">{{myAudio.dateDiff}}</ion-text>
+                </ion-row>
+            </ion-col>
+        </ion-row>
     </div>
 
     <div *ngIf="myChannelsLength > 0">
-      <ion-row class="ion-padding-start ion-padding-end ion-padding-top">
-        <ion-col class="video_title">
-          My Channels
-        </ion-col>
-        <ion-col class="viewall" (click)="viewAllChannels()">
-          View All
-        </ion-col>
-      </ion-row>
-      <ion-slides [options]="slideOpts">
-        <ion-slide *ngFor="let myChannel of myChannels;">
-          <ion-card class="small_card" (click)="goToChannelDetails(myChannel.id)">
-            <ion-item>
-              <ion-img class="small_card_img" [src]="myChannel.path ? myChannel.path : default_channel"></ion-img>
-            </ion-item>
-            <ion-item>
-              <ion-label class="small_card_text">{{myChannel.name}}</ion-label>
-            </ion-item>
-          </ion-card>
-        </ion-slide>
-      </ion-slides>
+        <ion-row class="ion-padding-start ion-padding-end ion-padding-top">
+            <ion-col class="video_title">
+                My Channels
+            </ion-col>
+            <ion-col class="viewall" (click)="viewAllChannels()">
+                View All
+            </ion-col>
+        </ion-row>
+        <ion-slides [options]="slideOpts">
+            <ion-slide *ngFor="let myChannel of myChannels;">
+                <ion-card class="small_card" (click)="goToChannelDetails(myChannel.id)">
+                    <ion-item>
+                        <ion-img class="small_card_img" [src]="myChannel.path ? myChannel.path : default_channel"></ion-img>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label class="small_card_text">{{myChannel.name}}</ion-label>
+                    </ion-item>
+                </ion-card>
+            </ion-slide>
+        </ion-slides>
     </div>
 
-    <ion-row class="ion-padding-start ion-padding-end ion-padding-top empty" *ngIf="myChannelsLength == 0 && myVideosLength == 0 && myAudiosLength == 0">
-      <ion-col>
-        No Podcast or Channel available. Please create one.
-      </ion-col>
+    <ion-row class="ion-padding-start ion-padding-end ion-padding-top empty no-contents" *ngIf="myChannelsLength == 0 && myVideosLength == 0 && myAudiosLength == 0">
+        <ion-col>
+            <img src="assets/animation_200_kmtfrdlj.gif" width="200">
+            <h5>No Podcast or Channel available. Please create one.</h5>
+            <a class="ion-home color-primary item" href="https://expressmyview.com/" target="_blank"> Visit Website</a>
+        </ion-col>
     </ion-row>
-  </ion-content>
-
+</ion-content>
