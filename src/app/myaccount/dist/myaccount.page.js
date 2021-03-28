@@ -66,6 +66,34 @@ var MyaccountPage = /** @class */ (function () {
         this.threedots = 'assets/icon/threedots.svg';
         this.title = "Lorem Ipsum is simply dummy text of the printing and typesetting industry";
         this.loaded = false;
+        this.default_channel = 'assets/icon/default_user.png';
+        // async presentPopover(ev: any) {
+        //   const popover = await this.popoverCtrl.create({
+        //     component: PopovercomponentPage,
+        //     cssClass: 'my-custom-class',
+        //     event: ev,
+        //     translucent: true
+        //   });
+        //   return await popover.present();
+        // }
+        this.slideOpts = {
+            initialSlide: 1,
+            speed: 400,
+            on: {
+                beforeInit: function () {
+                    var swiper = this;
+                    swiper.classNames.push(swiper.params.containerModifierClass + "fade");
+                    var overwriteParams = {
+                        slidesPerView: 3.5,
+                        autoplay: true,
+                        spaceBetween: -15,
+                        centeredSlides: false
+                    };
+                    swiper.params = Object.assign(swiper.params, overwriteParams);
+                    swiper.params = Object.assign(swiper.originalParams, overwriteParams);
+                }
+            }
+        };
         this.title = this.truncateChar(this.title);
         this.uid = localStorage.getItem("user_id");
         if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
@@ -86,33 +114,6 @@ var MyaccountPage = /** @class */ (function () {
     };
     MyaccountPage.prototype.ngOnInit = function () {
     };
-    // async presentPopover(ev: any) {
-    //   const popover = await this.popoverCtrl.create({
-    //     component: PopovercomponentPage,
-    //     cssClass: 'my-custom-class',
-    //     event: ev,
-    //     translucent: true
-    //   });
-    //   return await popover.present();
-    // }
-    // slideOpts = {
-    //   initialSlide: 1,
-    //   speed: 400,
-    //   on: {
-    //     beforeInit() {
-    //       const swiper = this;
-    //       swiper.classNames.push(`${swiper.params.containerModifierClass}fade`);
-    //       const overwriteParams = {
-    //         slidesPerView: 3.5,
-    //         autoplay:true,
-    //         spaceBetween: -15,
-    //         centeredSlides: false
-    //       };
-    //       swiper.params = Object.assign(swiper.params, overwriteParams);
-    //       swiper.params = Object.assign(swiper.originalParams, overwriteParams);
-    //     },
-    //   }
-    // };
     MyaccountPage.prototype.goBack = function () {
         this.location.back();
     };

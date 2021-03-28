@@ -9,16 +9,16 @@
     </ion-col>
     <ion-col size="6" class="ion-align-items-center ion-justify-content-center ion-align-self-center ion-padding-start">
       <ion-row>
-        <ion-col><ion-text class="channel_title">{{channelDetails.name}}</ion-text></ion-col>
+        <ion-col class="ion-no-padding"><ion-text class="channel_title">{{channelDetails.name}}</ion-text></ion-col>
         <!-- <ion-col class="ion-align-self-center"><ion-img class="small_icon" [src]="checkmark"></ion-img></ion-col> -->
       </ion-row>
       <ion-row>
-        <ion-col>
+        <ion-col class="ion-no-padding">
           <ion-text class="subscribers">{{channelDetails.subscribers}} subscribers</ion-text>
         </ion-col>
       </ion-row>
     </ion-col>
-    <ion-col size="4" class="ion-text-right" *ngIf="!isSame">
+    <ion-col size="4" class="ion-text-right ion-align-self-center" *ngIf="!isSame">
       <ion-button color="danger" class="subscribe_btn" *ngIf="!isSubscribed" (click)="subscribe()">Subscribe</ion-button>
       <ion-button color="medium" class="subscribe_btn" *ngIf="isSubscribed" (click)="subscribe()">Unsubscribe</ion-button>
     </ion-col>
@@ -27,7 +27,7 @@
     </ion-col>
   </ion-row>
 
-  <div *ngIf="allPodcastCount > 0">
+  <div *ngIf="allPodcastCount > 0 && podcastLoaded">
     <ion-row class="ion-padding-start ion-padding-end ion-padding-top">
       <ion-col class="video_title" *ngIf="allPodcastCount > 1">
         All {{allPodcastCount}} podcasts
@@ -44,8 +44,8 @@
         </ion-item>
       </ion-col>
       <ion-col size="7" class="ion-align-self-baseline">
-        <ion-row class="ion-align-items-start ion-no-padding" (click)="goToPlay(allPodcast.id)">
-          <ion-col size="10">
+        <ion-row class="ion-align-items-start ion-no-padding">
+          <ion-col size="10" (click)="goToPlay(allPodcast.id)">
             <ion-text class="title">{{allPodcast.title}}</ion-text>
           </ion-col>
          <ion-col *ngIf="myData" size="2">
@@ -66,4 +66,10 @@
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
+
+  <ion-row class="ion-padding-start ion-padding-end ion-padding-top empty" *ngIf="allPodcastCount == 0 && podcastLoaded">
+    <ion-col>
+      No Podcasts available.
+    </ion-col>
+  </ion-row>
 </ion-content>

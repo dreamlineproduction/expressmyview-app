@@ -44,6 +44,7 @@ ion-select {
 .logout_btn {
   height: 30px;
   float: right;
+  margin-left: 5px;
 }
 
 .searchbar-search-icon.sc-ion-searchbar-ios {
@@ -55,4 +56,11 @@ ion-select {
   right: unset !important;
   left: 5px !important;
   margin-right: 5px;
+}
+
+.empty {
+  color: grey;
+  font-size: 15px;
+  text-align: center;
+  font-weight: bold;
 }

@@ -1,7 +1,7 @@
 
-  <ion-header collapse="">
+  <ion-header collapse="" *ngIf="loaded">
     <ion-toolbar>
-      <ion-row class="ion-padding">
+      <ion-row class="ion-padding-start ion-padding-end">
         <ion-img offset=3 class="menu-logo-img ion-text-center" [src]="back" (click) = goBack()></ion-img>
         <ion-label class="menu_title">My Channels</ion-label>
         <ion-col>
@@ -14,7 +14,7 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-content>
+  <ion-content *ngIf="loaded">
     <div *ngIf="myChannels">
       <ion-card class="big_card" (click) = "channel(myChannel.id)" *ngFor="let myChannel of myChannels;">
         <ion-card-header class="ion-no-padding">
@@ -35,5 +35,15 @@
         </ion-card-content>
       </ion-card> 
     </div> 
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="moreData">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+    <ion-row class="ion-padding-start ion-padding-end ion-padding-top empty" *ngIf="!myChannels">
+      <ion-col>
+        No Channel available. Please create one.
+      </ion-col>
+    </ion-row>
   </ion-content>
 

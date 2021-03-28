@@ -63,6 +63,7 @@ var ChannelPage = /** @class */ (function () {
         this.bannerPath = 'assets/icon/default_banner.jpeg';
         this.logoPath = 'assets/icon/default_user.png';
         this.loaded = false;
+        this.podcastLoaded = false;
         this.myData = false;
         this.isSame = false;
         this.moreData = false;
@@ -75,6 +76,7 @@ var ChannelPage = /** @class */ (function () {
             }
             _this.cid = data.id;
             _this.getChannelDetails();
+            _this.getChannelPodcasts();
         });
     }
     ChannelPage.prototype.ngOnInit = function () {
@@ -120,11 +122,6 @@ var ChannelPage = /** @class */ (function () {
                                 console.log("datas", response[0]);
                                 _this.channelDetails = response[0].channelDetails;
                                 _this.allPodcastCount = response[0].allPodcastsCount;
-                                _this.allPodcasts = response[0].allPodcasts.data;
-                                _this.nextPageURL = response[0].allPodcasts.next_page_url;
-                                if (_this.nextPageURL != null) {
-                                    _this.moreData = true;
-                                }
                                 _this.isSubscribed = response[0].isSubscribed;
                                 if (response[0].channelDetails.bannerPath) {
                                     _this.bannerPath = response[0].channelDetails.bannerPath;
@@ -148,15 +145,53 @@ var ChannelPage = /** @class */ (function () {
             });
         });
     };
+    ChannelPage.prototype.getChannelPodcasts = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var loading, params;
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.loadingController.create({
+                            message: 'Please wait...'
+                        })];
+                    case 1:
+                        loading = _a.sent();
+                        return [4 /*yield*/, loading.present()];
+                    case 2:
+                        _a.sent();
+                        params = {
+                            'channel_id': this.cid
+                        };
+                        this.server.getChannelPodcasts(params).subscribe(function (response) {
+                            if (response.error == undefined) {
+                                console.log("datas", response[0]);
+                                _this.allPodcasts = response[0].data;
+                                _this.nextPageURL = response[0].next_page_url;
+                                if (_this.nextPageURL != null) {
+                                    _this.moreData = true;
+                                }
+                                _this.podcastLoaded = true;
+                                loading.dismiss();
+                            }
+                            else {
+                                _this.presentToast(response.error);
+                                loading.dismiss();
+                            }
+                        });
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
     ChannelPage.prototype.doInfinite = function (event) {
         var _this = this;
         console.log("nextPage", this.nextPageURL);
-        this.server.loadMorePost(this.nextPageURL).subscribe(function (response) {
+        this.server.loadMorePost(this.nextPageURL + "&channel_id=" + this.cid).subscribe(function (response) {
             console.log("reponse more", response);
-            response.allPodcasts[0].data.forEach(function (element) {
+            response[0].data.forEach(function (element) {
                 _this.allPodcasts.push(element);
             });
-            _this.nextPageURL = response[0].allPodcasts.next_page_url;
+            _this.nextPageURL = response[0].next_page_url;
             event.target.complete();
             console.log("nextPagei", _this.nextPageURL);
             if (_this.nextPageURL == null) {

@@ -20,6 +20,10 @@ export class MychannelsPage implements OnInit {
   uid:any;
   banner:any = 'assets/icon/default_banner.jpeg';
   channelLogo:any = 'assets/icon/default_user.png';
+  nextPageURL:any;
+  loaded:boolean = false;
+  moreData:boolean = false;
+
   constructor(private location: Location,  public navCtrl: NavController, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private router: Router) { 
     this.uid = localStorage.getItem("user_id");
     if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
@@ -61,17 +65,39 @@ export class MychannelsPage implements OnInit {
     this.server.getMyChannels(params).subscribe((response: any) => {
       if ( response.error == undefined) {
         console.log("datas", response[0]);
-        this.myChannels = response[0].myChannels;
+        this.myChannels = response[0].myChannels.data;
+        this.nextPageURL = response[0].myChannels.next_page_url;
+        if(this.nextPageURL != null){
+          this.moreData =  true;
+        }
         if(response[0].myChannels.bannerPath){
           this.banner = response[0].myChannels.bannerPath;
         }
         if(response[0].myChannels.logoPath){
           this.channelLogo = response[0].myChannels.logoPath;
         }
+        this.loaded = true;
         loading.dismiss();
       }else{
         this.presentToast(response.error);
+        this.loaded = true;
         loading.dismiss();
+      }
+    });
+  }
+
+  doInfinite(event:any){
+    console.log("nextPage", this.nextPageURL);
+    this.server.loadMorePost(this.nextPageURL+"&userid="+this.uid).subscribe((response: any) => {
+      console.log("reponse more", response);
+      response[0].myChannels.data.forEach(element => {
+        this.myChannels.push(element);
+      });
+      this.nextPageURL = response[0].myChannels.next_page_url;
+      event.target.complete()
+      console.log("nextPagei", this.nextPageURL);
+      if(this.nextPageURL == null){
+        this.moreData = false;
       }
     });
   }

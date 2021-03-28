@@ -17,7 +17,11 @@ export class MysubscriptionsPage implements OnInit {
   tiger:string='assets/icon/tiger.svg';
   mySubscriptions:any;
   user_image:any = 'assets/icon/default_user.png';
+  default_channel:any = 'assets/icon/default_user.png';
   uid:any;
+  nextPageURL:any;
+  moreData:boolean = false;
+
   constructor(private location: Location,  public navCtrl: NavController, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private router: Router) { 
     this.uid = localStorage.getItem("user_id");
     if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
@@ -54,11 +58,31 @@ export class MysubscriptionsPage implements OnInit {
     this.server.getMySubscriptions(params).subscribe((response: any) => {
       // console.log("datas", response.message);
       if ( response.error == undefined) {
-        this.mySubscriptions = response.message;
+        this.mySubscriptions = response.message.data;
+        this.nextPageURL = response.message.next_page_url;
+        if(this.nextPageURL != null){
+          this.moreData =  true;
+        }
         loading.dismiss();
       }else{
         this.presentToast(response.error);
         loading.dismiss();
+      }
+    });
+  }
+
+  doInfinite(event:any){
+    console.log("nextPage", this.nextPageURL);
+    this.server.loadMorePost(this.nextPageURL+"&uid="+this.uid).subscribe((response: any) => {
+      console.log("reponse more", response);
+      response.message.data.forEach(element => {
+        this.mySubscriptions.push(element);
+      });
+      this.nextPageURL = response.message.next_page_url;
+      event.target.complete()
+      console.log("nextPagei", this.nextPageURL);
+      if(this.nextPageURL == null){
+        this.moreData = false;
       }
     });
   }

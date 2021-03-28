@@ -29,6 +29,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'  
 import { NgxAgoraModule, AgoraConfig } from 'ngx-agora';
+import { NativeAudio } from '@ionic-native/native-audio/ngx';
 
 //   AppID: '03008fea3c2c4744995b487ac6ca59e6',
 // };
@@ -42,7 +43,7 @@ import { NgxAgoraModule, AgoraConfig } from 'ngx-agora';
     StatusBar,
     SplashScreen,Camera,FileChooser,Base64,File,FilePath,FileTransfer, 
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    AndroidPermissions,VideoEditor, StreamingMedia
+    AndroidPermissions,VideoEditor, StreamingMedia, NativeAudio
   ],
   bootstrap: [AppComponent]
 })

@@ -33,6 +33,7 @@ var angular_fontawesome_1 = require("@fortawesome/angular-fontawesome");
 var free_solid_svg_icons_1 = require("@fortawesome/free-solid-svg-icons");
 var free_regular_svg_icons_1 = require("@fortawesome/free-regular-svg-icons");
 var free_brands_svg_icons_1 = require("@fortawesome/free-brands-svg-icons");
+var ngx_13 = require("@ionic-native/native-audio/ngx");
 //   AppID: '03008fea3c2c4744995b487ac6ca59e6',
 // };
 var AppModule = /** @class */ (function () {
@@ -49,7 +50,7 @@ var AppModule = /** @class */ (function () {
                 ngx_2.StatusBar,
                 ngx_1.SplashScreen, ngx_3.Camera, ngx_5.FileChooser, ngx_6.Base64, ngx_7.File, ngx_8.FilePath, ngx_9.FileTransfer,
                 { provide: router_1.RouteReuseStrategy, useClass: angular_1.IonicRouteStrategy },
-                ngx_10.AndroidPermissions, ngx_11.VideoEditor, ngx_12.StreamingMedia
+                ngx_10.AndroidPermissions, ngx_11.VideoEditor, ngx_12.StreamingMedia, ngx_13.NativeAudio
             ],
             bootstrap: [app_component_1.AppComponent]
         })

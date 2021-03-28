@@ -1,6 +1,6 @@
 <ion-header collapse="" *ngIf="loaded">
   <ion-toolbar>
-    <ion-row class="ion-padding">
+    <ion-row class="ion-padding-start ion-padding-end">
       <ion-img offset=3 class="menu-logo-img ion-text-center" [src]="back" (click) = goBack()></ion-img>
       <ion-label class="menu_title">Channels</ion-label>
       <ion-col>
@@ -36,3 +36,10 @@
     </ion-infinite-scroll>
   </ion-content>
 
+  <ion-content *ngIf="!allChannels && loaded">
+    <ion-row class="ion-padding-start ion-padding-end ion-padding-top empty">
+      <ion-col>
+        No Channels available.
+      </ion-col>
+    </ion-row>
+  </ion-content>

@@ -31,6 +31,8 @@ export class MyaccountPage implements OnInit {
   myAudiosLength:any;
   myChannelsLength:any;
   loaded:boolean = false;
+  default_channel = 'assets/icon/default_user.png';
+
   constructor(public popoverCtrl: PopoverController, private location: Location, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private router: Router,public navCtrl: NavController) {
     this.title = this.truncateChar(this.title);
     this.uid = localStorage.getItem("user_id");
@@ -67,24 +69,24 @@ export class MyaccountPage implements OnInit {
   //   return await popover.present();
   // }
 
-  // slideOpts = {
-  //   initialSlide: 1,
-  //   speed: 400,
-  //   on: {
-  //     beforeInit() {
-  //       const swiper = this;
-  //       swiper.classNames.push(`${swiper.params.containerModifierClass}fade`);
-  //       const overwriteParams = {
-  //         slidesPerView: 3.5,
-  //         autoplay:true,
-  //         spaceBetween: -15,
-  //         centeredSlides: false
-  //       };
-  //       swiper.params = Object.assign(swiper.params, overwriteParams);
-  //       swiper.params = Object.assign(swiper.originalParams, overwriteParams);
-  //     },
-  //   }
-  // };
+  slideOpts = {
+    initialSlide: 1,
+    speed: 400,
+    on: {
+      beforeInit() {
+        const swiper = this;
+        swiper.classNames.push(`${swiper.params.containerModifierClass}fade`);
+        const overwriteParams = {
+          slidesPerView: 3.5,
+          autoplay:true,
+          spaceBetween: -15,
+          centeredSlides: false
+        };
+        swiper.params = Object.assign(swiper.params, overwriteParams);
+        swiper.params = Object.assign(swiper.originalParams, overwriteParams);
+      },
+    }
+  };
 
   goBack() {
     this.location.back();

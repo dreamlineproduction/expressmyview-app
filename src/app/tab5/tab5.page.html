@@ -1,7 +1,7 @@
 
   <ion-header collapse="" *ngIf="loaded">
     <ion-toolbar>
-      <ion-row class="ion-padding">
+      <ion-row class="ion-padding-start ion-padding-end">
         <ion-img offset=3 class="menu-logo-img ion-text-center" [src]="logo"></ion-img>
         <ion-label class="menu_title">Live Streaming</ion-label>
         <ion-col>
@@ -43,3 +43,10 @@
     </ion-infinite-scroll>
   </ion-content>
 
+  <ion-content *ngIf="!allVideoPodcasts && loaded">
+    <ion-row class="ion-padding-start ion-padding-end ion-padding-top empty">
+      <ion-col>
+        No Live Streaming available now.
+      </ion-col>
+    </ion-row>
+  </ion-content>

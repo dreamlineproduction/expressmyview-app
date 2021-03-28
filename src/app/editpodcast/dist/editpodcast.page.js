@@ -343,7 +343,7 @@ var EditpodcastPage = /** @class */ (function () {
     EditpodcastPage.prototype.goBack = function () {
         var navData = {
             queryParams: {
-                cid: this.cid
+                id: this.cid
             }
         };
         this.router.navigate(['tabs/channel'], navData);

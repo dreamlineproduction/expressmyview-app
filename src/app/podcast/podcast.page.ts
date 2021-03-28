@@ -4,6 +4,7 @@ import { NavController, ToastController, LoadingController, ActionSheetControlle
 import {ServiceService} from '../service.service';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-media/ngx';
+import { NativeAudio } from '@ionic-native/native-audio/ngx';
 
 @Component({
   selector: 'app-podcast',
@@ -38,7 +39,10 @@ export class PodcastPage {
   newrelatedPodcasts = [];
   isSame:boolean = false;
   fullHD:any;
-  constructor(private location: Location,  public navCtrl: NavController, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private streamingMedia: StreamingMedia, private route: ActivatedRoute,private router: Router) { 
+  filetype:any;
+  audio:any;
+
+  constructor(private location: Location,  public navCtrl: NavController, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private streamingMedia: StreamingMedia, private route: ActivatedRoute,private router: Router,private nativeAudio: NativeAudio) { 
     this.route.queryParams.subscribe((data) => {
       this.pid = data.id;
     });
@@ -87,6 +91,14 @@ export class PodcastPage {
   //   this.streamingMedia.playVideo('http://expressmyview.crtvecode.in/uploads/0xxKzADjM0_undefined_1615285748.mp4', options);
   // }
 
+  // audioPlay(){
+  //   this.nativeAudio.preloadSimple('uniqueId1', 'path/to/file.mp3').then(() => {
+  //     console.log('video finished');
+  //   }).catch(error => {
+  //     console.log(error);
+  //   });
+  // }
+  
   async getPodcastDetails() {
     const loading = await this.loadingController.create({
       message: 'Please wait...',
@@ -110,7 +122,12 @@ export class PodcastPage {
         this.categories = response[0].categories;
         this.isSubscribed = response[0].isSubscribed;
         this.isLiked = response[0].isLiked;
-        this.fullHD = response[0].podcast.videoPath;
+        this.filetype = response[0].podcast.file_type;
+        if(this.filetype == "video"){
+          this.fullHD = response[0].podcast.videoPath; 
+        }else{
+          this.audio = response[0].podcast.audioPath
+        }
         if(response[0].podcast.user_id == this.uid){
           this.isSame = true;
         }

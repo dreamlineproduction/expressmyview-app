@@ -320,7 +320,7 @@ export class EditpodcastPage {
   goBack() {
     const navData: NavigationExtras = {
       queryParams: {
-        cid: this.cid
+        id: this.cid
       }
     }
     this.router.navigate(['tabs/channel'], navData);

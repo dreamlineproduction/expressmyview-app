@@ -1,6 +1,6 @@
 <ion-header collapse="" *ngIf="loaded">
   <ion-toolbar>
-    <ion-row class="ion-padding">
+    <ion-row class="ion-padding-start ion-padding-end">
       <ion-img offset=3 class="menu-logo-img ion-text-center" [src]="back" (click) = goBack()></ion-img>
       <ion-label class="menu_title">Podcast</ion-label>
       <ion-col>
@@ -15,11 +15,25 @@
 <ion-content *ngIf="loaded">
   <!-- <video #video id="video_player" style="width: 100%;height: 200px;" poster="{{podcastDetails.thumbnail}}" src = "https://expressmyview.crtvecode.in/public/uploads/KVljDAjLgn_null_1615291532.mp4" class="podcastVideo" controls >
   </video> -->
-  <video #video id="video_player" style="width: 100%;height: 200px;" class="podcastVideo" controls >
+  <video controlsList="nodownload" #video id="video_player" style="width: 100%;height: 200px;" class="podcastVideo" controls  *ngIf="filetype == 'video'">
     <source data-fluid-hd src='{{fullHD}}' title='1080p' type='video/mp4' />
     <source data-fluid-hd src='vid_720p.mp4' title='720p' type='video/mp4' />
     <source src='vid_480p.mp4' title='480p' type='video/mp4' /> 
   </video>
+
+  <ion-row class="ion-align-items-center" *ngIf="filetype == 'audio'">
+    <ion-col class="ion-text-center ion-no-padding">
+      <ion-img [src]="podcastDetails.thumbnail" class="audio_thumbnail"></ion-img>
+    </ion-col>
+  </ion-row>
+  <ion-row class="ion-align-items-center">
+    <ion-col class="ion-text-center">
+      <audio controlsList="nodownload" controls *ngIf="filetype == 'audio'">
+        <source src="{{audio}}" type="audio/mpeg">
+      </audio>
+    </ion-col>
+  </ion-row>
+  
 
   <!-- <ion-row class="ion-align-items-center">
     <ion-item class="podcast_thumbnail_item" (click)="mediaPlay()">
@@ -90,7 +104,7 @@
     </ion-col>
   </ion-row>
 
-  <div>
+  <div *ngIf="relatedPodcasts">
     <ion-item>
       <h5 class="latest">Related Podcasts</h5>
     </ion-item>
@@ -122,6 +136,12 @@
   <ion-row class="ion-align-items-center ion-padding-start ion-padding-top ion-padding-end">
     <ion-col size="12" class="other_details_col">
       <ion-text class="comment_title">{{podcastDetails.comments_count}} comments</ion-text>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="ion-padding-start ion-padding-end ion-padding-top empty" *ngIf="!relatedPodcasts">
+    <ion-col>
+      No related podcasts available.
     </ion-col>
   </ion-row>
 </ion-content>

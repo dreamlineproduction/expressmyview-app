@@ -25,6 +25,8 @@ export class MyMediasPage{
   loaded:boolean = false;
   uid:any;
   media:any;
+  nextPageURL:any;
+  moreData:boolean = false;
   pageTitle:any;
   constructor(private location: Location,  public navCtrl: NavController, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private streamingMedia: StreamingMedia, private route: ActivatedRoute,private router: Router) {
     this.title = this.truncateChar(this.title);
@@ -67,13 +69,33 @@ export class MyMediasPage{
     this.server.getMyAllPodcasts(params).subscribe((response: any) => {
       if ( response.error == undefined) {
         console.log("datas", response[0]);
-        this.allVideoPodcasts = response[0].allVideoPodcasts;
+        this.allVideoPodcasts = response[0].allVideoPodcasts.data;
+        this.nextPageURL = response[0].allVideoPodcasts.next_page_url;
+        if(this.nextPageURL != null){
+          this.moreData =  true;
+        }
         this.loaded = true;
         loading.dismiss();
       }else{
         this.presentToast(response.error);
         this.loaded = true;
         loading.dismiss();
+      }
+    });
+  }
+
+  doInfinite(event:any){
+    console.log("nextPage", this.nextPageURL);
+    this.server.loadMorePost(this.nextPageURL+"&id="+this.uid+"&media="+this.media).subscribe((response: any) => {
+      console.log("reponse more", response);
+      response[0].allVideoPodcasts.data.forEach(element => {
+        this.allVideoPodcasts.push(element);
+      });
+      this.nextPageURL = response[0].allVideoPodcasts.next_page_url;
+      event.target.complete()
+      console.log("nextPagei", this.nextPageURL);
+      if(this.nextPageURL == null){
+        this.moreData = false;
       }
     });
   }

@@ -1,7 +1,7 @@
 
   <ion-header collapse="" *ngIf="loaded">
     <ion-toolbar>
-      <ion-row class="ion-padding">
+      <ion-row class="ion-padding-start ion-padding-end">
         <ion-img offset=3 class="menu-logo-img ion-text-center" [src]="back" (click) = goBack()></ion-img>
         <ion-label class="menu_title">My Account</ion-label>
         <ion-col>
@@ -75,7 +75,7 @@
               <ion-text class="title">{{myAudio.title}}</ion-text>
             </ion-col>
             <ion-col size="2">
-              <ion-img class="threedots" (click)="presentPopover($event, myAudio.channel_id,'podcast', myVideo.id)" [src]="threedots"></ion-img>
+              <ion-img class="threedots" (click)="presentPopover($event, myAudio.channel_id,'podcast', myAudio.id)" [src]="threedots"></ion-img>
             </ion-col>
           </ion-row>
          <ion-row class="ion-align-items-center channel_row">
@@ -92,7 +92,7 @@
       </ion-row>
     </div>
 
-    <div  *ngIf="myChannelsLength > 0">
+    <div *ngIf="myChannelsLength > 0">
       <ion-row class="ion-padding-start ion-padding-end ion-padding-top">
         <ion-col class="video_title">
           My Channels
@@ -105,7 +105,7 @@
         <ion-slide *ngFor="let myChannel of myChannels;">
           <ion-card class="small_card" (click)="goToChannelDetails(myChannel.id)">
             <ion-item>
-              <ion-img class="small_card_img" *ngIf="myChannel.path" [src]="myChannel.path"></ion-img>
+              <ion-img class="small_card_img" [src]="myChannel.path ? myChannel.path : default_channel"></ion-img>
             </ion-item>
             <ion-item>
               <ion-label class="small_card_text">{{myChannel.name}}</ion-label>
@@ -114,5 +114,11 @@
         </ion-slide>
       </ion-slides>
     </div>
+
+    <ion-row class="ion-padding-start ion-padding-end ion-padding-top empty" *ngIf="myChannelsLength == 0 && myVideosLength == 0 && myAudiosLength == 0">
+      <ion-col>
+        No Podcast or Channel available. Please create one.
+      </ion-col>
+    </ion-row>
   </ion-content>
 

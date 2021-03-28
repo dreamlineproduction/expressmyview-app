@@ -1,6 +1,9 @@
 ion-item, ion-toolbar{
     --border-color: transparent;
 }
+ion-header{
+    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%) !important;
+}
 //Header
 .menu-logo-img{
     width: 30px;
