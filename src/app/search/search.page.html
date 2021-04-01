@@ -14,6 +14,33 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="searchResults">
+  <ion-row class="ion-align-items-center ion-justify-content-center card_container" *ngFor="let searchResult of searchResults">
+    <ion-col size="4">
+      <ion-item class="img_container">
+        <ion-img class="img_icon" [src]="searchResult.path ? searchResult.path : default_podcast"></ion-img>
+        <ion-text class="img_text">{{searchResult.runtime_formatted}}</ion-text>
+      </ion-item>
+    </ion-col>
+    <ion-col size="7">
+      <ion-row class="ion-align-items-center" (click)="goToPlay(searchResult.id)">
+        <ion-text class="title">{{searchResult.title}}</ion-text>
+      </ion-row>
+     <ion-row class="ion-align-items-center">
+        <ion-text class="subtitle" (click)="goToChannelDetails(searchResult.channel_id)">{{searchResult.channelName}}</ion-text>
+        <!-- <ion-img class="small_icon" [src]="checkmark"></ion-img> -->
+     </ion-row>
+      <ion-row class="ion-align-items-center" (click)="goToPlay(searchResult.id)">
+        <ion-icon class="footer_icon"  name="eye"></ion-icon>
+        <ion-text class="footer_title">{{searchResult.views}} views</ion-text>
+        <ion-icon class="footer_icon" name="calendar"></ion-icon>
+        <ion-text class="footer_title">{{searchResult.dateDiff}}</ion-text>
+      </ion-row>
+    </ion-col>
+  </ion-row>
 
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="moreData">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

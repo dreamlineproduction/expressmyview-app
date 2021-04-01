@@ -10,14 +10,9 @@ exports.LivestreamPageModule = void 0;
 var core_1 = require("@angular/core");
 var common_1 = require("@angular/common");
 var forms_1 = require("@angular/forms");
-var ngx_agora_1 = require("ngx-agora");
 var angular_1 = require("@ionic/angular");
-var environment_1 = require("../../environments/environment");
 var livestream_routing_module_1 = require("./livestream-routing.module");
 var livestream_page_1 = require("./livestream.page");
-var agoraConfig = {
-    AppID: environment_1.environment.appID
-};
 var LivestreamPageModule = /** @class */ (function () {
     function LivestreamPageModule() {
     }
@@ -27,7 +22,6 @@ var LivestreamPageModule = /** @class */ (function () {
                 common_1.CommonModule,
                 forms_1.FormsModule,
                 angular_1.IonicModule,
-                ngx_agora_1.NgxAgoraModule.forRoot(agoraConfig),
                 livestream_routing_module_1.LivestreamPageRoutingModule
             ],
             declarations: [livestream_page_1.LivestreamPage]

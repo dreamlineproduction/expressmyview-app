@@ -2,7 +2,8 @@ ion-header {
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.08) !important;
 }
 
-ion-item, ion-toolbar {
+ion-item,
+ion-toolbar {
   --border-color: transparent;
 }
 
@@ -18,6 +19,14 @@ ion-slide {
 .menu-logo-img {
   width: 8px;
   margin-right: 10px;
+}
+
+.no-contents {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .menu_title {
@@ -130,7 +139,6 @@ ion-slide {
 }
 
 .small_card {
-  width: 86px;
   height: 93px;
   padding-top: 10px;
 }

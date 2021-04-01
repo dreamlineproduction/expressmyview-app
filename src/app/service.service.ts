@@ -12,8 +12,8 @@ import { FilterPage } from '../app/filter/filter.page';
 export class ServiceService {
   options:any;
   
-  url = "http://127.0.0.1:8000/api/";
-  // url = "https://expressmyview.crtvecode.in/public/api/";
+  // url = "http://127.0.0.1:8000/api/";
+  url = "https://expressmyview.crtvecode.in/expressmyview-git/expressmyview/public/api/";
   // url = "https://testmyserver.in/expressmyviewserver/api/";
   constructor(private http: HttpClient,private httpBackend: HttpBackend, public navCtrl: NavController, public modalController: ModalController) {
     this.http = new HttpClient(this.httpBackend);
@@ -224,6 +224,10 @@ export class ServiceService {
     .pipe(map(results => results));
   }
 
+  getAllCategories(){
+    return this.http.get(this.url+'getAllCategories', this.options)
+    .pipe(map(results => results));
+  }
 
   async presentModal() {
     const modal = await this.modalController.create({

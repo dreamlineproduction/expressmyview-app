@@ -42,10 +42,15 @@
   
       <ion-item>
         <ion-radio class="ion_radio" mode="md" value="cord"></ion-radio>
-        <ion-label class="filter_label">Cord</ion-label>
+        <ion-label class="filter_label">Any</ion-label>
       </ion-item>
   
-      <ion-item>
+      <ion-item *ngFor="let allCategory of allCategories">
+        <ion-radio class="ion_radio" mode="md" value="{{allCategory.slug}}"></ion-radio>
+        <ion-label class="filter_label">{{allCategory.name}}</ion-label>
+      </ion-item>
+
+      <!-- <ion-item>
         <ion-radio class="ion_radio" mode="md" value="cordss"></ion-radio>
         <ion-label class="filter_label">Cordss</ion-label>
       </ion-item>
@@ -53,7 +58,7 @@
       <ion-item>
         <ion-radio class="ion_radio" mode="md" value="cords"></ion-radio>
         <ion-label class="filter_label">Cords</ion-label>
-      </ion-item>
+      </ion-item> -->
 
     </ion-radio-group>
   </ion-list>

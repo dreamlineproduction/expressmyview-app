@@ -30,14 +30,17 @@ import { far } from '@fortawesome/free-regular-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'  
 import { NgxAgoraModule, AgoraConfig } from 'ngx-agora';
 import { NativeAudio } from '@ionic-native/native-audio/ngx';
+import { environment } from '../environments/environment';
 
-//   AppID: '03008fea3c2c4744995b487ac6ca59e6',
-// };
+const agoraConfig: AgoraConfig = {
+  AppID: environment.appID,
+};
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, PopovercomponentPageModule, FontAwesomeModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, PopovercomponentPageModule, FontAwesomeModule,
+    NgxAgoraModule.forRoot(agoraConfig),],
   providers: [
     ImagePicker,
     StatusBar,

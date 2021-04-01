@@ -46,14 +46,17 @@ exports.SearchPage = void 0;
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/common/http");
 var SearchPage = /** @class */ (function () {
-    function SearchPage(modalController, httpBackend, server, toastController, http) {
+    function SearchPage(modalController, httpBackend, server, toastController, http, router) {
         this.modalController = modalController;
         this.httpBackend = httpBackend;
         this.server = server;
         this.toastController = toastController;
         this.http = http;
+        this.router = router;
         this.back = 'assets/icon/back.svg';
         this.filter = 'assets/icon/filter.png';
+        this.default_podcast = 'assets/icon/default_user.png';
+        this.moreData = false;
         this.http = new http_1.HttpClient(this.httpBackend);
         var headers = new http_1.HttpHeaders({
             'Content-Type': 'application/json',
@@ -81,11 +84,34 @@ var SearchPage = /** @class */ (function () {
         this.server.searchAPI(params, this.options).subscribe(function (response) {
             if (response.error == undefined) {
                 console.log("response", response);
+                _this.searchResults = response.queryResults.podcasts.data;
+                _this.nextPageURL = response.queryResults.podcasts.next_page_url;
+                if (_this.nextPageURL != null) {
+                    _this.moreData = true;
+                }
             }
             else {
                 _this.presentToast(response.error);
             }
         });
+    };
+    SearchPage.prototype.goToChannelDetails = function (id) {
+        this.modalController.dismiss();
+        var navData = {
+            queryParams: {
+                id: id
+            }
+        };
+        this.router.navigate(['tabs/channel'], navData);
+    };
+    SearchPage.prototype.goToPlay = function (id) {
+        this.modalController.dismiss();
+        var navData = {
+            queryParams: {
+                id: id
+            }
+        };
+        this.router.navigate(['tabs/podcast'], navData);
     };
     SearchPage.prototype.presentToast = function (txt) {
         return __awaiter(this, void 0, void 0, function () {
@@ -105,6 +131,22 @@ var SearchPage = /** @class */ (function () {
                         return [2 /*return*/];
                 }
             });
+        });
+    };
+    SearchPage.prototype.doInfinite = function (event) {
+        var _this = this;
+        console.log("nextPage", this.nextPageURL);
+        this.server.loadMorePost(this.nextPageURL + '&q=' + this.searchKeys).subscribe(function (response) {
+            console.log("reponse more", response);
+            response.queryResults.podcasts.data.forEach(function (element) {
+                _this.searchResults.push(element);
+            });
+            _this.nextPageURL = response.queryResults.podcasts.next_page_url;
+            event.target.complete();
+            console.log("nextPagei", _this.nextPageURL);
+            if (_this.nextPageURL == null) {
+                _this.moreData = false;
+            }
         });
     };
     SearchPage = __decorate([

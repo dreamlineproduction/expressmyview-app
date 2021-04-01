@@ -49,13 +49,13 @@ var operators_1 = require("rxjs/operators");
 var search_page_1 = require("../app/search/search.page");
 var filter_page_1 = require("../app/filter/filter.page");
 var ServiceService = /** @class */ (function () {
-    // url = "https://expressmyview.crtvecode.in/public/api/";
     // url = "https://testmyserver.in/expressmyviewserver/api/";
     function ServiceService(http, httpBackend, navCtrl, modalController) {
         this.http = http;
         this.httpBackend = httpBackend;
         this.navCtrl = navCtrl;
         this.modalController = modalController;
+        // url = "http://127.0.0.1:8000/api/";
         this.url = "https://expressmyview.crtvecode.in/expressmyview-git/expressmyview/public/api/";
         this.http = new http_1.HttpClient(this.httpBackend);
         var headers = new http_1.HttpHeaders({
@@ -225,6 +225,10 @@ var ServiceService = /** @class */ (function () {
     };
     ServiceService.prototype.loadMorePost = function (url) {
         return this.http.post(url, this.options)
+            .pipe(operators_1.map(function (results) { return results; }));
+    };
+    ServiceService.prototype.getAllCategories = function () {
+        return this.http.get(this.url + 'getAllCategories', this.options)
             .pipe(operators_1.map(function (results) { return results; }));
     };
     ServiceService.prototype.presentModal = function () {

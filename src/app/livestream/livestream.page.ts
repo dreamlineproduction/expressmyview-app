@@ -56,29 +56,30 @@ export class LivestreamPage{
       this.user_image = localStorage.getItem("user_image");
     }
     this.watchAPI();
-    this.client = this.ngxAgoraService.createClient({ mode: 'live', codec: 'h264' });
-    this.client.setClientRole("audience");
+    // this.client = this.ngxAgoraService.createClient({ mode: 'live', codec: 'vp8' });
+    // this.client.setClientRole("audience");
   }
 
-  private startCall() {
-    console.log("appid", this.appID, "channel", this.streamChannel, "token", this.token, "userid", this.uid);
-    // this.client.join(this.appID, this.streamChannel, this.token, null);
-    this.ngxAgoraService.client.join(this.appID, this.streamChannel, this.token, (uid) => {
-    });
+  async startCall() {
+    // console.log("appid", this.appID, "channel", this.streamChannel, "token", this.token, "userid", this.uid);
+    // // this.client.join(this.appID, this.streamChannel, this.token, null);
+    // await this.client.join(this.appID, this.streamChannel, this.token, (uid) => {
+    //   console.log("userid", uid);
+    // });
     
-    this.client.on(ClientEvent.RemoteStreamAdded, evt => {
-      const stream = evt.stream as Stream;
-      this.client.subscribe(stream, { audio: true, video: true }, err => {
-        console.log('Subscribe stream failed', err);
-      });
-    });
+    // this.client.on(ClientEvent.RemoteStreamAdded, evt => {
+    //   const stream = evt.stream as Stream;
+    //   this.client.subscribe(stream, { audio: true, video: true }, err => {
+    //     console.log('Subscribe stream failed', err);
+    //   });
+    // });
 
-    this.client.on(ClientEvent.RemoteStreamSubscribed, evt => {
-      const stream = evt.stream as Stream;
-      const id = stream.getId().toString();
-      this.addVideoStream(id);
-      stream.play(id);
-    });
+    // this.client.on(ClientEvent.RemoteStreamSubscribed, evt => {
+    //   const stream = evt.stream as Stream;
+    //   const id = stream.getId().toString();
+    //   this.addVideoStream(id);
+    //   stream.play(id);
+    // });
 
     // this.client.on(ClientEvent.RemoteStreamRemoved, evt => {
     //   const stream = evt.stream as Stream;
@@ -97,6 +98,49 @@ export class LivestreamPage{
     //     console.log(`${evt.uid} left from this channel`);
     //   }
     // });
+    
+    var bclient = {
+      // For the local client.
+      client: null,
+      // For the local audio and video tracks.
+      localAudioTrack: null,
+      localVideoTrack: null,
+      hosts: null,
+    };
+    
+    bclient.client = this.ngxAgoraService.createClient({mode: 'live', codec: 'vp8'});
+    bclient.client.setClientRole("audience");
+
+    bclient.client.on('connection-state-change', (currState, prevState, reason) => {
+      console.log('Connection state: '+currState);
+    });
+
+    bclient.client.on('token-privilege-will-expire', async function() {
+      await bclient.client.renewToken(this.token)
+    });
+
+    bclient.client.on('token-privilege-did-expire', async function() {
+      await bclient.client.renewToken(this.token)
+    });
+
+    bclient.client.on('network-quality', (quality) => {
+      const { downlinkNetworkQuality, uplinkNetworkQuality } = quality;
+      console.log(quality);
+    });
+
+    bclient.client.on('exception', (event) => {
+      console.log(event);
+    });
+
+    bclient.client.on('user-joined', (user) => {
+      console.log('host joined', user);
+    });
+
+    bclient.client.on('user-left', (user) => {
+      console.log('host left', user);
+    });
+
+    const uid = await bclient.client.join(this.appID, this.channelName, this.token, null);
   }
 
   addVideoStream(elementId){

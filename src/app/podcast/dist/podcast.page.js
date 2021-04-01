@@ -182,7 +182,7 @@ var PodcastPage = /** @class */ (function () {
                     case 0: return [4 /*yield*/, this.toastController.create({
                             message: txt,
                             duration: 3000,
-                            position: 'top',
+                            position: 'bottom',
                             mode: 'ios',
                             color: 'dark'
                         })];

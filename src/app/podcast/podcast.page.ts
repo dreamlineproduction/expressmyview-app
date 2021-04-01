@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer2, RendererFactory2, } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Location } from '@angular/common';
 import { NavController, ToastController, LoadingController, ActionSheetController } from '@ionic/angular';
 import {ServiceService} from '../service.service';

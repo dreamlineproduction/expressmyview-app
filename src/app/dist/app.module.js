@@ -33,9 +33,12 @@ var angular_fontawesome_1 = require("@fortawesome/angular-fontawesome");
 var free_solid_svg_icons_1 = require("@fortawesome/free-solid-svg-icons");
 var free_regular_svg_icons_1 = require("@fortawesome/free-regular-svg-icons");
 var free_brands_svg_icons_1 = require("@fortawesome/free-brands-svg-icons");
+var ngx_agora_1 = require("ngx-agora");
 var ngx_13 = require("@ionic-native/native-audio/ngx");
-//   AppID: '03008fea3c2c4744995b487ac6ca59e6',
-// };
+var environment_1 = require("../environments/environment");
+var agoraConfig = {
+    AppID: environment_1.environment.appID
+};
 var AppModule = /** @class */ (function () {
     function AppModule(library) {
         library.addIconPacks(free_solid_svg_icons_1.fas, free_brands_svg_icons_1.fab, free_regular_svg_icons_1.far);
@@ -44,7 +47,8 @@ var AppModule = /** @class */ (function () {
         core_1.NgModule({
             declarations: [app_component_1.AppComponent],
             entryComponents: [],
-            imports: [platform_browser_1.BrowserModule, angular_1.IonicModule.forRoot(), app_routing_module_1.AppRoutingModule, http_1.HttpClientModule, popovercomponent_module_1.PopovercomponentPageModule, angular_fontawesome_1.FontAwesomeModule],
+            imports: [platform_browser_1.BrowserModule, angular_1.IonicModule.forRoot(), app_routing_module_1.AppRoutingModule, http_1.HttpClientModule, popovercomponent_module_1.PopovercomponentPageModule, angular_fontawesome_1.FontAwesomeModule,
+                ngx_agora_1.NgxAgoraModule.forRoot(agoraConfig),],
             providers: [
                 ngx_4.ImagePicker,
                 ngx_2.StatusBar,

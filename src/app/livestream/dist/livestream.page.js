@@ -44,7 +44,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.LivestreamPage = void 0;
 var core_1 = require("@angular/core");
-var ngx_agora_1 = require("ngx-agora");
 var LivestreamPage = /** @class */ (function () {
     function LivestreamPage(location, navCtrl, server, toastController, loadingController, streamingMedia, route, router, ngxAgoraService) {
         var _this = this;
@@ -82,43 +81,72 @@ var LivestreamPage = /** @class */ (function () {
             this.user_image = localStorage.getItem("user_image");
         }
         this.watchAPI();
-        this.client = this.ngxAgoraService.createClient({ mode: 'live', codec: 'h264' });
-        this.client.setClientRole("audience");
+        // this.client = this.ngxAgoraService.createClient({ mode: 'live', codec: 'vp8' });
+        // this.client.setClientRole("audience");
     }
     LivestreamPage.prototype.startCall = function () {
-        var _this = this;
-        console.log("appid", this.appID, "channel", this.streamChannel, "token", this.token, "userid", this.uid);
-        // this.client.join(this.appID, this.streamChannel, this.token, null);
-        this.ngxAgoraService.client.join(this.appID, this.streamChannel, this.token, function (uid) {
-        });
-        this.client.on(ngx_agora_1.ClientEvent.RemoteStreamAdded, function (evt) {
-            var stream = evt.stream;
-            _this.client.subscribe(stream, { audio: true, video: true }, function (err) {
-                console.log('Subscribe stream failed', err);
+        return __awaiter(this, void 0, void 0, function () {
+            var bclient, uid;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        bclient = {
+                            // For the local client.
+                            client: null,
+                            // For the local audio and video tracks.
+                            localAudioTrack: null,
+                            localVideoTrack: null,
+                            hosts: null
+                        };
+                        bclient.client = this.ngxAgoraService.createClient({ mode: 'live', codec: 'vp8' });
+                        bclient.client.setClientRole("audience");
+                        bclient.client.on('connection-state-change', function (currState, prevState, reason) {
+                            console.log('Connection state: ' + currState);
+                        });
+                        bclient.client.on('token-privilege-will-expire', function () {
+                            return __awaiter(this, void 0, void 0, function () {
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0: return [4 /*yield*/, bclient.client.renewToken(this.token)];
+                                        case 1:
+                                            _a.sent();
+                                            return [2 /*return*/];
+                                    }
+                                });
+                            });
+                        });
+                        bclient.client.on('token-privilege-did-expire', function () {
+                            return __awaiter(this, void 0, void 0, function () {
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0: return [4 /*yield*/, bclient.client.renewToken(this.token)];
+                                        case 1:
+                                            _a.sent();
+                                            return [2 /*return*/];
+                                    }
+                                });
+                            });
+                        });
+                        bclient.client.on('network-quality', function (quality) {
+                            var downlinkNetworkQuality = quality.downlinkNetworkQuality, uplinkNetworkQuality = quality.uplinkNetworkQuality;
+                            console.log(quality);
+                        });
+                        bclient.client.on('exception', function (event) {
+                            console.log(event);
+                        });
+                        bclient.client.on('user-joined', function (user) {
+                            console.log('host joined', user);
+                        });
+                        bclient.client.on('user-left', function (user) {
+                            console.log('host left', user);
+                        });
+                        return [4 /*yield*/, bclient.client.join(this.appID, this.channelName, this.token, null)];
+                    case 1:
+                        uid = _a.sent();
+                        return [2 /*return*/];
+                }
             });
         });
-        this.client.on(ngx_agora_1.ClientEvent.RemoteStreamSubscribed, function (evt) {
-            var stream = evt.stream;
-            var id = stream.getId().toString();
-            _this.addVideoStream(id);
-            stream.play(id);
-        });
-        // this.client.on(ClientEvent.RemoteStreamRemoved, evt => {
-        //   const stream = evt.stream as Stream;
-        //   if (stream) {
-        //     stream.stop();
-        //     this.remoteCalls = [];
-        //     console.log(`Remote stream is removed ${stream.getId()}`);
-        //   }
-        // });
-        // this.client.on(ClientEvent.PeerLeave, evt => {
-        //   const stream = evt.stream as Stream;
-        //   if (stream) {
-        //     stream.stop();
-        //     this.remoteCalls = this.remoteCalls.filter(call => call !== `${this.getRemoteId(stream)}`);
-        //     console.log(`${evt.uid} left from this channel`);
-        //   }
-        // });
     };
     LivestreamPage.prototype.addVideoStream = function (elementId) {
         var remoteContainer = document.getElementById("remote-container");
