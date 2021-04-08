@@ -2,7 +2,8 @@ ion-header {
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.08) !important;
 }
 
-ion-item, ion-toolbar {
+ion-item,
+ion-toolbar {
   --border-color: transparent;
 }
 
@@ -138,7 +139,7 @@ audio {
 .other_details_text {
   font-size: 15px;
   font-weight: normal;
-  color: #ff516b;
+  color: #616161;
   padding: 2px 5px;
   width: -webkit-fill-available;
 }
@@ -150,7 +151,20 @@ audio {
 }
 
 .other_details_col {
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
+  border-bottom: 1px solid #f1f1f1;
+  box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.un-subscribe {
+  padding: 2px;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.un-subscribe .button-native {
+  background: #3880ff00;
 }
 
 .img_icon {
@@ -223,4 +237,9 @@ audio {
 
 .podcastVideo {
   object-fit: cover;
+}
+
+.video {
+  height: 200px;
+  width: 100%;
 }

@@ -13,6 +13,8 @@ var forms_1 = require("@angular/forms");
 var angular_1 = require("@ionic/angular");
 var livestream_routing_module_1 = require("./livestream-routing.module");
 var livestream_page_1 = require("./livestream.page");
+var hero_detail_component_1 = require("../hero-detail/hero-detail.component");
+var angular_fontawesome_1 = require("@fortawesome/angular-fontawesome");
 var LivestreamPageModule = /** @class */ (function () {
     function LivestreamPageModule() {
     }
@@ -22,9 +24,11 @@ var LivestreamPageModule = /** @class */ (function () {
                 common_1.CommonModule,
                 forms_1.FormsModule,
                 angular_1.IonicModule,
-                livestream_routing_module_1.LivestreamPageRoutingModule
+                livestream_routing_module_1.LivestreamPageRoutingModule,
+                angular_fontawesome_1.FontAwesomeModule
             ],
-            declarations: [livestream_page_1.LivestreamPage]
+            declarations: [livestream_page_1.LivestreamPage, hero_detail_component_1.HeroDetailComponent],
+            exports: [hero_detail_component_1.HeroDetailComponent]
         })
     ], LivestreamPageModule);
     return LivestreamPageModule;

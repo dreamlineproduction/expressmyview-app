@@ -13,8 +13,24 @@
   </ion-toolbar>
 </ion-header>
 <ion-content *ngIf="loaded">
-  <video #video style="width: 100%;height: 200px;" poster="{{podcastDetails.stream.thumbnail}}" src = "https://expressmyview.crtvecode.in/uploads/KVljDAjLgn_null_1615291532.mp4" class="podcastVideo" controls >
-  </video>
+  <div #agora_local id="agora_local">
+  </div>
+  <div #remote_container id="remote_container">
+  </div>
+  <!-- <video #video style="width: 100%;height: 200px;" poster="{{podcastDetails.stream.thumbnail}}" src = "https://expressmyview.crtvecode.in/uploads/KVljDAjLgn_null_1615291532.mp4" class="podcastVideo" controls >
+  </video> -->
+  <!-- <video
+    id="my-player"
+    class="video-js"
+    controls
+    preload="auto"
+    poster="{{podcastDetails.stream.thumbnail}}"
+    data-setup='{}'>
+  <source src="https://expressmyview.crtvecode.in/uploads/KVljDAjLgn_null_1615291532.mp4" type="video/mp4"></source>
+  </video> -->
+
+
+  <!-- <video #target class="video-js" src="https://expressmyview.crtvecode.in/public/uploads/KVljDAjLgn_null_1615291532.mp4" controls muted playsinline preload="none"></video> -->
   
   <ion-row class="ion-align-items-center ion-padding-start">
     <ion-col>
@@ -28,13 +44,13 @@
               <ion-text class="big_card_footer">{{podcastDetails.stream.dateDiff}}</ion-text>
           </div>
         </ion-col>
-        <!-- <ion-col size="4" *ngIf="!isSame">
+        <ion-col size="4" *ngIf="!isSame">
           <ion-row>
-            <ion-button [color]="!isLiked ? 'danger' : 'medium'" role="button" (click)="like()">
+            <ion-button [color]="!isLiked ? 'dark' : 'medium'" role="button" (click)="like()">
               <fa-icon icon="thumbs-up"></fa-icon>
             </ion-button>
           </ion-row>
-        </ion-col> -->
+        </ion-col>
       </ion-row>
     </ion-col>
   </ion-row>
@@ -47,10 +63,10 @@
             <!-- <ion-img class="small_icon" [src]="checkmark"></ion-img>   -->
           </ion-row>
         </ion-col>
-        <!-- <ion-col size="5" class="ion-text-right" *ngIf="!isSame">
+        <ion-col size="5" class="ion-text-right" *ngIf="!isSame">
           <ion-button color="danger" *ngIf="!isSubscribed" (click)="subscribe()">Subscribe</ion-button>
           <ion-button color="medium" *ngIf="isSubscribed" (click)="subscribe()">Unsubscribe</ion-button>
-        </ion-col> -->
+        </ion-col>
       </ion-row>
     </ion-col>
   </ion-row>
@@ -76,7 +92,7 @@
     </ion-col>
   </ion-row>
 
-  <!-- <div>
+  <div>
     <ion-item>
       <h5 class="latest">Related Podcasts</h5>
     </ion-item>
@@ -103,15 +119,42 @@
         </ion-row>
       </ion-col>
     </ion-row>
-  </div> -->
-  <button (click)="startCall()">Start Call</button>
-  <div id="agora_local">
   </div>
-  <div id="remote-container">
-  </div>
+  <!-- <button (click)="startCall()">Start Call</button> -->
+  
+  
+  <!-- <video #target class="video-js" controls muted playsinline preload="none"></video> -->
+
+  <!-- <video  class="video-js" controls preload="auto" width="640" height="264" poster="MY_VIDEO_POSTER.jpg" data-setup='{}'>
+	<source src="//amssamples.streaming.mediaservices.windows.net/91492735-c523-432b-ba01-faba6c2206a2/AzureMediaServicesPromo.ism/manifest(format=m3u8-aapl-v3)"
+	 type='application/x-mpegURL'>
+	<p class="vjs-no-js">
+		To view this video please enable JavaScript, and consider upgrading to a web browser that
+		<a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+	</p>
+</video> -->
+
+  <!-- <app-hero-detail [options]="{ autoplay: true, controls: true, sources: [{ src: 'https://expressmyview.crtvecode.in/public/uploads/KVljDAjLgn_null_1615291532.mp4', type: 'video/mp4' }]}"></app-hero-detail> -->
+  
+  <!-- <video #video class="video-js" controls muted playsinline preload="none"></video> -->
+
   <ion-row class="ion-align-items-center ion-padding-start ion-padding-top ion-padding-end">
     <ion-col size="12" class="other_details_col">
       <ion-text class="comment_title">{{podcastDetails.stream.comments_count}} comments</ion-text>
     </ion-col>
   </ion-row>
 </ion-content>
+<!-- 
+<ion-content>
+  <div [id]="localCallId" class="local checknow"></div>
+
+  <div *ngFor="let callId of remoteCalls" [id]="callId" class="remote"></div>
+</ion-content> -->
+<!-- 
+<ion-content>
+  <video #video class="video-js" controls muted playsinline preload="none"></video>
+  <video id="video_holder"  #htmlvideo  autoplay height="300%" width="100%"
+  class="video-js vjs-default-skin vjs-big-play-centered vjs-big-play-button" controls 
+  data-setup='{}'data-res="auto" ></video>
+  <button (click)="startCall()">Start Call</button>
+</ion-content> -->

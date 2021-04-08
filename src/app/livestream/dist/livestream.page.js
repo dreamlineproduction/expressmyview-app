@@ -44,6 +44,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 exports.LivestreamPage = void 0;
 var core_1 = require("@angular/core");
+var ngx_agora_1 = require("ngx-agora");
 var LivestreamPage = /** @class */ (function () {
     function LivestreamPage(location, navCtrl, server, toastController, loadingController, streamingMedia, route, router, ngxAgoraService) {
         var _this = this;
@@ -68,9 +69,28 @@ var LivestreamPage = /** @class */ (function () {
         this.back = 'assets/icon/back.svg';
         this.loaded = false;
         this.podcastDetails = [];
+        this.isLiked = false;
         this.relatedPodcasts = [];
         this.newrelatedPodcasts = [];
+        this.isVideo = false;
         this.isSame = false;
+        this.videoJsConfigObj = {
+            preload: "metadata",
+            controls: true,
+            autoplay: true,
+            overrideNative: true,
+            techOrder: ["html5", "flash"],
+            html5: {
+                nativeVideoTracks: false,
+                nativeAudioTracks: false,
+                nativeTextTracks: false,
+                hls: {
+                    withCredentials: false,
+                    overrideNative: true,
+                    debug: true
+                }
+            }
+        };
         this.route.queryParams.subscribe(function (data) {
             _this.lid = data.lid;
         });
@@ -81,86 +101,92 @@ var LivestreamPage = /** @class */ (function () {
             this.user_image = localStorage.getItem("user_image");
         }
         this.watchAPI();
-        // this.client = this.ngxAgoraService.createClient({ mode: 'live', codec: 'vp8' });
-        // this.client.setClientRole("audience");
+        this.client = this.ngxAgoraService.createClient({ mode: 'live', codec: 'vp8' });
+        this.client.setClientRole("audience");
     }
     LivestreamPage.prototype.startCall = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var bclient, uid;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        bclient = {
-                            // For the local client.
-                            client: null,
-                            // For the local audio and video tracks.
-                            localAudioTrack: null,
-                            localVideoTrack: null,
-                            hosts: null
-                        };
-                        bclient.client = this.ngxAgoraService.createClient({ mode: 'live', codec: 'vp8' });
-                        bclient.client.setClientRole("audience");
-                        bclient.client.on('connection-state-change', function (currState, prevState, reason) {
-                            console.log('Connection state: ' + currState);
-                        });
-                        bclient.client.on('token-privilege-will-expire', function () {
-                            return __awaiter(this, void 0, void 0, function () {
-                                return __generator(this, function (_a) {
-                                    switch (_a.label) {
-                                        case 0: return [4 /*yield*/, bclient.client.renewToken(this.token)];
-                                        case 1:
-                                            _a.sent();
-                                            return [2 /*return*/];
-                                    }
-                                });
-                            });
-                        });
-                        bclient.client.on('token-privilege-did-expire', function () {
-                            return __awaiter(this, void 0, void 0, function () {
-                                return __generator(this, function (_a) {
-                                    switch (_a.label) {
-                                        case 0: return [4 /*yield*/, bclient.client.renewToken(this.token)];
-                                        case 1:
-                                            _a.sent();
-                                            return [2 /*return*/];
-                                    }
-                                });
-                            });
-                        });
-                        bclient.client.on('network-quality', function (quality) {
-                            var downlinkNetworkQuality = quality.downlinkNetworkQuality, uplinkNetworkQuality = quality.uplinkNetworkQuality;
-                            console.log(quality);
-                        });
-                        bclient.client.on('exception', function (event) {
-                            console.log(event);
-                        });
-                        bclient.client.on('user-joined', function (user) {
-                            console.log('host joined', user);
-                        });
-                        bclient.client.on('user-left', function (user) {
-                            console.log('host left', user);
-                        });
-                        return [4 /*yield*/, bclient.client.join(this.appID, this.channelName, this.token, null)];
-                    case 1:
-                        uid = _a.sent();
-                        return [2 /*return*/];
-                }
+        var _this = this;
+        console.log("appid", this.appID, "channel", this.streamChannel, "token", this.token, "userid", this.uid);
+        // this.client.join(this.appID, this.streamChannel, this.token, null);
+        // await this.client.join(this.appID, this.streamChannel, this.token, (uid) => {
+        //   console.log("userid", uid);
+        // });
+        this.ngxAgoraService.client.join(this.token, this.streamChannel, this.uid, function (uid) {
+            console.log("userid :", uid);
+        }, function (err) {
+            console.log(err);
+        });
+        this.ngxAgoraService.client.on(ngx_agora_1.ClientEvent.RemoteStreamAdded, function (evt) {
+            var stream = evt.stream;
+            console.log("stream", stream);
+            _this.ngxAgoraService.client.subscribe(stream, { audio: true, video: true }, function (err) {
+                console.log('Subscribe stream failed', err);
             });
         });
+        this.ngxAgoraService.client.on(ngx_agora_1.ClientEvent.RemoteStreamSubscribed, function (evt) {
+            var stream = evt.stream;
+            // this.video.nativeElement.srcObject = stream;
+            // this.player.src({ src : stream , type : "appliction/webrtc"});
+            // this.player.videoTracks().addTrack(stream);
+            // this.htmlVideo.nativeElement.srcObject = stream;
+            var id = stream.getId().toString();
+            _this.addVideoStream(id);
+            stream.play(id);
+        });
+        // this.client.on(ClientEvent.RemoteStreamRemoved, evt => {
+        //   const stream = evt.stream as Stream;
+        //   if (stream) {
+        //     stream.stop();
+        //     this.remoteCalls = [];
+        //     console.log(`Remote stream is removed ${stream.getId()}`);
+        //   }
+        // });
+        // this.client.on(ClientEvent.PeerLeave, evt => {
+        //   const stream = evt.stream as Stream;
+        //   if (stream) {
+        //     stream.stop();
+        //     this.remoteCalls = this.remoteCalls.filter(call => call !== `${this.getRemoteId(stream)}`);
+        //     console.log(`${evt.uid} left from this channel`);
+        //   }
+        // });
     };
     LivestreamPage.prototype.addVideoStream = function (elementId) {
-        var remoteContainer = document.getElementById("remote-container");
+        var remoteContainer = this.remote_container;
         // Creates a new div for every stream
         var streamDiv = document.createElement("div");
         // Assigns the elementId to the div.
         streamDiv.id = elementId;
         // Takes care of the lateral inversion
         streamDiv.style.transform = "rotateY(180deg)";
+        // streamDiv.style.height = "200px";
         // Adds the div to the container.
-        remoteContainer.appendChild(streamDiv);
+        remoteContainer.nativeElement.appendChild(streamDiv);
+        // let options: StreamingVideoOptions = {
+        //   successCallback: () => { console.log('Video played') },
+        //   errorCallback: (e) => { console.log('Error streaming') },
+        //   orientation: 'landscape',
+        //   shouldAutoClose: true,
+        //   controls: false
+        // };
+        // this.streamingMedia.playVideo('https://path/to/video/stream', options);
+        // console.log("stream media");
+        // console.log(stream);
+        // remoteContainer.nativeElement.srcObject = stream;
     };
     ;
     LivestreamPage.prototype.ngOnInit = function () {
+    };
+    LivestreamPage.prototype.ngAfterViewInit = function () {
+    };
+    LivestreamPage.prototype.ngAfterViewChecked = function () {
+        // this.options = { autoplay: true, controls: true, sources: [{ src: '', type: "appliction/webrtc" }]};
+        // const options = { "width":"100%" };
+        // this.player = videojs(this.video.nativeElement);
+    };
+    LivestreamPage.prototype.ngOnDestroy = function () {
+        if (this.player) {
+            this.player.dispose();
+        }
     };
     LivestreamPage.prototype.toFullScreen = function () {
         var elem = this.video.nativeElement;
@@ -200,19 +226,19 @@ var LivestreamPage = /** @class */ (function () {
                                 console.log("casts", _this.casts);
                                 _this.tags = response.livestreams.tags;
                                 _this.categories = response.livestreams.categories;
-                                _this.loaded = true;
+                                _this.isVideo = true;
                                 _this.appID = response.livestreams.appID;
                                 _this.token = response.livestreams.token;
                                 _this.streamChannel = response.livestreams.stream_channel;
                                 _this.streamUid = response.livestreams.userrtm;
+                                _this.startCall();
+                                _this.isSubscribed = response.livestreams.isSubscribed;
+                                _this.isLiked = response.livestreams.stream.isLiked;
+                                if (response.livestreams.user_id == _this.uid) {
+                                    _this.isSame = true;
+                                }
+                                _this.loaded = true;
                                 loading.dismiss();
-                                // this.isSubscribed = response.livestreams.isSubscribed;
-                                // this.isLiked = response.livestreams.isLiked;
-                                // if(response[0].podcast.user_id == this.uid){
-                                //   this.isSame = true;
-                                // this.loaded = true;
-                                // loading.dismiss();
-                                // }
                             }
                             else {
                                 _this.presentToast(response.error);
@@ -347,6 +373,18 @@ var LivestreamPage = /** @class */ (function () {
     __decorate([
         core_1.ViewChild('video')
     ], LivestreamPage.prototype, "video");
+    __decorate([
+        core_1.ViewChild('agora_local')
+    ], LivestreamPage.prototype, "agora_local");
+    __decorate([
+        core_1.ViewChild('remote_container')
+    ], LivestreamPage.prototype, "remote_container");
+    __decorate([
+        core_1.ViewChild('target', { static: true })
+    ], LivestreamPage.prototype, "target");
+    __decorate([
+        core_1.ViewChild('htmlvideo')
+    ], LivestreamPage.prototype, "htmlVideo");
     LivestreamPage = __decorate([
         core_1.Component({
             selector: 'app-livestream',

@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { Location } from '@angular/common';
 import { NavController, ToastController, LoadingController, ActionSheetController } from '@ionic/angular';
 import {ServiceService} from '../service.service';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-media/ngx';
 import { NgxAgoraService  , Stream, AgoraClient, ClientEvent, StreamEvent } from 'ngx-agora';
+import videojs from 'video.js';
 
 @Component({
   selector: 'app-livestream',
@@ -13,7 +14,20 @@ import { NgxAgoraService  , Stream, AgoraClient, ClientEvent, StreamEvent } from
 })
 export class LivestreamPage{
   @ViewChild('video') video: ElementRef;
+  @ViewChild('agora_local') agora_local: ElementRef;
+  @ViewChild('remote_container') remote_container: ElementRef;
+  @ViewChild('target', {static: true}) target: ElementRef;
+  @ViewChild('htmlvideo') htmlVideo: ElementRef;
 
+  options: {
+    autoplay: boolean,
+    controls: boolean,
+    sources: {
+        src: string,
+        type: string,
+    }[],
+  };
+  player: videojs.Player;
   logo:string='assets/icon/logo.svg';
   logout_icon:string='assets/icon/menu.svg';
   search:string='assets/icon/search.svg';
@@ -35,16 +49,19 @@ export class LivestreamPage{
   tags:any;
   categories:any;
   isSubscribed:boolean;
-  isLiked:boolean;
+  isLiked:boolean = false;
   disliked:boolean;
   uid:any;
   relatedPodcasts = [];
   newrelatedPodcasts = [];
   token:any;
   streamUid:any;
+  isVideo:boolean = false;
   isSame:boolean = false;
+  // player: videojs.Player;
   private client: AgoraClient;
-  constructor(private location: Location,  public navCtrl: NavController, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private streamingMedia: StreamingMedia, private route: ActivatedRoute,private router: Router, private ngxAgoraService: NgxAgoraService,) { 
+
+  constructor(private location: Location,  public navCtrl: NavController, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private streamingMedia: StreamingMedia, private route: ActivatedRoute,private router: Router, private ngxAgoraService: NgxAgoraService) { 
     this.route.queryParams.subscribe((data) => {
       this.lid = data.lid;
     });
@@ -56,30 +73,42 @@ export class LivestreamPage{
       this.user_image = localStorage.getItem("user_image");
     }
     this.watchAPI();
-    // this.client = this.ngxAgoraService.createClient({ mode: 'live', codec: 'vp8' });
-    // this.client.setClientRole("audience");
+    this.client = this.ngxAgoraService.createClient({ mode: 'live', codec: 'vp8' });
+    this.client.setClientRole("audience");
   }
 
-  async startCall() {
-    // console.log("appid", this.appID, "channel", this.streamChannel, "token", this.token, "userid", this.uid);
-    // // this.client.join(this.appID, this.streamChannel, this.token, null);
+  
+  startCall() {
+    console.log("appid", this.appID, "channel", this.streamChannel, "token", this.token, "userid", this.uid);
+    // this.client.join(this.appID, this.streamChannel, this.token, null);
     // await this.client.join(this.appID, this.streamChannel, this.token, (uid) => {
     //   console.log("userid", uid);
     // });
     
-    // this.client.on(ClientEvent.RemoteStreamAdded, evt => {
-    //   const stream = evt.stream as Stream;
-    //   this.client.subscribe(stream, { audio: true, video: true }, err => {
-    //     console.log('Subscribe stream failed', err);
-    //   });
-    // });
+    this.ngxAgoraService.client.join(this.token, this.streamChannel, this.uid, (uid) => {
+      console.log("userid :",uid);
+    }, (err) => {
+      console.log(err);
+    });
 
-    // this.client.on(ClientEvent.RemoteStreamSubscribed, evt => {
-    //   const stream = evt.stream as Stream;
-    //   const id = stream.getId().toString();
-    //   this.addVideoStream(id);
-    //   stream.play(id);
-    // });
+    this.ngxAgoraService.client.on(ClientEvent.RemoteStreamAdded, evt => {
+      const stream = evt.stream as Stream;
+      console.log("stream", stream);
+      this.ngxAgoraService.client.subscribe(stream, { audio: true, video: true }, err => {
+        console.log('Subscribe stream failed', err);
+      });
+    });
+
+    this.ngxAgoraService.client.on(ClientEvent.RemoteStreamSubscribed, evt => {
+      const stream = evt.stream as Stream;
+      // this.video.nativeElement.srcObject = stream;
+      // this.player.src({ src : stream , type : "appliction/webrtc"});
+      // this.player.videoTracks().addTrack(stream);
+      // this.htmlVideo.nativeElement.srcObject = stream;
+      const id = stream.getId().toString();
+      this.addVideoStream(id);
+      stream.play(id);
+    });
 
     // this.client.on(ClientEvent.RemoteStreamRemoved, evt => {
     //   const stream = evt.stream as Stream;
@@ -99,63 +128,71 @@ export class LivestreamPage{
     //   }
     // });
     
-    var bclient = {
-      // For the local client.
-      client: null,
-      // For the local audio and video tracks.
-      localAudioTrack: null,
-      localVideoTrack: null,
-      hosts: null,
-    };
-    
-    bclient.client = this.ngxAgoraService.createClient({mode: 'live', codec: 'vp8'});
-    bclient.client.setClientRole("audience");
-
-    bclient.client.on('connection-state-change', (currState, prevState, reason) => {
-      console.log('Connection state: '+currState);
-    });
-
-    bclient.client.on('token-privilege-will-expire', async function() {
-      await bclient.client.renewToken(this.token)
-    });
-
-    bclient.client.on('token-privilege-did-expire', async function() {
-      await bclient.client.renewToken(this.token)
-    });
-
-    bclient.client.on('network-quality', (quality) => {
-      const { downlinkNetworkQuality, uplinkNetworkQuality } = quality;
-      console.log(quality);
-    });
-
-    bclient.client.on('exception', (event) => {
-      console.log(event);
-    });
-
-    bclient.client.on('user-joined', (user) => {
-      console.log('host joined', user);
-    });
-
-    bclient.client.on('user-left', (user) => {
-      console.log('host left', user);
-    });
-
-    const uid = await bclient.client.join(this.appID, this.channelName, this.token, null);
   }
 
   addVideoStream(elementId){
-    let remoteContainer = document.getElementById("remote-container");
+    let remoteContainer = this.remote_container;
     // Creates a new div for every stream
     let streamDiv = document.createElement("div");
     // Assigns the elementId to the div.
     streamDiv.id = elementId;
     // Takes care of the lateral inversion
     streamDiv.style.transform = "rotateY(180deg)";
+
+    // streamDiv.style.height = "200px";
     // Adds the div to the container.
-    remoteContainer.appendChild(streamDiv);
+    remoteContainer.nativeElement.appendChild(streamDiv);
+
+    // let options: StreamingVideoOptions = {
+    //   successCallback: () => { console.log('Video played') },
+    //   errorCallback: (e) => { console.log('Error streaming') },
+    //   orientation: 'landscape',
+    //   shouldAutoClose: true,
+    //   controls: false
+    // };
+    
+    // this.streamingMedia.playVideo('https://path/to/video/stream', options);
+    // console.log("stream media");
+    // console.log(stream);
+    // remoteContainer.nativeElement.srcObject = stream;
+  };
+
+  public videoJsConfigObj = {
+    preload: "metadata",
+    controls: true,
+    autoplay: true,
+    overrideNative: true,
+    techOrder: ["html5", "flash"],
+    html5: {
+        nativeVideoTracks: false,
+        nativeAudioTracks: false,
+        nativeTextTracks: false,
+        hls: {
+            withCredentials: false,
+            overrideNative: true,
+            debug: true
+        }
+    }
   };
 
   ngOnInit() {
+    
+  }
+
+  ngAfterViewInit(){
+    
+  }
+
+  ngAfterViewChecked(){
+    // this.options = { autoplay: true, controls: true, sources: [{ src: '', type: "appliction/webrtc" }]};
+    // const options = { "width":"100%" };
+    // this.player = videojs(this.video.nativeElement);
+  }
+
+  ngOnDestroy() {
+    if (this.player) {
+      this.player.dispose();
+    }
   }
 
   toFullScreen() {
@@ -192,20 +229,19 @@ export class LivestreamPage{
         console.log("casts", this.casts);
         this.tags = response.livestreams.tags;
         this.categories = response.livestreams.categories;
-        this.loaded = true;
+        this.isVideo = true;
         this.appID = response.livestreams.appID;
         this.token = response.livestreams.token;
         this.streamChannel = response.livestreams.stream_channel;
         this.streamUid = response.livestreams.userrtm;
+        this.startCall();
+        this.isSubscribed = response.livestreams.isSubscribed;
+        this.isLiked = response.livestreams.stream.isLiked;
+        if(response.livestreams.user_id == this.uid){
+          this.isSame = true
+        }
+        this.loaded = true;
         loading.dismiss();
-        // this.isSubscribed = response.livestreams.isSubscribed;
-        // this.isLiked = response.livestreams.isLiked;
-        // if(response[0].podcast.user_id == this.uid){
-        //   this.isSame = true;
-        
-        // this.loaded = true;
-        // loading.dismiss();
-        // }
       }
       else{
         this.presentToast(response.error);
@@ -308,3 +344,4 @@ export class LivestreamPage{
     // this.getPodcastDetails();
   }
 }
+
