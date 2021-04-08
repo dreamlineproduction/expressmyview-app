@@ -14,6 +14,7 @@ var angular_1 = require("@ionic/angular");
 var podcast_routing_module_1 = require("./podcast-routing.module");
 var angular_fontawesome_1 = require("@fortawesome/angular-fontawesome");
 var podcast_page_1 = require("./podcast.page");
+var hero_detail_component_1 = require("../hero-detail/hero-detail.component");
 var PodcastPageModule = /** @class */ (function () {
     function PodcastPageModule() {
     }
@@ -26,7 +27,8 @@ var PodcastPageModule = /** @class */ (function () {
                 podcast_routing_module_1.PodcastPageRoutingModule,
                 angular_fontawesome_1.FontAwesomeModule
             ],
-            declarations: [podcast_page_1.PodcastPage]
+            declarations: [podcast_page_1.PodcastPage, hero_detail_component_1.HeroDetailComponent],
+            exports: [hero_detail_component_1.HeroDetailComponent]
         })
     ], PodcastPageModule);
     return PodcastPageModule;

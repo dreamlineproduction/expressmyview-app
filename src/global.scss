@@ -29,6 +29,7 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 @import "~fluid-player/src/css/fluidplayer.css";
+@import '~video.js/dist/video-js.css';
 ion-select {
     width: 100%;
 }
@@ -54,6 +55,7 @@ ion-font-family {
     height: 30px;
     float: right;
     margin-left: 5px;
+    margin-top: 0px;
 }
 
 .searchbar-search-icon.sc-ion-searchbar-ios {
@@ -67,9 +69,19 @@ ion-font-family {
     margin-right: 5px;
 }
 
-.empty{
+.empty {
     color: grey;
     font-size: 15px;
     text-align: center;
     font-weight: bold;
+}
+
+.video-js {
+    position: relative !important;
+    width: 100% !important;
+    height: 200px !important;
+}
+
+#remote_container>div>div {
+    height: 200px !important;
 }

@@ -36,6 +36,7 @@ var free_brands_svg_icons_1 = require("@fortawesome/free-brands-svg-icons");
 var ngx_agora_1 = require("ngx-agora");
 var ngx_13 = require("@ionic-native/native-audio/ngx");
 var environment_1 = require("../environments/environment");
+var ngx_14 = require("@ionic-native/screen-orientation/ngx");
 var agoraConfig = {
     AppID: environment_1.environment.appID
 };
@@ -48,15 +49,17 @@ var AppModule = /** @class */ (function () {
             declarations: [app_component_1.AppComponent],
             entryComponents: [],
             imports: [platform_browser_1.BrowserModule, angular_1.IonicModule.forRoot(), app_routing_module_1.AppRoutingModule, http_1.HttpClientModule, popovercomponent_module_1.PopovercomponentPageModule, angular_fontawesome_1.FontAwesomeModule,
-                ngx_agora_1.NgxAgoraModule.forRoot(agoraConfig),],
+                ngx_agora_1.NgxAgoraModule.forRoot(agoraConfig)],
             providers: [
                 ngx_4.ImagePicker,
                 ngx_2.StatusBar,
                 ngx_1.SplashScreen, ngx_3.Camera, ngx_5.FileChooser, ngx_6.Base64, ngx_7.File, ngx_8.FilePath, ngx_9.FileTransfer,
                 { provide: router_1.RouteReuseStrategy, useClass: angular_1.IonicRouteStrategy },
-                ngx_10.AndroidPermissions, ngx_11.VideoEditor, ngx_12.StreamingMedia, ngx_13.NativeAudio
+                ngx_10.AndroidPermissions, ngx_11.VideoEditor, ngx_12.StreamingMedia, ngx_13.NativeAudio, ngx_14.ScreenOrientation
             ],
-            bootstrap: [app_component_1.AppComponent]
+            schemas: [core_1.CUSTOM_ELEMENTS_SCHEMA],
+            bootstrap: [app_component_1.AppComponent],
+            exports: []
         })
     ], AppModule);
     return AppModule;

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -31,6 +31,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import { NgxAgoraModule, AgoraConfig } from 'ngx-agora';
 import { NativeAudio } from '@ionic-native/native-audio/ngx';
 import { environment } from '../environments/environment';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx'
 
 const agoraConfig: AgoraConfig = {
   AppID: environment.appID,
@@ -40,15 +41,18 @@ const agoraConfig: AgoraConfig = {
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, PopovercomponentPageModule, FontAwesomeModule,
-    NgxAgoraModule.forRoot(agoraConfig),],
+    NgxAgoraModule.forRoot(agoraConfig)],
   providers: [
     ImagePicker,
     StatusBar,
     SplashScreen,Camera,FileChooser,Base64,File,FilePath,FileTransfer, 
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    AndroidPermissions,VideoEditor, StreamingMedia, NativeAudio
+    AndroidPermissions,VideoEditor, StreamingMedia, NativeAudio, ScreenOrientation
   ],
-  bootstrap: [AppComponent]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  bootstrap: [AppComponent],
+  exports: [
+  ]
 })
 export class AppModule {
   constructor(library: FaIconLibrary) { 

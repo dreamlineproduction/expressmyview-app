@@ -15,7 +15,7 @@
   <ion-content *ngIf="allVideoPodcasts && loaded">
     <ion-row class="ion-align-items-center ion-justify-content-center card_container" *ngFor="let allVideoPodcast of allVideoPodcasts;">
       <ion-col size="4">
-        <ion-item class="img_container">
+        <ion-item class="img_container" (click)="goToPlay(allVideoPodcast.id)">
           <ion-img class="img_icon" *ngIf="allVideoPodcast" [src]="allVideoPodcast.path"></ion-img>
           <ion-text class="img_text">{{allVideoPodcast.runtime}}</ion-text>
         </ion-item>

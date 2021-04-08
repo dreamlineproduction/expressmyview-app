@@ -84,13 +84,15 @@ var PodcastPage = /** @class */ (function () {
     }
     PodcastPage.prototype.ngOnInit = function () {
     };
-    PodcastPage.prototype.toFullScreen = function () {
-        var elem = this.videoElement.nativeElement;
-        // var elem = document.getElementById("video");
-        if (elem.requestFullscreen) {
-            elem.requestFullscreen();
-        }
+    PodcastPage.prototype.ngOnDestroy = function () {
     };
+    // toFullScreen() {
+    //   let elem = this.videoElement.nativeElement as HTMLVideoElement;
+    //   // var elem = document.getElementById("video");
+    //   if (elem.requestFullscreen) {
+    //     elem.requestFullscreen();
+    //   }
+    // }
     PodcastPage.prototype.goBack = function () {
         this.location.back();
     };
@@ -149,7 +151,8 @@ var PodcastPage = /** @class */ (function () {
                                 _this.isLiked = response[0].isLiked;
                                 _this.filetype = response[0].podcast.file_type;
                                 if (_this.filetype == "video") {
-                                    _this.fullHD = response[0].podcast.videoPath;
+                                    // this.fullHD = response[0].podcast.videoPath; 
+                                    _this.fullHD = 'https://expressmyview.crtvecode.in/public/uploads/KVljDAjLgn_null_1615291532.mp4';
                                 }
                                 else {
                                     _this.audio = response[0].podcast.audioPath;
@@ -173,6 +176,8 @@ var PodcastPage = /** @class */ (function () {
                 }
             });
         });
+    };
+    PodcastPage.prototype.ngAfterViewChecked = function () {
     };
     PodcastPage.prototype.presentToast = function (txt) {
         return __awaiter(this, void 0, void 0, function () {

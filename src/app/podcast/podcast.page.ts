@@ -13,7 +13,6 @@ import { NativeAudio } from '@ionic-native/native-audio/ngx';
 })
 export class PodcastPage {
   @ViewChild('video') videoElement: ElementRef;
-  fluidPlayer: any;
   logo:string='assets/icon/logo.svg';
   logout_icon:string='assets/icon/menu.svg';
   search:string='assets/icon/search.svg';
@@ -57,15 +56,20 @@ export class PodcastPage {
   }
 
   ngOnInit() {
+    
   }
 
-  toFullScreen() {
-    let elem = this.videoElement.nativeElement as HTMLVideoElement;
-    // var elem = document.getElementById("video");
-    if (elem.requestFullscreen) {
-      elem.requestFullscreen();
-    }
+  ngOnDestroy(){
+  
   }
+
+  // toFullScreen() {
+  //   let elem = this.videoElement.nativeElement as HTMLVideoElement;
+  //   // var elem = document.getElementById("video");
+  //   if (elem.requestFullscreen) {
+  //     elem.requestFullscreen();
+  //   }
+  // }
 
   goBack() {
     this.location.back();
@@ -125,6 +129,7 @@ export class PodcastPage {
         this.filetype = response[0].podcast.file_type;
         if(this.filetype == "video"){
           this.fullHD = response[0].podcast.videoPath; 
+          // this.fullHD = 'https://expressmyview.crtvecode.in/public/uploads/KVljDAjLgn_null_1615291532.mp4';
         }else{
           this.audio = response[0].podcast.audioPath
         }
@@ -144,6 +149,10 @@ export class PodcastPage {
     });
   }
 
+  ngAfterViewChecked(){
+   
+  }
+  
   async presentToast(txt) {
     const toast = await this.toastController.create({
       message: txt,
