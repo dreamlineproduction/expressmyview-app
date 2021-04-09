@@ -34,14 +34,19 @@ export class EditchannelPage implements OnInit {
   loaded:boolean = false;
   constructor(private location: Location,  public navCtrl: NavController, private camera: Camera, private actionSheetController : ActionSheetController, private file: File, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private route: ActivatedRoute, private router: Router) {
     this.uid = localStorage.getItem("user_id");
+    this.route.queryParams.subscribe((data) => {
+      this.cid = data.id;
+    });
+  }
+
+  ionViewDidEnter(){
+    this.loaded = false;
+    this.uid = localStorage.getItem("user_id");
     if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
       
     }else{
       this.user_image = localStorage.getItem("user_image");
     }
-    this.route.queryParams.subscribe((data) => {
-      this.cid = data.id;
-    });
     this.getChannelDetails();
   }
 
@@ -179,7 +184,12 @@ export class EditchannelPage implements OnInit {
     toast.present();
   }
 
-  ngOnInit() {
+  ngOnInit(){
+    if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+    }else{
+      this.user_image = localStorage.getItem("user_image");
+    }
   }
 
   goBack() {

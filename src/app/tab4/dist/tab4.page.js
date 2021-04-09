@@ -63,8 +63,16 @@ var Tab4Page = /** @class */ (function () {
         this.loaded = false;
         this.moreData = false;
         this.title = this.truncateChar(this.title);
-        this.getAllPodcasts();
     }
+    Tab4Page.prototype.ionViewDidEnter = function () {
+        this.loaded = false;
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
+        this.getAllPodcasts();
+    };
     Tab4Page.prototype.truncateChar = function (text) {
         var charlimit = 50;
         if (!text || text.length <= charlimit) {

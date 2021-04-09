@@ -68,9 +68,18 @@ var MychannelsPage = /** @class */ (function () {
         else {
             this.user_image = localStorage.getItem("user_image");
         }
-        this.getMyChannels();
     }
+    MychannelsPage.prototype.ionViewDidEnter = function () {
+        this.loaded = false;
+        this.uid = localStorage.getItem("user_id");
+        this.getMyChannels();
+    };
     MychannelsPage.prototype.ngOnInit = function () {
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
     };
     MychannelsPage.prototype.goBack = function () {
         this.location.back();

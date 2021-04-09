@@ -20,6 +20,10 @@ export class ChangepasswordPage implements OnInit {
 
   constructor(private location: Location,  public navCtrl: NavController, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController) { 
     this.uid = localStorage.getItem("user_id");
+  }
+
+  ionViewDidEnter(){
+    this.uid = localStorage.getItem("user_id");
     if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
       
     }else{
@@ -27,8 +31,12 @@ export class ChangepasswordPage implements OnInit {
     }
   }
 
-  ngOnInit() {
-
+  ngOnInit(){
+    if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+    }else{
+      this.user_image = localStorage.getItem("user_image");
+    }
   }
 
   async changePassword() {

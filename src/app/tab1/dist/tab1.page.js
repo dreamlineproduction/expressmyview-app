@@ -79,8 +79,17 @@ var Tab1Page = /** @class */ (function () {
             }
         };
         this.uid = localStorage.getItem("user_id");
-        this.getHomeDatas();
     }
+    Tab1Page.prototype.ionViewDidEnter = function () {
+        this.loaded = false;
+        this.uid = localStorage.getItem("user_id");
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
+        this.getHomeDatas();
+    };
     Tab1Page.prototype.ngOnInit = function () {
         if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
         }

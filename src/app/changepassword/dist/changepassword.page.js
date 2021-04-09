@@ -56,13 +56,21 @@ var ChangepasswordPage = /** @class */ (function () {
         this.search = 'assets/icon/search.svg';
         this.user_image = 'assets/icon/default_user.png';
         this.uid = localStorage.getItem("user_id");
+    }
+    ChangepasswordPage.prototype.ionViewDidEnter = function () {
+        this.uid = localStorage.getItem("user_id");
         if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
         }
         else {
             this.user_image = localStorage.getItem("user_image");
         }
-    }
+    };
     ChangepasswordPage.prototype.ngOnInit = function () {
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
     };
     ChangepasswordPage.prototype.changePassword = function () {
         return __awaiter(this, void 0, void 0, function () {

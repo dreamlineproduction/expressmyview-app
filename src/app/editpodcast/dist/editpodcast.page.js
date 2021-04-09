@@ -116,6 +116,10 @@ var EditpodcastPage = /** @class */ (function () {
             _this.cid = data.cid;
         });
         this.uid = localStorage.getItem('user_id');
+    }
+    EditpodcastPage.prototype.ionViewDidEnter = function () {
+        this.loaded = false;
+        this.uid = localStorage.getItem("user_id");
         if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
         }
         else {
@@ -123,7 +127,14 @@ var EditpodcastPage = /** @class */ (function () {
         }
         this.getDatas();
         this.getPodcastDetails();
-    }
+    };
+    EditpodcastPage.prototype.ngOnInit = function () {
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
+    };
     EditpodcastPage.prototype.selectMember = function (event, checkbox) {
         if (event.target.checked) {
             this.selectedCategories.push(checkbox);

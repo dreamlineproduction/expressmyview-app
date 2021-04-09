@@ -21,8 +21,14 @@ export class MysubscriptionsPage implements OnInit {
   uid:any;
   nextPageURL:any;
   moreData:boolean = false;
+  loaded:boolean = false;
 
   constructor(private location: Location,  public navCtrl: NavController, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private router: Router) { 
+    this.uid = localStorage.getItem("user_id");
+  }
+
+  ionViewDidEnter(){
+    this.loaded = false;
     this.uid = localStorage.getItem("user_id");
     if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
       
@@ -32,7 +38,12 @@ export class MysubscriptionsPage implements OnInit {
     this.getMySubscriptions();
   }
 
-  ngOnInit() {
+  ngOnInit(){
+    if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+    }else{
+      this.user_image = localStorage.getItem("user_image");
+    }
   }
 
   channel(id){
@@ -63,9 +74,11 @@ export class MysubscriptionsPage implements OnInit {
         if(this.nextPageURL != null){
           this.moreData =  true;
         }
+        this.loaded = true;
         loading.dismiss();
       }else{
         this.presentToast(response.error);
+        this.loaded = true;
         loading.dismiss();
       }
     });

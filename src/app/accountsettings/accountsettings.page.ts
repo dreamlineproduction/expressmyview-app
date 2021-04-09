@@ -1006,6 +1006,11 @@ export class AccountsettingsPage implements OnInit {
     }];
     constructor(private location: Location,  public navCtrl: NavController, private file: File, private camera: Camera, private actionSheetController : ActionSheetController, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController) {
         this.uid = localStorage.getItem("user_id");
+    }
+
+    ionViewDidEnter(){
+        this.uid = localStorage.getItem("user_id");
+        this.loaded = false;
         if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
       
         }else{
@@ -1014,7 +1019,12 @@ export class AccountsettingsPage implements OnInit {
         this.getuser();
     }
 
-    ngOnInit() {
+    ngOnInit(){
+        if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+          
+        }else{
+          this.user_image = localStorage.getItem("user_image");
+        }
     }
 
     goBack() {
@@ -1079,17 +1089,19 @@ export class AccountsettingsPage implements OnInit {
 
         this.server.getuser(params).subscribe((response: any) => {
         if ( response.error == undefined) {
+            console.log("response", response);
             this.myAccountDetails = response.user;
             this.myAccountProfile = response.user_profile[0];
-            this.name = this.myAccountDetails.name;
-            this.phone = this.myAccountProfile.phone;
-            this.email = this.myAccountDetails.email;
-            this.country = this.myAccountProfile.country;
-            this.city = this.myAccountProfile.city;
-            this.state = this.myAccountProfile.state;
-            this.zip = this.myAccountProfile.zip;
-            this.address = this.myAccountProfile.address;
-            this.myPhoto = this.myAccountProfile.imagePath;
+            this.name = response.user.name;
+            this.phone = response.user_profile[0].phone;
+            this.email = response.user.email;
+            this.country = response.user_profile[0].country;
+            this.city = response.user_profile[0].city;
+            this.state = response.user_profile[0].state;
+            this.zip = response.user_profile[0].zip;
+            this.address = response.user_profile[0].address;
+            this.myPhoto = response.user_profile[0].imagePath;
+            console.log("email", this.email);
             if(this.myAccountDetails.hide_email == 0){
             this.hideEmail = false;
             }else{
@@ -1128,9 +1140,11 @@ export class AccountsettingsPage implements OnInit {
     
         this.server.updateAccountSettings(param).subscribe((response: any) => {
             if ( response.error == undefined) {
-            this.user_image = response.user_profile.avatar;
+            this.loaded = false;
             localStorage.setItem("user_image", response.user_profile.avatar);
+            this.user_image = response.user_profile.avatar;
             this.presentToast("Updated Successfully");
+            this.loaded = true;
             loading.dismiss();
             }else{
             this.presentToast(response.error);

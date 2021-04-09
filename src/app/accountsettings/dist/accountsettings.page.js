@@ -1032,14 +1032,23 @@ var AccountsettingsPage = /** @class */ (function () {
                 code: "VI"
             }];
         this.uid = localStorage.getItem("user_id");
+    }
+    AccountsettingsPage.prototype.ionViewDidEnter = function () {
+        this.uid = localStorage.getItem("user_id");
+        this.loaded = false;
         if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
         }
         else {
             this.user_image = localStorage.getItem("user_image");
         }
         this.getuser();
-    }
+    };
     AccountsettingsPage.prototype.ngOnInit = function () {
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
     };
     AccountsettingsPage.prototype.goBack = function () {
         this.navCtrl.navigateForward('tabs/tab1');
@@ -1118,17 +1127,19 @@ var AccountsettingsPage = /** @class */ (function () {
                         };
                         this.server.getuser(params).subscribe(function (response) {
                             if (response.error == undefined) {
+                                console.log("response", response);
                                 _this.myAccountDetails = response.user;
                                 _this.myAccountProfile = response.user_profile[0];
-                                _this.name = _this.myAccountDetails.name;
-                                _this.phone = _this.myAccountProfile.phone;
-                                _this.email = _this.myAccountDetails.email;
-                                _this.country = _this.myAccountProfile.country;
-                                _this.city = _this.myAccountProfile.city;
-                                _this.state = _this.myAccountProfile.state;
-                                _this.zip = _this.myAccountProfile.zip;
-                                _this.address = _this.myAccountProfile.address;
-                                _this.myPhoto = _this.myAccountProfile.imagePath;
+                                _this.name = response.user.name;
+                                _this.phone = response.user_profile[0].phone;
+                                _this.email = response.user.email;
+                                _this.country = response.user_profile[0].country;
+                                _this.city = response.user_profile[0].city;
+                                _this.state = response.user_profile[0].state;
+                                _this.zip = response.user_profile[0].zip;
+                                _this.address = response.user_profile[0].address;
+                                _this.myPhoto = response.user_profile[0].imagePath;
+                                console.log("email", _this.email);
                                 if (_this.myAccountDetails.hide_email == 0) {
                                     _this.hideEmail = false;
                                 }
@@ -1181,9 +1192,11 @@ var AccountsettingsPage = /** @class */ (function () {
                         _a.sent();
                         this.server.updateAccountSettings(param).subscribe(function (response) {
                             if (response.error == undefined) {
-                                _this.user_image = response.user_profile.avatar;
+                                _this.loaded = false;
                                 localStorage.setItem("user_image", response.user_profile.avatar);
+                                _this.user_image = response.user_profile.avatar;
                                 _this.presentToast("Updated Successfully");
+                                _this.loaded = true;
                                 loading_1.dismiss();
                             }
                             else {

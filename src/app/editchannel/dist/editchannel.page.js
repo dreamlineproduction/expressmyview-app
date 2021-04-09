@@ -63,16 +63,20 @@ var EditchannelPage = /** @class */ (function () {
         this.user_image = 'assets/icon/default_user.png';
         this.loaded = false;
         this.uid = localStorage.getItem("user_id");
+        this.route.queryParams.subscribe(function (data) {
+            _this.cid = data.id;
+        });
+    }
+    EditchannelPage.prototype.ionViewDidEnter = function () {
+        this.loaded = false;
+        this.uid = localStorage.getItem("user_id");
         if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
         }
         else {
             this.user_image = localStorage.getItem("user_image");
         }
-        this.route.queryParams.subscribe(function (data) {
-            _this.cid = data.id;
-        });
         this.getChannelDetails();
-    }
+    };
     EditchannelPage.prototype.pickImage = function (sourceType, source) {
         var _this = this;
         var options = {
@@ -252,6 +256,11 @@ var EditchannelPage = /** @class */ (function () {
         });
     };
     EditchannelPage.prototype.ngOnInit = function () {
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
     };
     EditchannelPage.prototype.goBack = function () {
         var navData = {

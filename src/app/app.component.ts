@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { Platform, MenuController, NavController } from '@ionic/angular';
+import { Platform, MenuController, NavController, LoadingController, ToastController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Location } from '@angular/common';
 // import { AngularAgoraRtcService, Stream } from 'angular-agora-rtc'; 
 // import { NgxAgoraService  , Stream, AgoraClient, ClientEvent, StreamEvent } from 'ngx-agora';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import {ServiceService} from './service.service';
 
 @Component({
   selector: 'app-root',
@@ -26,6 +27,8 @@ export class AppComponent {
   androidCordova = false;
   remoteCalls: string[] = [];
   user_image:any;
+  uid:any;
+
   constructor(
     private location: Location,
     public navCtrl: NavController,
@@ -36,6 +39,9 @@ export class AppComponent {
     // private agoraService: AngularAgoraRtcService,
     // private ngxAgoraService: NgxAgoraService,
     private androidPermissions: AndroidPermissions,
+    public server: ServiceService, 
+    public toastController: ToastController, 
+    public loadingController: LoadingController
   ) {
     this.initializeApp();
     // this.client = this.ngxAgoraService.createClient({ mode: 'live', codec: 'h264' });
@@ -59,8 +65,8 @@ export class AppComponent {
       // }
       this.statusBar.styleDefault();
       this.menu.close('first');
-      let userid =  localStorage.getItem('user_id');
-      this.user_image  = localStorage.getItem('user_image');
+      this.uid =  localStorage.getItem('user_id');
+      this.getuser();
       // let useremail =  localStorage.getItem('user_email');
       // let username =  localStorage.getItem('username');
       // if(userid == '' || typeof userid === undefined || userid == null || userid == 'null'){
@@ -68,6 +74,20 @@ export class AppComponent {
       // }
     });
   }
+
+  async getuser() {
+    const params = {
+    'id' : this.uid
+    };
+
+    this.server.getuser(params).subscribe((response: any) => {
+      if ( response.error == undefined) {
+          this.user_image  = response.user_profile[0].imagePath;
+          localStorage.setItem('user_image', this.user_image);
+      }
+    });
+  }
+
 
   // startCall() {
   //   this.agoraService.client.join(null, '1000', null, (uid) => {

@@ -204,6 +204,11 @@ var CreatechannelsPage = /** @class */ (function () {
         });
     };
     CreatechannelsPage.prototype.ngOnInit = function () {
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
     };
     CreatechannelsPage.prototype.goBack = function () {
         this.location.back();

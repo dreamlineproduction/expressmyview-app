@@ -24,6 +24,15 @@ export class Tab4Page{
   moreData:boolean = false;
   constructor(public navCtrl: NavController, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private router: Router) {
     this.title = this.truncateChar(this.title);
+  }
+
+  ionViewDidEnter(){
+    this.loaded = false;
+    if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+    }else{
+      this.user_image = localStorage.getItem("user_image");
+    }
     this.getAllPodcasts();
   }
 
@@ -92,14 +101,13 @@ export class Tab4Page{
     this.router.navigate(['tabs/podcast'], navData);
   }
 
-  ngOnInit() {
+  ngOnInit(){
     if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
       
     }else{
       this.user_image = localStorage.getItem("user_image");
     }
   }
-
   doInfinite(event:any){
     console.log("nextPage", this.nextPageURL);
     this.server.loadMore(this.nextPageURL).subscribe((response: any) => {

@@ -141,7 +141,12 @@ export class CreatechannelsPage implements OnInit {
     toast.present();
   }
 
-  ngOnInit() {
+  ngOnInit(){
+    if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+    }else{
+      this.user_image = localStorage.getItem("user_image");
+    }
   }
 
   goBack() {

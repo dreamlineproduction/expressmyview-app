@@ -92,11 +92,12 @@ export class Tab3Page {
 
     ngOnInit(){
       if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
-      
+        
       }else{
         this.user_image = localStorage.getItem("user_image");
       }
     }
+    
     async uploadFile(){
       const userid = localStorage.getItem('user_id');
       console.log("userid", userid);

@@ -72,11 +72,13 @@ export class LivestreamPage{
     }else{
       this.user_image = localStorage.getItem("user_image");
     }
+  }
+  
+  ionViewDidEnter(){
     this.watchAPI();
     this.client = this.ngxAgoraService.createClient({ mode: 'live', codec: 'vp8' });
     this.client.setClientRole("audience");
   }
-
   
   startCall() {
     console.log("appid", this.appID, "channel", this.streamChannel, "token", this.token, "userid", this.uid);

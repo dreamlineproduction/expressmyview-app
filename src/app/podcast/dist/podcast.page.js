@@ -75,14 +75,24 @@ var PodcastPage = /** @class */ (function () {
             _this.pid = data.id;
         });
         this.uid = localStorage.getItem("user_id");
+    }
+    PodcastPage.prototype.ionViewDidEnter = function () {
+        this.loaded = false;
+        this.uid = localStorage.getItem("user_id");
+        this.loaded = false;
         if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
         }
         else {
             this.user_image = localStorage.getItem("user_image");
         }
         this.getPodcastDetails();
-    }
+    };
     PodcastPage.prototype.ngOnInit = function () {
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
     };
     PodcastPage.prototype.ngOnDestroy = function () {
     };
@@ -151,8 +161,8 @@ var PodcastPage = /** @class */ (function () {
                                 _this.isLiked = response[0].isLiked;
                                 _this.filetype = response[0].podcast.file_type;
                                 if (_this.filetype == "video") {
-                                    // this.fullHD = response[0].podcast.videoPath; 
-                                    _this.fullHD = 'https://expressmyview.crtvecode.in/public/uploads/KVljDAjLgn_null_1615291532.mp4';
+                                    _this.fullHD = response[0].podcast.videoPath;
+                                    // this.fullHD = 'https://expressmyview.crtvecode.in/public/uploads/KVljDAjLgn_null_1615291532.mp4';
                                 }
                                 else {
                                     _this.audio = response[0].podcast.audioPath;

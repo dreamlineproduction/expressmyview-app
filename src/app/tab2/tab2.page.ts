@@ -24,10 +24,20 @@ export class Tab2Page {
   moreData:boolean = false;
   constructor(private location: Location,  public navCtrl: NavController, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private router: Router) { 
     this.uid = localStorage.getItem("user_id");
+  }
+
+  ionViewDidEnter(){
+    this.loaded = false;
+    this.uid = localStorage.getItem("user_id");
+    if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+    }else{
+      this.user_image = localStorage.getItem("user_image");
+    }
     this.getAllChannels();
   }
 
-  ngOnInit() {
+  ngOnInit(){
     if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
       
     }else{

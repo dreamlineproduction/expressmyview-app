@@ -75,11 +75,24 @@ var ChannelPage = /** @class */ (function () {
                 _this.myData = true;
             }
             _this.cid = data.id;
-            _this.getChannelDetails();
-            _this.getChannelPodcasts();
         });
     }
+    ChannelPage.prototype.ionViewDidEnter = function () {
+        this.uid = localStorage.getItem("user_id");
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
+        this.getChannelDetails();
+        this.getChannelPodcasts();
+    };
     ChannelPage.prototype.ngOnInit = function () {
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
     };
     ChannelPage.prototype.truncateChar = function (text) {
         var charlimit = 35;

@@ -27,6 +27,16 @@ export class Tab5Page{
   constructor(public navCtrl: NavController, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private router: Router) {
     this.title = this.truncateChar(this.title);
     this.uid = localStorage.getItem("user_id");
+  }
+
+  ionViewDidEnter(){
+    this.loaded = false;
+    this.uid = localStorage.getItem("user_id");
+    if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+    }else{
+      this.user_image = localStorage.getItem("user_image");
+    }
     this.getAllPodcasts();
   }
 
@@ -101,8 +111,7 @@ export class Tab5Page{
     }
     this.router.navigate(['tabs/channel'], navData);
   }
-
-  ngOnInit() {
+  ngOnInit(){
     if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
       
     }else{

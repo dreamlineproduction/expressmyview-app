@@ -65,8 +65,17 @@ var Tab5Page = /** @class */ (function () {
         this.moreData = false;
         this.title = this.truncateChar(this.title);
         this.uid = localStorage.getItem("user_id");
-        this.getAllPodcasts();
     }
+    Tab5Page.prototype.ionViewDidEnter = function () {
+        this.loaded = false;
+        this.uid = localStorage.getItem("user_id");
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
+        this.getAllPodcasts();
+    };
     Tab5Page.prototype.truncateChar = function (text) {
         var charlimit = 50;
         if (!text || text.length <= charlimit) {

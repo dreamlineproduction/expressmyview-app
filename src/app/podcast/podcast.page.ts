@@ -47,6 +47,12 @@ export class PodcastPage {
     });
   
     this.uid = localStorage.getItem("user_id");
+  }
+
+  ionViewDidEnter(){
+    this.loaded = false;
+    this.uid = localStorage.getItem("user_id");
+    this.loaded = false;
     if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
       
     }else{
@@ -55,8 +61,12 @@ export class PodcastPage {
     this.getPodcastDetails();
   }
 
-  ngOnInit() {
-    
+  ngOnInit(){
+    if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+    }else{
+      this.user_image = localStorage.getItem("user_image");
+    }
   }
 
   ngOnDestroy(){

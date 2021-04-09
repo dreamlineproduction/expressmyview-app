@@ -39,6 +39,11 @@ export class MyMediasPage{
         this.pageTitle = "My Audio Podcasts";
       }
     });
+  }
+
+  ionViewDidEnter(){
+    this.loaded = false;
+    this.uid = localStorage.getItem("user_id");
     this.getAllPodcasts();
   }
 

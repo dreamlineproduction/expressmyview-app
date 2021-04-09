@@ -60,6 +60,11 @@ var MysubscriptionsPage = /** @class */ (function () {
         this.user_image = 'assets/icon/default_user.png';
         this.default_channel = 'assets/icon/default_user.png';
         this.moreData = false;
+        this.loaded = false;
+        this.uid = localStorage.getItem("user_id");
+    }
+    MysubscriptionsPage.prototype.ionViewDidEnter = function () {
+        this.loaded = false;
         this.uid = localStorage.getItem("user_id");
         if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
         }
@@ -67,8 +72,13 @@ var MysubscriptionsPage = /** @class */ (function () {
             this.user_image = localStorage.getItem("user_image");
         }
         this.getMySubscriptions();
-    }
+    };
     MysubscriptionsPage.prototype.ngOnInit = function () {
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
     };
     MysubscriptionsPage.prototype.channel = function (id) {
         var navData = {
@@ -103,10 +113,12 @@ var MysubscriptionsPage = /** @class */ (function () {
                                 if (_this.nextPageURL != null) {
                                     _this.moreData = true;
                                 }
+                                _this.loaded = true;
                                 loading.dismiss();
                             }
                             else {
                                 _this.presentToast(response.error);
+                                _this.loaded = true;
                                 loading.dismiss();
                             }
                         });

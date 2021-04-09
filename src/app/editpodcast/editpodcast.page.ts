@@ -108,14 +108,27 @@ export class EditpodcastPage {
         this.cid = data.cid
       });
       this.uid = localStorage.getItem('user_id');
-      if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
-      
-      }else{
-        this.user_image = localStorage.getItem("user_image");
-      }
-      this.getDatas();
-      this.getPodcastDetails();
     }
+
+  ionViewDidEnter(){
+    this.loaded = false;
+    this.uid = localStorage.getItem("user_id");
+    if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+    }else{
+      this.user_image = localStorage.getItem("user_image");
+    }
+    this.getDatas();
+    this.getPodcastDetails();
+  }
+
+  ngOnInit(){
+    if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+    }else{
+      this.user_image = localStorage.getItem("user_image");
+    }
+  }
 
   selectMember(event, checkbox : String){
     if ( event.target.checked ) {

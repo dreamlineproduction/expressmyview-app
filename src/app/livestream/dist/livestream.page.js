@@ -100,10 +100,12 @@ var LivestreamPage = /** @class */ (function () {
         else {
             this.user_image = localStorage.getItem("user_image");
         }
+    }
+    LivestreamPage.prototype.ionViewDidEnter = function () {
         this.watchAPI();
         this.client = this.ngxAgoraService.createClient({ mode: 'live', codec: 'vp8' });
         this.client.setClientRole("audience");
-    }
+    };
     LivestreamPage.prototype.startCall = function () {
         var _this = this;
         console.log("appid", this.appID, "channel", this.streamChannel, "token", this.token, "userid", this.uid);

@@ -36,6 +36,11 @@ export class MyaccountPage implements OnInit {
   constructor(public popoverCtrl: PopoverController, private location: Location, public server: ServiceService, public toastController: ToastController, public loadingController: LoadingController, private router: Router,public navCtrl: NavController) {
     this.title = this.truncateChar(this.title);
     this.uid = localStorage.getItem("user_id");
+  }
+
+  ionViewDidEnter(){
+    this.loaded = false;
+    this.uid = localStorage.getItem("user_id");
     if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
       
     }else{
@@ -56,7 +61,12 @@ export class MyaccountPage implements OnInit {
     return shortened;
   }
 
-  ngOnInit() {
+  ngOnInit(){
+    if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+    }else{
+      this.user_image = localStorage.getItem("user_image");
+    }
   }
 
   // async presentPopover(ev: any) {

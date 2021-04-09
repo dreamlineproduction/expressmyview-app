@@ -31,10 +31,20 @@ export class MychannelsPage implements OnInit {
     }else{
       this.user_image = localStorage.getItem("user_image");
     }
+  }
+
+  ionViewDidEnter(){
+    this.loaded = false;
+    this.uid = localStorage.getItem("user_id");
     this.getMyChannels();
   }
 
-  ngOnInit() {
+  ngOnInit(){
+    if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+    }else{
+      this.user_image = localStorage.getItem("user_image");
+    }
   }
 
   goBack() {

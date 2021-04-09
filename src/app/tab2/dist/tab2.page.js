@@ -62,8 +62,17 @@ var Tab2Page = /** @class */ (function () {
         this.loaded = false;
         this.moreData = false;
         this.uid = localStorage.getItem("user_id");
-        this.getAllChannels();
     }
+    Tab2Page.prototype.ionViewDidEnter = function () {
+        this.loaded = false;
+        this.uid = localStorage.getItem("user_id");
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
+        this.getAllChannels();
+    };
     Tab2Page.prototype.ngOnInit = function () {
         if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
         }

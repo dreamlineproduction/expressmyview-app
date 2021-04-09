@@ -40,12 +40,26 @@ export class ChannelPage implements OnInit {
         this.myData = true;
       }
       this.cid = data.id;
-      this.getChannelDetails();
-      this.getChannelPodcasts();
     });
   }
 
-  ngOnInit() {
+  ionViewDidEnter(){
+    this.uid = localStorage.getItem("user_id");
+    if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+    }else{
+      this.user_image = localStorage.getItem("user_image");
+    }
+    this.getChannelDetails();
+    this.getChannelPodcasts();
+  }
+
+  ngOnInit(){
+    if(typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == ""){
+      
+    }else{
+      this.user_image = localStorage.getItem("user_image");
+    }
   }
 
   truncateChar(text: string): string {

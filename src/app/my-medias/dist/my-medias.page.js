@@ -78,8 +78,12 @@ var MyMediasPage = /** @class */ (function () {
                 _this.pageTitle = "My Audio Podcasts";
             }
         });
-        this.getAllPodcasts();
     }
+    MyMediasPage.prototype.ionViewDidEnter = function () {
+        this.loaded = false;
+        this.uid = localStorage.getItem("user_id");
+        this.getAllPodcasts();
+    };
     MyMediasPage.prototype.truncateChar = function (text) {
         var charlimit = 50;
         if (!text || text.length <= charlimit) {

@@ -96,13 +96,17 @@ var MyaccountPage = /** @class */ (function () {
         };
         this.title = this.truncateChar(this.title);
         this.uid = localStorage.getItem("user_id");
+    }
+    MyaccountPage.prototype.ionViewDidEnter = function () {
+        this.loaded = false;
+        this.uid = localStorage.getItem("user_id");
         if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
         }
         else {
             this.user_image = localStorage.getItem("user_image");
         }
         this.getMyAccountDatas();
-    }
+    };
     MyaccountPage.prototype.truncateChar = function (text) {
         var charlimit = 35;
         if (!text || text.length <= charlimit) {
@@ -113,6 +117,11 @@ var MyaccountPage = /** @class */ (function () {
         return shortened;
     };
     MyaccountPage.prototype.ngOnInit = function () {
+        if (typeof localStorage.getItem("user_image") === undefined || localStorage.getItem("user_image") == "undefined" || localStorage.getItem("user_image") == "") {
+        }
+        else {
+            this.user_image = localStorage.getItem("user_image");
+        }
     };
     MyaccountPage.prototype.goBack = function () {
         this.location.back();

@@ -50,6 +50,7 @@ var search_page_1 = require("../app/search/search.page");
 var filter_page_1 = require("../app/filter/filter.page");
 var ServiceService = /** @class */ (function () {
     // url = "https://testmyserver.in/expressmyviewserver/api/";
+    // url = "https://expressmyview.com/api/"
     function ServiceService(http, httpBackend, navCtrl, modalController) {
         this.http = http;
         this.httpBackend = httpBackend;
