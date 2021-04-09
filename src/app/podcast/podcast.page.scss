@@ -151,8 +151,7 @@ audio {
 }
 
 .other_details_col {
-    border-bottom: 1px solid #f1f1f1;
-    box-shadow: 1px 2px 4px 0 rgb(0 0 0 / 10%);
+    box-shadow: rgb(0 0 0 / 12%) 0px 4px 16px;
     background-color: #fff;
 }
 
@@ -240,8 +239,7 @@ audio {
     object-fit: cover;
 }
 
-.video{
+.video {
     height: 200px;
     width: 100%;
 }
-
