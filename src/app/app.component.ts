@@ -66,7 +66,9 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.menu.close('first');
       this.uid =  localStorage.getItem('user_id');
-      this.getuser();
+      if(this.uid){
+        this.getuser();
+      }
       // let useremail =  localStorage.getItem('user_email');
       // let username =  localStorage.getItem('username');
       // if(userid == '' || typeof userid === undefined || userid == null || userid == 'null'){
@@ -81,6 +83,7 @@ export class AppComponent {
     };
 
     this.server.getuser(params).subscribe((response: any) => {
+      console.log("response");
       if ( response.error == undefined) {
           this.user_image  = response.user_profile[0].imagePath;
           localStorage.setItem('user_image', this.user_image);

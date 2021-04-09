@@ -108,6 +108,8 @@ var Tab4Page = /** @class */ (function () {
                                 loading.dismiss();
                             }
                             else {
+                                console.log("allVideoPodcasts", _this.allVideoPodcasts);
+                                _this.loaded = true;
                                 _this.presentToast(response.error);
                                 loading.dismiss();
                             }

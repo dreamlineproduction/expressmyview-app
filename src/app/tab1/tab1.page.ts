@@ -89,6 +89,7 @@ export class Tab1Page {
         loading.dismiss();
       }else{
         this.presentToast(response.error);
+        this.loaded = true;
         if(response[0].appID){
           localStorage.setItem("appID",response[0].appID );
         }

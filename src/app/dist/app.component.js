@@ -94,7 +94,9 @@ var AppComponent = /** @class */ (function () {
             _this.statusBar.styleDefault();
             _this.menu.close('first');
             _this.uid = localStorage.getItem('user_id');
-            _this.getuser();
+            if (_this.uid) {
+                _this.getuser();
+            }
             // let useremail =  localStorage.getItem('user_email');
             // let username =  localStorage.getItem('username');
             // if(userid == '' || typeof userid === undefined || userid == null || userid == 'null'){
@@ -111,6 +113,7 @@ var AppComponent = /** @class */ (function () {
                     'id': this.uid
                 };
                 this.server.getuser(params).subscribe(function (response) {
+                    console.log("response");
                     if (response.error == undefined) {
                         _this.user_image = response.user_profile[0].imagePath;
                         localStorage.setItem('user_image', _this.user_image);

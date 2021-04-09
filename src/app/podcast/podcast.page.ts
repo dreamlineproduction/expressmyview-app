@@ -154,6 +154,7 @@ export class PodcastPage {
         loading.dismiss();
       }else{
         this.presentToast(response.error);
+        this.loaded = true;
         loading.dismiss();
       }
     });

@@ -112,6 +112,7 @@ var Tab5Page = /** @class */ (function () {
                             }
                             else {
                                 _this.presentToast(response.error);
+                                _this.loaded = true;
                                 loading.dismiss();
                             }
                         });

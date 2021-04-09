@@ -128,6 +128,7 @@ var Tab1Page = /** @class */ (function () {
                             }
                             else {
                                 _this.presentToast(response.error);
+                                _this.loaded = true;
                                 if (response[0].appID) {
                                     localStorage.setItem("appID", response[0].appID);
                                 }

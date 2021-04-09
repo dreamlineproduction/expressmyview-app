@@ -66,6 +66,8 @@ export class Tab4Page{
         this.loaded = true;
         loading.dismiss();
       }else{
+        console.log("allVideoPodcasts", this.allVideoPodcasts);
+        this.loaded = true;
         this.presentToast(response.error);
         loading.dismiss();
       }
