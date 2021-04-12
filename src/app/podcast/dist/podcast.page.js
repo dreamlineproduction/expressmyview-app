@@ -310,6 +310,9 @@ var PodcastPage = /** @class */ (function () {
         this.pid = id;
         this.getPodcastDetails();
     };
+    PodcastPage.prototype.comments = function () {
+        this.server.comments(this.uid, this.pid);
+    };
     __decorate([
         core_1.ViewChild('video')
     ], PodcastPage.prototype, "videoElement");

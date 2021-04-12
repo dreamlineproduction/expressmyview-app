@@ -90,6 +90,14 @@ const routes: Routes = [
     path: 'my-medias',
     loadChildren: () => import('./my-medias/my-medias.module').then( m => m.MyMediasPageModule)
   },
+  {
+    path: 'comments',
+    loadChildren: () => import('./comments/comments.module').then( m => m.CommentsPageModule)
+  },
+  {
+    path: 'subcomments',
+    loadChildren: () => import('./subcomments/subcomments.module').then( m => m.SubcommentsPageModule)
+  },
 ];
 @NgModule({
   imports: [

@@ -77,7 +77,7 @@
             </ion-row>
         </ion-col>
     </ion-row>
-    <ion-row class="ion-padding-start ion-padding-top ion-padding-end">
+    <ion-row class="ion-padding-start ion-padding-top ion-padding-end high_margin">
         <ion-col class="other_details_col">
             <ion-row class="ion-align-items-center">
                 <ion-col size="7">
@@ -115,6 +115,12 @@
         </ion-col>
     </ion-row>
 
+    <ion-row class="ion-align-items-center ion-padding-start ion-padding-top ion-padding-end" (click)="comments()">
+        <ion-col size="12" class="other_details_col">
+            <ion-text class="comment_title">{{podcastDetails.commentsCount}} comments</ion-text>
+        </ion-col>
+    </ion-row>
+
     <div *ngIf="relatedPodcasts">
         <ion-item>
             <h5 class="latest">Related Podcasts</h5>
@@ -144,37 +150,6 @@
         </ion-row>
     </div>
 
-    <ion-row class="ion-align-items-center ion-padding-start ion-padding-top ion-padding-end">
-        <ion-col size="12" class="other_details_col">
-            <ion-text class="comment_title">{{podcastDetails.comments_count}} comments</ion-text>
-        </ion-col>
-    </ion-row>
-
-    <ion-row class="ion-align-items-center ion-padding-start ion-padding-top ion-padding-end">
-        <ion-col size="11">
-            <ion-textarea class="comment_box" placeholder="What you are thinking?"></ion-textarea>
-        </ion-col>
-        <ion-col size="1" class="ion-align-self-center">
-            <ion-icon class="send_icon" name="send-sharp"></ion-icon>
-        </ion-col>
-    </ion-row>
-    <ion-row class="ion-align-items-center ion-padding-start ion-padding-top ion-padding-end">
-        <ion-col size="2" class="comment_image">
-            <ion-img [src]="user_image"></ion-img>
-        </ion-col>
-        <ion-col size="10">
-            <ion-text class="comment_time">User name - 1 month ago</ion-text>
-            <ion-text class="comment_text">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-            </ion-text>
-            <ion-row class="comment_footer">
-                <fa-icon icon="thumbs-up" class="comment_footer_icon"></fa-icon>
-                <ion-text class="comment_footer_text">6.1K</ion-text>
-                <ion-icon name="chatbox" class="comment_footer_icon"></ion-icon>
-                <ion-text>190</ion-text>
-            </ion-row>
-        </ion-col>
-    </ion-row>
     <ion-row class="ion-padding-start ion-padding-end ion-padding-top empty" *ngIf="!relatedPodcasts">
         <ion-col>
             No related podcasts available.

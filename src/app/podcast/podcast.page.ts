@@ -246,7 +246,6 @@ export class PodcastPage {
     this.router.navigate(['tabs/channel'], navData);
   }
 
-
   goToPlay(id){
     const navData: NavigationExtras = {
       queryParams: {
@@ -256,5 +255,9 @@ export class PodcastPage {
     this.router.navigate(['tabs/podcast'], navData);
     this.pid = id;
     this.getPodcastDetails();
+  }
+
+  comments(){
+    this.server.comments(this.uid, this.pid);
   }
 }

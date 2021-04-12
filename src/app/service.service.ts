@@ -5,15 +5,19 @@ import { map } from 'rxjs/operators';
 import { ModalController } from '@ionic/angular';
 import { SearchPage } from '../app/search/search.page';
 import { FilterPage } from '../app/filter/filter.page';
+import { CommentsPage } from '../app/comments/comments.page';
+import { SubcommentsPage } from '../app/subcomments/subcomments.page';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServiceService {
   options:any;
-  
+  modalInst=[];
+  i=0;
+
   // url = "http://127.0.0.1:8000/api/";
-  url = "https://expressmyview.com/public/api/";
+  url = "https://expressmyview.crtvecode.in/expressmyview-git/expressmyview/public/api/";
   // url = "https://testmyserver.in/expressmyviewserver/api/";
   // url = "https://expressmyview.com/api/"
   constructor(private http: HttpClient,private httpBackend: HttpBackend, public navCtrl: NavController, public modalController: ModalController) {
@@ -215,6 +219,37 @@ export class ServiceService {
     .pipe(map(results => results));
   }
 
+  getAllCommentsByPodcastId(data){
+    console.log("comment data in service", data);
+    return this.http.post(this.url+'getAllCommentsByPodcastId',data, this.options)
+    .pipe(map(results => results));
+  }
+
+  getAllReplyByCommentId(data){
+    console.log("comment data in service", data);
+    return this.http.post(this.url+'getAllReplyByCommentId',data, this.options)
+    .pipe(map(results => results));
+  }
+
+  uploadComment(data){
+    console.log("comment data in service", data);
+    return this.http.post(this.url+'uploadComment',data, this.options)
+    .pipe(map(results => results));
+  }
+
+  likeComment(data){
+    console.log("comment data in service", data);
+    return this.http.post(this.url+'likeComment',data, this.options)
+    .pipe(map(results => results));
+  }
+
+  uploadReply(data){
+    console.log("comment data in service", data);
+    return this.http.post(this.url+'uploadReply',data, this.options)
+    .pipe(map(results => results));
+  }
+
+
   loadMore(url){
     return this.http.get(url, this.options)
     .pipe(map(results => results));
@@ -238,11 +273,37 @@ export class ServiceService {
     return await modal.present();
   }
 
+  async comments(uid, pid) {
+    const modal = await this.modalController.create({
+      component: CommentsPage,
+      cssClass: 'commentsModel',
+      componentProps: { uid: uid, pid: pid }
+    });
+    this.storeModal(modal);
+    return await modal.present();
+  }
+
+  async subComments(uid, cid, pid) {
+    const modal = await this.modalController.create({
+      component: SubcommentsPage,
+      cssClass: 'commentsModel',
+      componentProps: { uid: uid, cid: cid, pid: pid }
+    });
+    this.storeModal(modal);
+    return await modal.present();
+  }
+
   async filterSearch() {
     const modal = await this.modalController.create({
       component: FilterPage,
       cssClass: 'my-custom-class'
     });
     return await modal.present();
+  }
+
+  storeModal(x)
+  {
+        this.modalInst[this.i]=x;
+        this.i++;
   }
 }

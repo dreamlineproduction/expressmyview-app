@@ -48,6 +48,8 @@ var http_1 = require("@angular/common/http");
 var operators_1 = require("rxjs/operators");
 var search_page_1 = require("../app/search/search.page");
 var filter_page_1 = require("../app/filter/filter.page");
+var comments_page_1 = require("../app/comments/comments.page");
+var subcomments_page_1 = require("../app/subcomments/subcomments.page");
 var ServiceService = /** @class */ (function () {
     // url = "https://testmyserver.in/expressmyviewserver/api/";
     // url = "https://expressmyview.com/api/"
@@ -56,6 +58,8 @@ var ServiceService = /** @class */ (function () {
         this.httpBackend = httpBackend;
         this.navCtrl = navCtrl;
         this.modalController = modalController;
+        this.modalInst = [];
+        this.i = 0;
         // url = "http://127.0.0.1:8000/api/";
         this.url = "https://expressmyview.crtvecode.in/expressmyview-git/expressmyview/public/api/";
         this.http = new http_1.HttpClient(this.httpBackend);
@@ -220,6 +224,31 @@ var ServiceService = /** @class */ (function () {
         return this.http.post(this.url + 'getMyAllPodcasts', data, this.options)
             .pipe(operators_1.map(function (results) { return results; }));
     };
+    ServiceService.prototype.getAllCommentsByPodcastId = function (data) {
+        console.log("comment data in service", data);
+        return this.http.post(this.url + 'getAllCommentsByPodcastId', data, this.options)
+            .pipe(operators_1.map(function (results) { return results; }));
+    };
+    ServiceService.prototype.getAllReplyByCommentId = function (data) {
+        console.log("comment data in service", data);
+        return this.http.post(this.url + 'getAllReplyByCommentId', data, this.options)
+            .pipe(operators_1.map(function (results) { return results; }));
+    };
+    ServiceService.prototype.uploadComment = function (data) {
+        console.log("comment data in service", data);
+        return this.http.post(this.url + 'uploadComment', data, this.options)
+            .pipe(operators_1.map(function (results) { return results; }));
+    };
+    ServiceService.prototype.likeComment = function (data) {
+        console.log("comment data in service", data);
+        return this.http.post(this.url + 'likeComment', data, this.options)
+            .pipe(operators_1.map(function (results) { return results; }));
+    };
+    ServiceService.prototype.uploadReply = function (data) {
+        console.log("comment data in service", data);
+        return this.http.post(this.url + 'uploadReply', data, this.options)
+            .pipe(operators_1.map(function (results) { return results; }));
+    };
     ServiceService.prototype.loadMore = function (url) {
         return this.http.get(url, this.options)
             .pipe(operators_1.map(function (results) { return results; }));
@@ -249,6 +278,44 @@ var ServiceService = /** @class */ (function () {
             });
         });
     };
+    ServiceService.prototype.comments = function (uid, pid) {
+        return __awaiter(this, void 0, void 0, function () {
+            var modal;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.modalController.create({
+                            component: comments_page_1.CommentsPage,
+                            cssClass: 'commentsModel',
+                            componentProps: { uid: uid, pid: pid }
+                        })];
+                    case 1:
+                        modal = _a.sent();
+                        this.storeModal(modal);
+                        return [4 /*yield*/, modal.present()];
+                    case 2: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    ServiceService.prototype.subComments = function (uid, cid, pid) {
+        return __awaiter(this, void 0, void 0, function () {
+            var modal;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.modalController.create({
+                            component: subcomments_page_1.SubcommentsPage,
+                            cssClass: 'commentsModel',
+                            componentProps: { uid: uid, cid: cid, pid: pid }
+                        })];
+                    case 1:
+                        modal = _a.sent();
+                        this.storeModal(modal);
+                        return [4 /*yield*/, modal.present()];
+                    case 2: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
     ServiceService.prototype.filterSearch = function () {
         return __awaiter(this, void 0, void 0, function () {
             var modal;
@@ -265,6 +332,10 @@ var ServiceService = /** @class */ (function () {
                 }
             });
         });
+    };
+    ServiceService.prototype.storeModal = function (x) {
+        this.modalInst[this.i] = x;
+        this.i++;
     };
     ServiceService = __decorate([
         core_1.Injectable({

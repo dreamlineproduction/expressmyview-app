@@ -47,6 +47,7 @@ ion-font-family {
   height: 30px;
   float: right;
   margin-left: 5px;
+  margin-top: 0px;
 }
 
 .searchbar-search-icon.sc-ion-searchbar-ios {
@@ -70,9 +71,30 @@ ion-font-family {
 .video-js {
   position: relative !important;
   width: 100% !important;
-  height: 200px !important;
+  height: 27% !important;
+  position: fixed !important;
+  z-index: 10000;
+  position: fixed !important;
 }
 
 #remote_container > div > div {
   height: 200px !important;
+}
+
+.commentsModel {
+  --height: 75% !important;
+  align-items: flex-end !important;
+}
+
+.subCommentsModel {
+  --height: 75% !important;
+  align-items: flex-end !important;
+}
+
+.redColor {
+  color: red;
+}
+
+.blackColor {
+  color: black;
 }

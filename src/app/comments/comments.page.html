@@ -1,0 +1,43 @@
+<ion-header *ngIf="loaded">
+  <ion-toolbar>
+    <ion-title class="title">Comments <span class="count">{{count}}</span></ion-title>
+    <ion-img offset=3 class="close ion-text-center" [src]="close" (click)=closeModel()></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="comments" *ngIf="loaded">
+  <ion-row class="ion-align-items-center ion-padding-start ion-padding-top ion-padding-end">
+    <ion-col size="11">
+        <ion-textarea [(ngModel)]="commentBox" class="comment_box" placeholder="What you are thinking?"></ion-textarea>
+    </ion-col>
+    <ion-col size="1" class="ion-align-self-center" *ngIf="commentBox">
+        <ion-icon class="send_icon" name="send-sharp" (click)="uploadComment()"></ion-icon>
+    </ion-col>
+  </ion-row>
+  <div *ngFor="let comment of allComments">
+    <ion-row class="ion-align-items-center ion-padding-start ion-padding-top ion-padding-end">
+        <ion-col size="2">
+            <ion-img class="comment_image" [src]="comment.user_image ? comment.user_image : user_image"></ion-img>
+        </ion-col>
+        <ion-col size="10">
+            <ion-text class="comment_time">{{comment.username}} - {{comment.date}}</ion-text>
+            <ion-text class="comment_text">
+                {{comment.message}}
+            </ion-text>
+            <ion-row class="comment_footer">
+                <fa-icon icon="thumbs-up" class="comment_footer_icon" [ngClass]="!comment.isLiked ? 'blackColor' : 'redColor'" (click)="likeComment(comment.id, comment.isSame)"></fa-icon>
+                <ion-text class="comment_footer_text">{{comment.likes}}</ion-text>
+                <ion-icon name="chatbox" class="comment_footer_icon" *ngIf="comment.replyCount > 0"></ion-icon>
+                <ion-text *ngIf="comment.replyCount > 0">{{comment.replyCount}}</ion-text>
+            </ion-row>
+        </ion-col>
+    </ion-row>
+    <ion-row class="ion-align-items-center ion-padding-start ion-padding-top ion-padding-end">
+      <ion-col size="2"></ion-col>
+      <ion-col size="10">
+        <ion-text class="reply" *ngIf="comment.replyCount > 0" (click)="subComments(comment.id)">{{comment.replyCount}} Replies</ion-text>
+        <ion-text class="reply" *ngIf="comment.replyCount == 0" (click)="subComments(comment.id)">Reply</ion-text>
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-content>
