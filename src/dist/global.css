@@ -98,3 +98,10 @@ ion-font-family {
 .blackColor {
   color: black;
 }
+
+.delete_icon {
+  float: right;
+  color: red;
+  font-size: 15px;
+  padding-right: 5px;
+}

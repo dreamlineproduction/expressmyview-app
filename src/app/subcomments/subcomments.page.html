@@ -10,13 +10,13 @@
  </ion-toolbar>
 </ion-header>
 
-<ion-content class="comments" *ngIf="loaded">
+<ion-content class="comments" *ngIf="loaded && comment">
   <ion-row class="ion-align-items-center ion-padding-start ion-padding-top ion-padding-end">
     <ion-col size="2">
         <ion-img class="comment_image" [src]="user_image"></ion-img>
     </ion-col>
     <ion-col size="10">
-        <ion-text class="comment_time">{{comment.username}} - {{comment.date}}</ion-text>
+        <ion-text class="comment_time">{{comment.username}} - {{comment.date}} <fa-icon *ngIf="comment.isSame" icon="trash" class="delete_icon" (click)="delete(comment.id, 'main')"></fa-icon></ion-text>
         <ion-text class="comment_text">
            {{comment.message}}
         </ion-text>
@@ -36,12 +36,12 @@
         <ion-icon class="send_icon" name="send-sharp" (click)="uploadComment()" *ngIf="commentBox"></ion-icon>
     </ion-col>
   </ion-row>
-  <ion-row class="ion-align-items-center ion-padding-start ion-padding-top ion-padding-end" *ngFor="let reply of allReplies">
+  <ion-row class="ion-align-items-center ion-padding-start ion-padding-top ion-padding-end" *ngFor="let reply of allReplies; let myIndex=index;">
       <ion-col size="2">
           <ion-img class="comment_image" [src]="reply.user_image ? reply.user_image : user_image"></ion-img>
       </ion-col>
       <ion-col size="10">
-          <ion-text class="comment_time">{{reply.username}} - {{reply.date}}</ion-text>
+          <ion-text class="comment_time">{{reply.username}} - {{reply.date}} <fa-icon *ngIf="reply.isSame" icon="trash" class="delete_icon" (click)="delete(reply.id, myIndex)"></fa-icon></ion-text>
           <ion-text class="comment_text">
               {{reply.message}}
           </ion-text>

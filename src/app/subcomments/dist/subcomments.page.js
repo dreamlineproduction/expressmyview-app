@@ -45,12 +45,13 @@ exports.__esModule = true;
 exports.SubcommentsPage = void 0;
 var core_1 = require("@angular/core");
 var SubcommentsPage = /** @class */ (function () {
-    function SubcommentsPage(modalController, navCtrl, server, toastController, loadingController) {
+    function SubcommentsPage(modalController, navCtrl, server, toastController, loadingController, alertController) {
         this.modalController = modalController;
         this.navCtrl = navCtrl;
         this.server = server;
         this.toastController = toastController;
         this.loadingController = loadingController;
+        this.alertController = alertController;
         this.loaded = false;
         this.user_image = 'assets/icon/default_user.png';
         this.close = 'assets/icon/close.png';
@@ -102,6 +103,86 @@ var SubcommentsPage = /** @class */ (function () {
                         });
                         _a.label = 4;
                     case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    SubcommentsPage.prototype["delete"] = function (cid, myIndex) {
+        return __awaiter(this, void 0, void 0, function () {
+            var alert;
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.alertController.create({
+                            cssClass: 'my-custom-class',
+                            header: 'Confirm',
+                            message: 'You are going to delete this comment, the process cannot be reverted back, please confirm to proceed.',
+                            buttons: [
+                                {
+                                    text: 'Cancel',
+                                    role: 'cancel',
+                                    cssClass: 'secondary',
+                                    handler: function (blah) {
+                                        console.log('Confirm Cancel: blah');
+                                    }
+                                }, {
+                                    text: 'Confirm',
+                                    handler: function () {
+                                        _this.deleteComment(cid, myIndex);
+                                    }
+                                }
+                            ]
+                        })];
+                    case 1:
+                        alert = _a.sent();
+                        return [4 /*yield*/, alert.present()];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    SubcommentsPage.prototype.deleteComment = function (cid, index) {
+        return __awaiter(this, void 0, void 0, function () {
+            var loading, params;
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.loadingController.create({
+                            message: 'Please wait...'
+                        })];
+                    case 1:
+                        loading = _a.sent();
+                        return [4 /*yield*/, loading.present()];
+                    case 2:
+                        _a.sent();
+                        params = {
+                            cid: cid,
+                            uid: this.uid
+                        };
+                        this.server.deleteComment(params).subscribe(function (response) {
+                            if (index != "main") {
+                                _this.allReplies.splice(index, 1);
+                            }
+                            else {
+                                _this.allReplies = [];
+                                _this.modalController.dismiss();
+                                _this.server.comments(_this.uid, _this.pid);
+                            }
+                            console.log("response", response);
+                            if (response.error == undefined) {
+                                _this.presentToast(response.message);
+                                _this.loaded = true;
+                                loading.dismiss();
+                            }
+                            else {
+                                _this.presentToast(response.error);
+                                _this.loaded = true;
+                                loading.dismiss();
+                            }
+                        });
+                        return [2 /*return*/];
                 }
             });
         });
@@ -179,7 +260,8 @@ var SubcommentsPage = /** @class */ (function () {
                                     "replyCount": 0,
                                     "date": response.message.date,
                                     "username": response.message.username,
-                                    "user_image": response.message.user_image
+                                    "user_image": response.message.user_image,
+                                    "isSame": true
                                 };
                                 _this.allReplies.unshift(data);
                                 _this.commentBox = "";
@@ -218,6 +300,7 @@ var SubcommentsPage = /** @class */ (function () {
         });
     };
     SubcommentsPage.prototype.goBack = function () {
+        this.server.comments(this.uid, this.pid);
         this.modalController.dismiss();
     };
     __decorate([

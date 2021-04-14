@@ -244,6 +244,11 @@ var ServiceService = /** @class */ (function () {
         return this.http.post(this.url + 'likeComment', data, this.options)
             .pipe(operators_1.map(function (results) { return results; }));
     };
+    ServiceService.prototype.deleteComment = function (data) {
+        console.log("comment data in service", data);
+        return this.http.post(this.url + 'deleteComment', data, this.options)
+            .pipe(operators_1.map(function (results) { return results; }));
+    };
     ServiceService.prototype.uploadReply = function (data) {
         console.log("comment data in service", data);
         return this.http.post(this.url + 'uploadReply', data, this.options)

@@ -243,6 +243,12 @@ export class ServiceService {
     .pipe(map(results => results));
   }
 
+  deleteComment(data){
+    console.log("comment data in service", data);
+    return this.http.post(this.url+'deleteComment',data, this.options)
+    .pipe(map(results => results));
+  }
+  
   uploadReply(data){
     console.log("comment data in service", data);
     return this.http.post(this.url+'uploadReply',data, this.options)

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NavController, ToastController, LoadingController, ActionSheetController, ModalController } from '@ionic/angular';
 import {ServiceService} from '../service.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-subcomments',
@@ -19,11 +20,14 @@ export class SubcommentsPage implements OnInit {
   allReplies = [];
   commentBox:any;
 
-  constructor(public modalController: ModalController, 
+  constructor(
+    public modalController: ModalController, 
     public navCtrl: NavController, 
     public server: ServiceService, 
     public toastController: ToastController, 
-    public loadingController: LoadingController) { }
+    public loadingController: LoadingController,
+    public alertController: AlertController
+  ) { }
 
   ngOnInit() {
     this.getAllComments();
@@ -66,6 +70,64 @@ export class SubcommentsPage implements OnInit {
     }
   }
 
+  async delete(cid, myIndex) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Confirm',
+      message: 'You are going to delete this comment, the process cannot be reverted back, please confirm to proceed.',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Confirm',
+          handler: () => {
+            this.deleteComment(cid, myIndex);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+  
+
+  async deleteComment(cid, index) {
+    const loading = await this.loadingController.create({
+      message: 'Please wait...',
+    });
+
+    await loading.present();
+
+    const params = {
+      cid : cid,
+      uid : this.uid
+    };
+
+    this.server.deleteComment(params).subscribe((response: any) => {
+      if(index != "main"){
+        this.allReplies.splice(index, 1);
+      }else{
+        this.allReplies = [];
+        this.modalController.dismiss()
+        this.server.comments(this.uid, this.pid);
+      }
+      console.log("response", response);
+      if ( response.error == undefined) {
+        this.presentToast(response.message);
+        this.loaded = true;
+        loading.dismiss();
+      }else{
+        this.presentToast(response.error);
+        this.loaded = true;
+        loading.dismiss();
+      }
+    });
+  }
 
   async getAllComments() {
     const loading = await this.loadingController.create({
@@ -124,7 +186,8 @@ export class SubcommentsPage implements OnInit {
             "replyCount": 0,
             "date": response.message.date,
             "username": response.message.username,
-            "user_image": response.message.user_image
+            "user_image": response.message.user_image,
+            "isSame": true
         }
         this.allReplies.unshift(data);
         this.commentBox = "";
@@ -150,6 +213,7 @@ export class SubcommentsPage implements OnInit {
   }
 
   goBack(){
-    this.modalController.dismiss()
+    this.server.comments(this.uid, this.pid);
+    this.modalController.dismiss();
   }
 }

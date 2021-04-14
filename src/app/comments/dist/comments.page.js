@@ -45,27 +45,34 @@ exports.__esModule = true;
 exports.CommentsPage = void 0;
 var core_1 = require("@angular/core");
 var CommentsPage = /** @class */ (function () {
-    function CommentsPage(modalController, navCtrl, server, toastController, loadingController) {
+    function CommentsPage(modalController, navCtrl, server, toastController, loadingController, alertController) {
         this.modalController = modalController;
         this.navCtrl = navCtrl;
         this.server = server;
         this.toastController = toastController;
         this.loadingController = loadingController;
+        this.alertController = alertController;
         this.loaded = false;
         this.user_image = 'assets/icon/default_user.png';
         this.close = 'assets/icon/close.png';
+        this.back = 'assets/icon/back.svg';
         this.allComments = [];
+        this.subComment = false;
+        this.allReplies = [];
+        this.moreData = false;
+        this.moreReply = false;
     }
     CommentsPage.prototype.ngOnInit = function () {
-        this.getAllComments();
     };
     CommentsPage.prototype.ionViewDidEnter = function () {
+        this.getAllComments();
     };
     CommentsPage.prototype.closeModel = function () {
         this.modalController.dismiss();
     };
     CommentsPage.prototype.subComments = function (cid) {
         this.server.subComments(this.uid, cid, this.pid);
+        this.modalController.dismiss();
     };
     CommentsPage.prototype.uploadComment = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -86,7 +93,7 @@ var CommentsPage = /** @class */ (function () {
                             comment: this.commentBox,
                             uid: this.uid
                         };
-                        this.server.likeComment(params).subscribe(function (response) {
+                        this.server.uploadComment(params).subscribe(function (response) {
                             console.log("response", response);
                             if (response.error == undefined) {
                                 var data = {
@@ -102,8 +109,15 @@ var CommentsPage = /** @class */ (function () {
                                     "replyCount": 0,
                                     "date": response.message.date,
                                     "username": response.message.username,
-                                    "user_image": response.message.user_image
+                                    "user_image": response.message.user_image,
+                                    "isSame": true
                                 };
+                                console.log("this comments", _this.allComments);
+                                // if(this.allComments){
+                                //   this.allComments.unshift(data);
+                                // }else{
+                                //   this.allComments = data;
+                                // }
                                 _this.allComments.unshift(data);
                                 _this.count++;
                                 _this.commentBox = "";
@@ -121,14 +135,14 @@ var CommentsPage = /** @class */ (function () {
             });
         });
     };
-    CommentsPage.prototype.likeComment = function (cid, isSame) {
+    CommentsPage.prototype.likeComment = function (comment) {
         return __awaiter(this, void 0, void 0, function () {
             var loading_1, params;
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        if (!isSame) return [3 /*break*/, 1];
+                        if (!comment.isSame) return [3 /*break*/, 1];
                         this.presentToast("You can't like your own comment");
                         return [3 /*break*/, 4];
                     case 1: return [4 /*yield*/, this.loadingController.create({
@@ -140,7 +154,7 @@ var CommentsPage = /** @class */ (function () {
                     case 3:
                         _a.sent();
                         params = {
-                            cid: cid,
+                            cid: comment.id,
                             uid: this.uid
                         };
                         this.server.likeComment(params).subscribe(function (response) {
@@ -148,6 +162,14 @@ var CommentsPage = /** @class */ (function () {
                             if (response.error == undefined) {
                                 _this.presentToast(response.message);
                                 _this.likes = response.likes;
+                                if (comment.isLiked == true) {
+                                    comment.likes--;
+                                    comment.isLiked = false;
+                                }
+                                else {
+                                    comment.likes++;
+                                    comment.isLiked = true;
+                                }
                                 _this.loaded = true;
                                 loading_1.dismiss();
                             }
@@ -159,6 +181,94 @@ var CommentsPage = /** @class */ (function () {
                         });
                         _a.label = 4;
                     case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    CommentsPage.prototype["delete"] = function (cid, myIndex, type) {
+        return __awaiter(this, void 0, void 0, function () {
+            var alert;
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.alertController.create({
+                            cssClass: 'my-custom-class',
+                            header: 'Confirm',
+                            message: 'You are going to delete this comment, the process cannot be reverted back, please confirm to proceed.',
+                            buttons: [
+                                {
+                                    text: 'Cancel',
+                                    role: 'cancel',
+                                    cssClass: 'secondary',
+                                    handler: function (blah) {
+                                        console.log('Confirm Cancel: blah');
+                                    }
+                                }, {
+                                    text: 'Confirm',
+                                    handler: function () {
+                                        _this.deleteComment(cid, myIndex, type);
+                                    }
+                                }
+                            ]
+                        })];
+                    case 1:
+                        alert = _a.sent();
+                        return [4 /*yield*/, alert.present()];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    CommentsPage.prototype.deleteComment = function (cid, index, type) {
+        return __awaiter(this, void 0, void 0, function () {
+            var loading, params;
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.loadingController.create({
+                            message: 'Please wait...'
+                        })];
+                    case 1:
+                        loading = _a.sent();
+                        return [4 /*yield*/, loading.present()];
+                    case 2:
+                        _a.sent();
+                        params = {
+                            cid: cid,
+                            uid: this.uid
+                        };
+                        this.server.deleteComment(params).subscribe(function (response) {
+                            console.log("response", response);
+                            if (response.error == undefined) {
+                                _this.presentToast(response.message);
+                                if (type == 'subComment') {
+                                    console.log("inside subComment");
+                                    if (index != "main") {
+                                        _this.allReplies.splice(index, 1);
+                                    }
+                                    else {
+                                        _this.allReplies = [];
+                                        _this.getAllComments();
+                                        _this.commentBox = [];
+                                        _this.cid = "";
+                                        _this.subComment = false;
+                                    }
+                                }
+                                else {
+                                    _this.allComments.splice(index, 1);
+                                }
+                                _this.loaded = true;
+                                loading.dismiss();
+                            }
+                            else {
+                                _this.presentToast(response.error);
+                                _this.loaded = true;
+                                loading.dismiss();
+                            }
+                        });
+                        return [2 /*return*/];
                 }
             });
         });
@@ -184,9 +294,14 @@ var CommentsPage = /** @class */ (function () {
                         this.server.getAllCommentsByPodcastId(params).subscribe(function (response) {
                             console.log("response", response);
                             if (response.error == undefined) {
+                                // this.allComments = null;
                                 _this.allComments = response.message.data;
                                 _this.count = response.count;
                                 _this.likes = response.message.data.likes;
+                                _this.nextPageURL = response.message.next_page_url;
+                                if (_this.nextPageURL != null) {
+                                    _this.moreData = true;
+                                }
                                 _this.loaded = true;
                                 loading.dismiss();
                             }
@@ -219,6 +334,144 @@ var CommentsPage = /** @class */ (function () {
                         return [2 /*return*/];
                 }
             });
+        });
+    };
+    CommentsPage.prototype.getAllSubComments = function (cid) {
+        return __awaiter(this, void 0, void 0, function () {
+            var loading, params;
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this.cid = cid;
+                        return [4 /*yield*/, this.loadingController.create({
+                                message: 'Please wait...'
+                            })];
+                    case 1:
+                        loading = _a.sent();
+                        return [4 /*yield*/, loading.present()];
+                    case 2:
+                        _a.sent();
+                        params = {
+                            cid: cid,
+                            uid: this.uid
+                        };
+                        this.server.getAllReplyByCommentId(params).subscribe(function (response) {
+                            console.log("response", response);
+                            if (response.error == undefined) {
+                                _this.comment = response.comment;
+                                _this.allReplies = response.replies.data;
+                                _this.nextReplyPageURL = response.replies.next_page_url;
+                                if (_this.nextReplyPageURL != null) {
+                                    _this.moreReply = true;
+                                }
+                                _this.loaded = true;
+                                _this.commentBox = [];
+                                _this.subComment = true;
+                                loading.dismiss();
+                            }
+                            else {
+                                _this.presentToast(response.error);
+                                _this.loaded = true;
+                                loading.dismiss();
+                            }
+                        });
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    CommentsPage.prototype.uploadReply = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var loading, params;
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.loadingController.create({
+                            message: 'Please wait...'
+                        })];
+                    case 1:
+                        loading = _a.sent();
+                        return [4 /*yield*/, loading.present()];
+                    case 2:
+                        _a.sent();
+                        params = {
+                            pid: this.pid,
+                            comment: this.commentBox,
+                            uid: this.uid,
+                            cid: this.cid
+                        };
+                        this.server.uploadReply(params).subscribe(function (response) {
+                            console.log("response", response);
+                            if (response.error == undefined) {
+                                var data = {
+                                    "id": response.message.id,
+                                    "podcast_id": _this.pid,
+                                    "user_id": _this.uid,
+                                    "parent_id": _this.cid,
+                                    "message": _this.commentBox,
+                                    "likes": 0,
+                                    "status": 1,
+                                    "created_at": response.message.created_at,
+                                    "updated_at": response.message.updated_at,
+                                    "replyCount": 0,
+                                    "date": response.message.date,
+                                    "username": response.message.username,
+                                    "user_image": response.message.user_image,
+                                    "isSame": true
+                                };
+                                _this.allReplies.unshift(data);
+                                _this.commentBox = "";
+                                _this.loaded = true;
+                                loading.dismiss();
+                            }
+                            else {
+                                _this.presentToast(response.error);
+                                _this.loaded = true;
+                                loading.dismiss();
+                            }
+                        });
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    CommentsPage.prototype.goBack = function () {
+        this.getAllComments();
+        this.commentBox = [];
+        this.cid = "";
+        this.subComment = false;
+    };
+    CommentsPage.prototype.doInfinite = function (event) {
+        var _this = this;
+        console.log("nextPage", this.nextPageURL);
+        this.server.loadMorePost(this.nextPageURL + "&uid=" + this.uid + "&pid=" + this.pid).subscribe(function (response) {
+            console.log("reponse more", response);
+            response.message.data.forEach(function (element) {
+                _this.allComments.push(element);
+            });
+            _this.nextPageURL = response.message.next_page_url;
+            event.target.complete();
+            console.log("nextPagei", _this.nextPageURL);
+            if (_this.nextPageURL == null) {
+                _this.moreData = false;
+            }
+        });
+    };
+    CommentsPage.prototype.loadMoreReply = function (event) {
+        var _this = this;
+        console.log("nextPage", this.nextReplyPageURL);
+        this.server.loadMorePost(this.nextReplyPageURL + "&uid=" + this.uid + "&cid=" + this.cid).subscribe(function (response) {
+            console.log("reponse more", response);
+            response.replies.data.forEach(function (element) {
+                _this.allReplies.push(element);
+            });
+            _this.nextReplyPageURL = response.replies.next_page_url;
+            event.target.complete();
+            console.log("nextPagei", _this.nextReplyPageURL);
+            if (_this.nextReplyPageURL == null) {
+                _this.moreReply = false;
+            }
         });
     };
     __decorate([
